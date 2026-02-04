@@ -18,5 +18,11 @@ class Blog extends Model
         'reference_image',
         'status',
         'created_by',
+        'category_id',
+        'tags',
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

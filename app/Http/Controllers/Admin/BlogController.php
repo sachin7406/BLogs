@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Category;
+
 
 class BlogController extends Controller
 {
@@ -16,17 +18,17 @@ class BlogController extends Controller
     {
         return view('admin.dashboard', [
             'totalBlogs'     => Blog::count(),
-            'activeBlogs'    => Blog::where('status', 'published')->count(),
-            'inactiveBlogs'  => Blog::where('status', 'draft')->count(),
+            'activeBlogs'    => Blog::where('status', 'active')->count(),
+            'inactiveBlogs'  => Blog::where('status', 'inactive')->count(),
             'newBlogs'       => Blog::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
-            'latestBlogs'    => Blog::latest()->limit(5)->get(),
-            'blogs'          => Blog::latest()->paginate(8)
+            'latestBlogs'    => Blog::with('category')->latest()->limit(5)->get(),
+            'blogs'          => Blog::with('category')->latest()->paginate(8)
         ]);
     }
 
     public function index()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = Blog::with('category')->latest()->get();
         return view('admin.blogs.index', compact('blogs'));
     }
 
@@ -38,7 +40,9 @@ class BlogController extends Controller
         $request->validate([
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
-            'status'  => 'nullable|in:draft,published,inactive',
+            'status'  => 'nullable|in:active,inactive',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|string',
         ]);
 
         /* =====================================
@@ -111,7 +115,9 @@ class BlogController extends Controller
             'description'     => $description,
             'reference_link'  => $referenceLink,
             'reference_image' => $referenceImage,
-            'status'          => $request->status ?? 'draft',
+            'status'          => $request->status ?? 'active',
+            'category_id'     => $request->category_id,
+            'tags'            => $request->tags,
             'created_by'      => session('admin_id') ?? 1,
         ];
 
@@ -159,6 +165,7 @@ class BlogController extends Controller
         // Re‑use the same advanced editor view for create & edit
         return view('admin.blogs.create', [
             'blog'   => null,
+            'categories' => Category::orderBy('name')->get(),
         ]);
     }
 
@@ -177,6 +184,7 @@ class BlogController extends Controller
 
         return view('admin.blogs.create', [
             'blog' => $blog,
+            'categories' => Category::orderBy('name')->get(),
         ]);
     }
 
@@ -191,7 +199,9 @@ class BlogController extends Controller
         $request->validate([
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
-            'status'  => 'nullable|in:draft,published,inactive',
+            'status'  => 'nullable|in:active,inactive',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|string',
         ]);
 
         $blocks = json_decode($request->input('content'), true);
@@ -245,6 +255,8 @@ class BlogController extends Controller
             'reference_link'  => $referenceLink,
             'reference_image' => $referenceImage,
             'status'          => $request->status ?? $blog->status,
+            'category_id'     => $request->category_id,
+            'tags'            => $request->tags,
         ]);
 
         return back()->with('success', 'Blog updated successfully');
@@ -258,10 +270,12 @@ class BlogController extends Controller
 
     public function publicBlogs()
     {
+        // Only return blogs with active status and order by latest
         $blogs = Blog::where('status', 'active')
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('pages.blogs', compact('blogs'));
+        // Pass $blogs explicitly to the view as an array
+        return view('partials.blogs', ['blogs' => $blogs]);
     }
 }

@@ -1648,6 +1648,10 @@ $isEdit = isset($blog) && $blog;
         border-style: solid;
         padding: 8px;
         background: #fff;
+        display: inline-block;
+        max-width: 100%;
+        resize: both;
+        overflow: auto;
     }
 
     .block-image-inner.has-image img {
@@ -1692,6 +1696,7 @@ $isEdit = isset($blog) && $blog;
         color: #50575e;
         margin-bottom: 12px;
     }
+
 
     /* Accordion block */
     .block-accordion-item {
@@ -2070,24 +2075,19 @@ $isEdit = isset($blog) && $blog;
                 <strong>Status</strong>
                 <div class="status-radio">
                     <label>
-                        <input type="radio" name="status" value="draft"
-                            {{ $isEdit ? ($blog->status === 'draft' ? 'checked' : '') : 'checked' }}>
-                        Draft
+                        <input type="radio" name="status" value="active"
+                            {{ $isEdit ? ($blog->status === 'active' ? 'checked' : '') : 'checked' }}>
+                        Active
                     </label>
                     <label>
-                        <input type="radio" name="status" value="published"
-                            {{ $isEdit && $blog->status === 'published' ? 'checked' : '' }}>
-                        Published
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="scheduled"
-                            {{ $isEdit && $blog->status === 'scheduled' ? 'checked' : '' }}>
-                        Scheduled
+                        <input type="radio" name="status" value="inactive"
+                            {{ $isEdit && $blog->status === 'inactive' ? 'checked' : '' }}>
+                        Inactive
                     </label>
                 </div>
             </div>
 
-            <div class="settings-group"  style="display: none;">
+            <div class="settings-group" style="display: none;">
                 <strong>Publish</strong>
                 <div class="value" id="publishTiming">Immediately</div>
                 <div class="publish-timing" id="publishTimingInput" style="display: none;">
@@ -2115,6 +2115,24 @@ $isEdit = isset($blog) && $blog;
                     <option>Editor</option>
                     <option>Author</option>
                 </select>
+            </div>
+            <div class="settings-group">
+                <strong>Category</strong>
+                <select id="categorySelect" style="width:100%;padding:6px;border:1px solid #dcdcde;border-radius:4px;margin-top:6px;">
+                    <option value="">Uncategorized</option>
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ $isEdit && $blog && $blog->category_id === $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                    @endforeach
+                </select>
+                <div style="margin-top:6px;font-size:12px;color:#50575e;">Choose a category for this post.</div>
+            </div>
+
+            <div class="settings-group">
+                <strong>Tags</strong>
+                <input type="text" id="tagsInput" placeholder="Add tags (comma separated)" value="{{ $isEdit ? e($blog->tags ?? '') : '' }}" style="width:100%;padding:6px;border:1px solid #dcdcde;border-radius:4px;margin-top:6px;">
+                <div style="margin-top:6px;font-size:12px;color:#50575e;">Separate tags with commas.</div>
             </div>
 
         </div>
@@ -2347,6 +2365,8 @@ $isEdit = isset($blog) && $blog;
     <input type="hidden" name="title">
     <input type="hidden" name="content">
     <input type="hidden" name="status">
+    <input type="hidden" name="category_id">
+    <input type="hidden" name="tags">
 </form>
 
 
@@ -3420,6 +3440,28 @@ $isEdit = isset($blog) && $blog;
         if (bfw) bfw.value = el.style.fontWeight === 'bold' ? 'bold' : 'normal';
         const bc = document.getElementById('blockColor');
         if (bc) bc.value = tc ? tc.value : '#1d2327';
+        const bb = document.getElementById('blockBgColor');
+        if (bb) bb.value = rgbToHex(el.style.backgroundColor) || '#ffffff';
+        const padInput = document.getElementById('blockPadding');
+        const padSlider = document.getElementById('blockPaddingSlider');
+        const marginInput = document.getElementById('blockMargin');
+        const marginSlider = document.getElementById('blockMarginSlider');
+        if (padInput) padInput.value = parsePx(el.style.padding) || 0;
+        if (padSlider) padSlider.value = parsePx(el.style.padding) || 0;
+        if (marginInput) marginInput.value = parsePx(el.style.margin) || 0;
+        if (marginSlider) marginSlider.value = parsePx(el.style.margin) || 0;
+        const borderWInput = document.getElementById('blockBorderWidth');
+        const borderWSlider = document.getElementById('blockBorderWidthSlider');
+        if (borderWInput) borderWInput.value = parsePx(el.style.borderWidth) || 0;
+        if (borderWSlider) borderWSlider.value = parsePx(el.style.borderWidth) || 0;
+        const radiusInput = document.getElementById('blockBorderRadius');
+        const radiusSlider = document.getElementById('blockBorderRadiusSlider');
+        if (radiusInput) radiusInput.value = parsePx(el.style.borderRadius) || 0;
+        if (radiusSlider) radiusSlider.value = parsePx(el.style.borderRadius) || 0;
+        const borderStyleInput = document.getElementById('blockBorderStyle');
+        if (borderStyleInput) borderStyleInput.value = el.style.borderStyle || 'solid';
+        const borderColorInput = document.getElementById('blockBorderColor');
+        if (borderColorInput) borderColorInput.value = rgbToHex(el.style.borderColor) || '#dcdcde'
     }
 
     function syncColumnToolbar(block) {
@@ -3452,6 +3494,34 @@ $isEdit = isset($blog) && $blog;
         const m = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         if (!m) return null;
         return '#' + [1, 2, 3].map(i => ('0' + parseInt(m[i], 10).toString(16)).slice(-2)).join('');
+    }
+
+    function parsePx(value) {
+        if (!value) return 0;
+        const num = parseFloat(value.toString().replace('px', ''));
+        return Number.isNaN(num) ? 0 : num;
+    }
+
+    function applyFontSize(value) {
+        if (!selectedBlockContent) return;
+        const selection = window.getSelection ? window.getSelection() : null;
+        if (selection && selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const inBlock = selectedBlockContent.contains(range.commonAncestorContainer);
+            if (inBlock && !selection.isCollapsed && value) {
+                const span = document.createElement('span');
+                span.style.fontSize = value;
+                const contents = range.extractContents();
+                span.appendChild(contents);
+                range.insertNode(span);
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(span);
+                selection.addRange(newRange);
+                return;
+            }
+        }
+        selectedBlockContent.style.fontSize = value || '';
     }
 
     function applyFontSize(value) {
@@ -4445,16 +4515,11 @@ $isEdit = isset($blog) && $blog;
     });
 
     document.querySelectorAll('input[name="status"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            const publishTiming = document.getElementById('publishTiming');
-            const publishTimingInput = document.getElementById('publishTimingInput');
-            if (e.target.value === 'scheduled') {
-                publishTiming.style.display = 'none';
-                publishTimingInput.style.display = 'block';
-            } else {
-                publishTiming.style.display = 'block';
-                publishTimingInput.style.display = 'none';
-            }
+        radio.addEventListener('change', () => {
+            const statusField = document.querySelector('[name=status]');
+            const checked = document.querySelector('input[name="status"]:checked');
+            if (statusField && checked) statusField.value = checked.value;
+
         });
     });
 
@@ -4793,7 +4858,29 @@ $isEdit = isset($blog) && $blog;
             newAuthorInput.value = authorSelect.value.trim();
             document.getElementById('saveForm').appendChild(newAuthorInput);
         }
+        const categorySelect = document.getElementById('categorySelect');
+        const categoryField = document.querySelector('[name=category_id]');
+        if (categorySelect && categoryField) {
+            categoryField.value = categorySelect.value;
+        } else if (categorySelect) {
+            let newCategoryInput = document.createElement('input');
+            newCategoryInput.type = 'hidden';
+            newCategoryInput.name = 'category_id';
+            newCategoryInput.value = categorySelect.value;
+            document.getElementById('saveForm').appendChild(newCategoryInput);
+        }
 
+        const tagsInput = document.getElementById('tagsInput');
+        const tagsField = document.querySelector('[name=tags]');
+        if (tagsInput && tagsField) {
+            tagsField.value = tagsInput.value.trim();
+        } else if (tagsInput) {
+            let newTagsInput = document.createElement('input');
+            newTagsInput.type = 'hidden';
+            newTagsInput.name = 'tags';
+            newTagsInput.value = tagsInput.value.trim();
+            document.getElementById('saveForm').appendChild(newTagsInput);
+        }
         /* ===============================
            Debug
         =============================== */
@@ -4818,7 +4905,17 @@ $isEdit = isset($blog) && $blog;
             }
         };
         // Set status (if you use it in backend)
-        document.querySelector('[name=status]') && (document.querySelector('[name=status]').value = publish ? 'published' : 'draft');
+        const statusField = document.querySelector('[name=status]');
+        const checkedStatus = document.querySelector('input[name="status"]:checked');
+        if (statusField) {
+            if (publish) {
+                statusField.value = 'active';
+            } else if (checkedStatus) {
+                statusField.value = checkedStatus.value;
+            } else {
+                statusField.value = 'inactive';
+            }
+        }
         saveForm.submit();
     }
 

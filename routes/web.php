@@ -5,6 +5,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +24,7 @@ Route::get('/admin/logout', [AuthController::class, 'logout'])
     ->name('admin.logout');
 
 
-Route::prefix('admin')->group(function () { 
+Route::prefix('admin')->group(function () {
 
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -51,10 +53,15 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::post('/blogs/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::delete('/blogs/delete/{id}', [BlogController::class, 'delete'])->name('blogs.delete');
     Route::post('blogs/upload-image', [BlogController::class, 'uploadImage'])->name('blogs.uploadImage');
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
 });
 
-Route::get('/blogs', [BlogController::class, 'publicBlogs'])
-    ->name('blogs.public');
+// Route::get('/blogs', function () {
+//     return view('pages.blogs');
+// })->name('blogs.public');
 
 /*
 |--------------------------------------------------------------------------

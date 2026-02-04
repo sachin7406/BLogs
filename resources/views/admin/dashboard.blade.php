@@ -53,7 +53,12 @@
                 </p>
 
                 <div class="blog-meta">
-                    <span class="badge bg-success">{{ $blog->status }}</span>
+                    <span class="badge bg-{{ $blog->status === 'active' ? 'success' : 'secondary' }}">{{ ucfirst($blog->status) }}</span>
+                    @if($blog->category)
+                        <span class="badge bg-info ms-1">{{ $blog->category->name }}</span>
+                    @else
+                        <span class="badge bg-light text-dark ms-1">Uncategorized</span>
+                    @endif
                     <small>{{ $blog->created_at->diffForHumans() }}</small>
                 </div>
             </div>
