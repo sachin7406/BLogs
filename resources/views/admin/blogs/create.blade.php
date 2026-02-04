@@ -952,16 +952,18 @@ $isEdit = isset($blog) && $blog;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
     }
 
     .collapsible-toggle::after {
-        content: '+';
-        font-size: 18px;
+        content: '▸';
+        font-size: 14px;
         color: #50575e;
+        transition: transform 0.15s ease-in-out;
     }
 
     .collapsible-toggle.expanded::after {
-        content: '−';
+        transform: rotate(90deg);
     }
 
     .collapsible-content {
@@ -3808,13 +3810,23 @@ $isEdit = isset($blog) && $blog;
     // Collapsible sections
     document.querySelectorAll('.collapsible-toggle').forEach(toggle => {
         toggle.onclick = () => {
-            const content = toggle.nextElementSibling;
+            const group = toggle.closest('.settings-group');
+            const content = group ? group.querySelector('.collapsible-content') : null;
             if (content) {
                 const isExpanded = content.style.display !== 'none';
                 content.style.display = isExpanded ? 'none' : 'block';
                 toggle.classList.toggle('expanded', !isExpanded);
             }
         };
+    });
+
+    document.querySelectorAll('.block-settings-header').forEach(header => {
+        header.addEventListener('click', (e) => {
+            if (e.target.closest('.block-settings-kebab')) return;
+            if (e.target.closest('.collapsible-toggle')) return;
+            const toggle = header.querySelector('.collapsible-toggle');
+            if (toggle) toggle.click();
+        });
     });
 
     // Dimensions and Border controls
