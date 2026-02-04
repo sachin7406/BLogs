@@ -2405,6 +2405,7 @@ $isEdit = isset($blog) && $blog;
     <input type="hidden" name="title">
     <input type="hidden" name="content">
     <input type="hidden" name="status">
+    <input type="hidden" name="reference_image">
     <input type="hidden" name="category_id">
     <input type="hidden" name="tags">
 </form>
@@ -4913,7 +4914,7 @@ $isEdit = isset($blog) && $blog;
     }
 
     async function saveContent(publish = false) {
-        const blocksRaw = Array.from(document.querySelectorAll('#editor .block'));
+        const blocksRaw = Array.from(editor.children).filter(el => el.classList.contains('block'));
         const validationErrors = validateFormFields(blocksRaw);
 
         if (validationErrors.length > 0) {
@@ -5043,6 +5044,37 @@ $isEdit = isset($blog) && $blog;
             newAuthorInput.value = authorSelect.value.trim();
             document.getElementById('saveForm').appendChild(newAuthorInput);
         }
+
+        const featuredInput = document.getElementById('featuredImageInput');
+        const featuredBtn = document.getElementById('featuredImageBtn');
+        const referenceField = document.querySelector('[name=reference_image]');
+        const ensureReferenceField = () => {
+            if (referenceField) return referenceField;
+            const newRefInput = document.createElement('input');
+            newRefInput.type = 'hidden';
+            newRefInput.name = 'reference_image';
+            document.getElementById('saveForm').appendChild(newRefInput);
+            return newRefInput;
+        };
+        const setReferenceImage = async () => {
+            const refField = ensureReferenceField();
+            if (featuredInput && featuredInput.files && featuredInput.files[0]) {
+                const uploaded = await uploadImage(featuredInput.files[0], pageTitle);
+                refField.value = uploaded;
+                return;
+            }
+            const featuredImg = featuredBtn ? featuredBtn.querySelector('img') : null;
+            if (featuredImg && featuredImg.getAttribute('src')) {
+                let src = featuredImg.getAttribute('src');
+                if (isBase64Image(src)) {
+                    const file = base64ToFile(src);
+                    src = await uploadImage(file, pageTitle);
+                }
+                refField.value = src;
+            }
+        };
+
+        await setReferenceImage();
 
         const categorySelect = document.getElementById('categorySelect');
         const categoryField = document.querySelector('[name=category_id]');
