@@ -1,0 +1,120 @@
+body {
+    background: #f3f4f7;
+    font-size: 14px;
+    overflow-x: hidden;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 65px;
+    /* 👈 collapsed by default */
+    height: 100vh;
+    background: #0f172a;
+    color: #cbd5e1;
+    padding-top: 20px;
+    transition: width 0.3s ease;
+    z-index: 1050;
+}
+
+/* Expand on hover */
+.sidebar:hover {
+    width: 180px;
+}
+
+/* Sidebar links */
+.sidebar a {
+    color: #cbd5e1;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Icon spacing */
+.sidebar a i {
+    min-width: 24px;
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+/* Hover active */
+.sidebar a:hover,
+.sidebar a.active {
+    background: #1e293b;
+    color: #fff;
+}
+
+/* ===== TEXT VISIBILITY ===== */
+.sidebar .d-sm-inline {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Show text on hover */
+.sidebar:hover .d-sm-inline {
+    opacity: 1;
+}
+
+/* ===== Topbar ===== */
+.topbar {
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 60px;
+    /* 👈 match collapsed sidebar */
+    right: 0;
+    transition: left 0.3s ease;
+    z-index: 1030;
+}
+
+/* Move topbar when sidebar expands */
+.sidebar:hover~.content .topbar {
+    left: 180px;
+}
+
+/* ===== Content ===== */
+.content {
+    margin-left: 65px;
+    min-height: 100vh;
+    padding-top: 80px;
+    transition: margin-left 0.3s ease;
+    width: 100%;
+}
+
+/* Move content when sidebar expands */
+.sidebar:hover~.content {
+    margin-left: 180px;
+}
+
+/* ===== Mobile (unchanged) ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        font-size: 12px;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+        font-size: 12px;
+    }
+
+    .topbar {
+        left: 0;
+    }
+
+    .content {
+        margin-left: 0;
+        padding-top: 80px;
+        font-size: 12px;
+    }
+}
