@@ -28,9 +28,9 @@ class CreateBlogsTable extends Migration
             $table->string('reference_link')->nullable();
             $table->string('reference_image')->nullable();
 
-            // Status (draft / publish flow)
-            $table->enum('status', ['draft', 'published', 'inactive'])
-                  ->default('draft');
+            // Status (active / inactive)
+            $table->enum('status', ['active', 'inactive'])
+                  ->default('active');
 
             // Admin user
             $table->unsignedBigInteger('created_by');

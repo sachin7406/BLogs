@@ -35,7 +35,15 @@
                 </div>
 
                 <div class="blog-meta">
-                    <span class="badge bg-success">Active</span>
+                    <span class="badge bg-{{ $blog->status === 'active' ? 'success' : 'secondary' }}">
+                        {{ ucfirst($blog->status) }}
+                    </span>
+                    @if($blog->category)
+                        <span class="badge bg-light text-dark">{{ $blog->category->name }}</span>
+                    @endif
+                    @if(!empty($blog->tags))
+                        <span class="badge bg-light text-dark">{{ $blog->tags }}</span>
+                    @endif
 
                     <span class="created-time">
                         Created {{ $blog->created_at->diffForHumans() }}

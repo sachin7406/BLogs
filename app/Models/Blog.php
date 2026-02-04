@@ -16,7 +16,14 @@ class Blog extends Model
         'description',
         'reference_link',
         'reference_image',
+        'category_id',
+        'tags',
         'status',
         'created_by',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

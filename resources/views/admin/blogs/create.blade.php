@@ -1647,6 +1647,10 @@ $isEdit = isset($blog) && $blog;
         border-style: solid;
         padding: 8px;
         background: #fff;
+        display: inline-block;
+        max-width: 100%;
+        resize: both;
+        overflow: auto;
     }
 
     .block-image-inner.has-image img {
@@ -1690,6 +1694,19 @@ $isEdit = isset($blog) && $blog;
         font-size: 13px;
         color: #50575e;
         margin-bottom: 12px;
+    }
+
+    .block-gallery-inner {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+    }
+
+    .block-gallery-inner img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 6px;
     }
 
     /* Accordion block */
@@ -1918,6 +1935,7 @@ $isEdit = isset($blog) && $blog;
             <div class="block-category">
                 <div class="block-category-title">MEDIA</div>
                 <div class="block-item" data-block="image" draggable="true" title="Image"><span class="block-item-icon">🖼</span><span class="block-item-text">Image</span></div>
+                <div class="block-item" data-block="gallery" draggable="true" title="Gallery"><span class="block-item-icon">🖼</span><span class="block-item-text">Gallery</span></div>
             </div>
         </div>
         <div class="wp-left-tab-content" id="wpLeftTabPatterns" style="display:none;">
@@ -2069,29 +2087,34 @@ $isEdit = isset($blog) && $blog;
                 <strong>Status</strong>
                 <div class="status-radio">
                     <label>
-                        <input type="radio" name="status" value="draft"
-                            {{ $isEdit ? ($blog->status === 'draft' ? 'checked' : '') : 'checked' }}>
-                        Draft
+                        <input type="radio" name="status" value="active"
+                            {{ $isEdit ? ($blog->status === 'active' ? 'checked' : '') : 'checked' }}>
+                        Active
                     </label>
                     <label>
-                        <input type="radio" name="status" value="published"
-                            {{ $isEdit && $blog->status === 'published' ? 'checked' : '' }}>
-                        Published
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="scheduled"
-                            {{ $isEdit && $blog->status === 'scheduled' ? 'checked' : '' }}>
-                        Scheduled
+                        <input type="radio" name="status" value="inactive"
+                            {{ $isEdit && $blog->status === 'inactive' ? 'checked' : '' }}>
+                        Inactive
                     </label>
                 </div>
             </div>
+            <div class="settings-group">
+                <strong>Category</strong>
+                <select id="categorySelect" style="width:100%;padding:6px;border:1px solid #dcdcde;border-radius:4px;margin-top:6px;">
+                    <option value="">Uncategorized</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ $isEdit && $blog && $blog->category_id === $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <div style="margin-top:6px;font-size:12px;color:#50575e;">Choose a category for this post.</div>
+            </div>
 
             <div class="settings-group">
-                <strong>Publish</strong>
-                <div class="value" id="publishTiming">Immediately</div>
-                <div class="publish-timing" id="publishTimingInput" style="display: none;">
-                    <input type="datetime-local" id="scheduleDate">
-                </div>
+                <strong>Tags</strong>
+                <input type="text" id="tagsInput" placeholder="Add tags (comma separated)" value="{{ $isEdit ? e($blog->tags ?? '') : '' }}" style="width:100%;padding:6px;border:1px solid #dcdcde;border-radius:4px;margin-top:6px;">
+                <div style="margin-top:6px;font-size:12px;color:#50575e;">Separate tags with commas.</div>
             </div>
 
             <div class="settings-group">
@@ -2154,6 +2177,11 @@ $isEdit = isset($blog) && $blog;
                     <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
                         <input type="color" id="blockColor" value="#1d2327" style="width:36px;height:36px;border:1px solid #dcdcde;border-radius:4px;cursor:pointer;">
                         <span>Text</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+                        <input type="color" id="blockBgColor" value="#ffffff" style="width:36px;height:36px;border:1px solid #dcdcde;border-radius:4px;cursor:pointer;">
+                        <span>Background</span>
+                        <button type="button" id="blockBgClear" style="margin-left:auto;border:1px solid #dcdcde;background:#fff;border-radius:4px;padding:4px 8px;cursor:pointer;">Clear</button>
                     </div>
                 </div>
                 <div class="settings-group" id="blockFormatGroup">
@@ -2355,6 +2383,8 @@ $isEdit = isset($blog) && $blog;
     <input type="hidden" name="title">
     <input type="hidden" name="content">
     <input type="hidden" name="status">
+    <input type="hidden" name="category_id">
+    <input type="hidden" name="tags">
 </form>
 
 
@@ -2463,6 +2493,7 @@ $isEdit = isset($blog) && $blog;
             quote: '" Quote',
             code: '<> Code',
             image: '🖼 Image',
+            gallery: '🖼 Gallery',
             columns: '▌ Columns',
             accordion: '≡ Accordion',
             separator: '— Separator',
@@ -2950,6 +2981,52 @@ $isEdit = isset($blog) && $blog;
         };
     }
 
+    function addGalleryBlock() {
+        const wrap = document.createElement('div');
+        wrap.className = 'block-image-inner';
+        wrap.innerHTML = `
+            <div class="block-image-instruction">Upload multiple images to build a gallery.</div>
+            <div class="block-image-actions">
+                <button type="button" class="btn-upload block-gallery-upload">Upload</button>
+                <button type="button" class="btn-secondary block-gallery-url">Insert from URL</button>
+            </div>
+            <input type="file" class="block-gallery-file" accept="image/*" multiple style="display:none">
+        `;
+        wrapBlock(wrap, 'gallery');
+        const fileInput = wrap.querySelector('.block-gallery-file');
+        wrap.querySelector('.block-gallery-upload').onclick = () => fileInput.click();
+        fileInput.onchange = (e) => {
+            const files = Array.from(e.target.files || []);
+            if (!files.length) return;
+            wrap.classList.add('has-image');
+            wrap.innerHTML = '<div class="block-gallery-inner"></div>';
+            const grid = wrap.querySelector('.block-gallery-inner');
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const img = document.createElement('img');
+                    img.src = ev.target.result;
+                    grid.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        };
+        wrap.querySelector('.block-gallery-url').onclick = () => {
+            const urlInput = prompt('Enter image URLs (comma separated):');
+            if (!urlInput) return;
+            const urls = urlInput.split(',').map(u => u.trim()).filter(Boolean);
+            if (!urls.length) return;
+            wrap.classList.add('has-image');
+            wrap.innerHTML = '<div class="block-gallery-inner"></div>';
+            const grid = wrap.querySelector('.block-gallery-inner');
+            urls.forEach(url => {
+                const img = document.createElement('img');
+                img.src = url;
+                grid.appendChild(img);
+            });
+        };
+    }
+
     function removeBlock(btn) {
         btn.closest('.block').remove();
         saveState();
@@ -3283,6 +3360,9 @@ $isEdit = isset($blog) && $blog;
             // Allow alignment & dimension controls on image itself
             return block.querySelector('.block-image-inner img') || block.querySelector('img');
         }
+        if (type === 'gallery') {
+            return block.querySelector('.block-gallery-inner') || block.querySelector('.block-image-inner');
+        }
         if (type === 'columns' || type === 'accordion' || type === 'buttons' || type === 'separator' || type === 'spacer') return null;
         return block.querySelector('[contenteditable="true"]') || block.querySelector('h1, h2, h3, h4, div, blockquote, pre, ul, ol') || block.children[2];
     }
@@ -3428,6 +3508,28 @@ $isEdit = isset($blog) && $blog;
         if (bfw) bfw.value = el.style.fontWeight === 'bold' ? 'bold' : 'normal';
         const bc = document.getElementById('blockColor');
         if (bc) bc.value = tc ? tc.value : '#1d2327';
+        const bb = document.getElementById('blockBgColor');
+        if (bb) bb.value = rgbToHex(el.style.backgroundColor) || '#ffffff';
+        const padInput = document.getElementById('blockPadding');
+        const padSlider = document.getElementById('blockPaddingSlider');
+        const marginInput = document.getElementById('blockMargin');
+        const marginSlider = document.getElementById('blockMarginSlider');
+        if (padInput) padInput.value = parsePx(el.style.padding) || 0;
+        if (padSlider) padSlider.value = parsePx(el.style.padding) || 0;
+        if (marginInput) marginInput.value = parsePx(el.style.margin) || 0;
+        if (marginSlider) marginSlider.value = parsePx(el.style.margin) || 0;
+        const borderWInput = document.getElementById('blockBorderWidth');
+        const borderWSlider = document.getElementById('blockBorderWidthSlider');
+        if (borderWInput) borderWInput.value = parsePx(el.style.borderWidth) || 0;
+        if (borderWSlider) borderWSlider.value = parsePx(el.style.borderWidth) || 0;
+        const radiusInput = document.getElementById('blockBorderRadius');
+        const radiusSlider = document.getElementById('blockBorderRadiusSlider');
+        if (radiusInput) radiusInput.value = parsePx(el.style.borderRadius) || 0;
+        if (radiusSlider) radiusSlider.value = parsePx(el.style.borderRadius) || 0;
+        const borderStyleInput = document.getElementById('blockBorderStyle');
+        if (borderStyleInput) borderStyleInput.value = el.style.borderStyle || 'solid';
+        const borderColorInput = document.getElementById('blockBorderColor');
+        if (borderColorInput) borderColorInput.value = rgbToHex(el.style.borderColor) || '#dcdcde';
     }
 
     function syncColumnToolbar(block) {
@@ -3460,6 +3562,12 @@ $isEdit = isset($blog) && $blog;
         const m = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         if (!m) return null;
         return '#' + [1, 2, 3].map(i => ('0' + parseInt(m[i], 10).toString(16)).slice(-2)).join('');
+    }
+
+    function parsePx(value) {
+        if (!value) return 0;
+        const num = parseFloat(value.toString().replace('px', ''));
+        return Number.isNaN(num) ? 0 : num;
     }
 
     function applyFontSize(value) {
@@ -3607,9 +3715,23 @@ $isEdit = isset($blog) && $blog;
             document.getElementById('tbColor').value = e.target.value;
         }
     });
+    document.getElementById('blockBgColor').addEventListener('input', (e) => {
+        if (selectedBlockContent) {
+            selectedBlockContent.style.backgroundColor = e.target.value;
+            saveState();
+        }
+    });
+    document.getElementById('blockBgClear').addEventListener('click', () => {
+        if (selectedBlockContent) {
+            selectedBlockContent.style.backgroundColor = '';
+            const bgInput = document.getElementById('blockBgColor');
+            if (bgInput) bgInput.value = '#ffffff';
+            saveState();
+        }
+    });
     document.getElementById('blockAlignLeft').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
+            if (selectedBlock && (selectedBlock.dataset.type === 'image' || selectedBlock.dataset.type === 'gallery')) {
                 selectedBlockContent.style.display = 'block';
                 selectedBlockContent.style.marginLeft = '0';
                 selectedBlockContent.style.marginRight = 'auto';
@@ -3621,7 +3743,7 @@ $isEdit = isset($blog) && $blog;
     };
     document.getElementById('blockAlignCenter').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
+            if (selectedBlock && (selectedBlock.dataset.type === 'image' || selectedBlock.dataset.type === 'gallery')) {
                 selectedBlockContent.style.display = 'block';
                 selectedBlockContent.style.marginLeft = 'auto';
                 selectedBlockContent.style.marginRight = 'auto';
@@ -3633,7 +3755,7 @@ $isEdit = isset($blog) && $blog;
     };
     document.getElementById('blockAlignRight').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
+            if (selectedBlock && (selectedBlock.dataset.type === 'image' || selectedBlock.dataset.type === 'gallery')) {
                 selectedBlockContent.style.display = 'block';
                 selectedBlockContent.style.marginLeft = 'auto';
                 selectedBlockContent.style.marginRight = '0';
@@ -4105,7 +4227,7 @@ $isEdit = isset($blog) && $blog;
         {
             name: 'Gallery',
             icon: '🖼',
-            block: 'image'
+            block: 'gallery'
         }
     ];
 
@@ -4262,6 +4384,7 @@ $isEdit = isset($blog) && $blog;
         else if (blockType === 'separator') block = addSeparator();
         else if (blockType === 'spacer') block = addSpacer();
         else if (blockType === 'image') block = addImageBlock();
+        else if (blockType === 'gallery') block = addGalleryBlock();
         else if (blockType === 'details') block = addAccordion();
         else if (blockType === 'verse') block = addPreformatted();
         else if (blockType === 'classic') block = addParagraph();
@@ -4452,16 +4575,10 @@ $isEdit = isset($blog) && $blog;
     });
 
     document.querySelectorAll('input[name="status"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            const publishTiming = document.getElementById('publishTiming');
-            const publishTimingInput = document.getElementById('publishTimingInput');
-            if (e.target.value === 'scheduled') {
-                publishTiming.style.display = 'none';
-                publishTimingInput.style.display = 'block';
-            } else {
-                publishTiming.style.display = 'block';
-                publishTimingInput.style.display = 'none';
-            }
+        radio.addEventListener('change', () => {
+            const statusField = document.querySelector('[name=status]');
+            const checked = document.querySelector('input[name="status"]:checked');
+            if (statusField && checked) statusField.value = checked.value;
         });
     });
 
@@ -4471,12 +4588,6 @@ $isEdit = isset($blog) && $blog;
         const layout = document.querySelector('.wp-layout');
         const collapsed = layout.classList.toggle('right-collapsed');
         settingsSidebarBtn.classList.toggle('active', !collapsed);
-    };
-
-    document.getElementById('publishTiming').onclick = () => {
-        document.getElementById('publishTiming').style.display = 'none';
-        document.getElementById('publishTimingInput').style.display = 'block';
-        document.getElementById('scheduleDate').focus();
     };
 
     document.getElementById('slugValue').onclick = () => {
@@ -4650,6 +4761,12 @@ $isEdit = isset($blog) && $blog;
                         errors.push("Image block at position " + (i + 1) + " cannot be blank.");
                     }
                 }
+                if (type === 'gallery') {
+                    const imgs = b.querySelectorAll('img');
+                    if (!imgs.length) {
+                        errors.push("Gallery block at position " + (i + 1) + " cannot be blank.");
+                    }
+                }
                 if (type === 'accordion') {
                     b.querySelectorAll('.block-accordion-item').forEach((item, itemIdx) => {
                         let titleText = (item.querySelector('.block-accordion-title')?.textContent || '').trim();
@@ -4720,6 +4837,27 @@ $isEdit = isset($blog) && $blog;
                 blocks.push({
                     type: 'image',
                     url: src // ✅ ONLY URL (no Base64, no HTML)
+                });
+            }
+            /* ===============================
+               Gallery (Base64 → Upload → URLs)
+            =============================== */
+            else if (type === 'gallery') {
+                const imgs = Array.from(b.querySelectorAll('img'));
+                if (!imgs.length) continue;
+                const urls = [];
+                for (const img of imgs) {
+                    let src = img.getAttribute('src');
+                    if (src && isBase64Image(src)) {
+                        const file = base64ToFile(src);
+                        src = await uploadImage(file, pageTitle);
+                        img.setAttribute('src', src);
+                    }
+                    if (src) urls.push(src);
+                }
+                blocks.push({
+                    type: 'gallery',
+                    urls: urls
                 });
             }
 
@@ -4801,6 +4939,30 @@ $isEdit = isset($blog) && $blog;
             document.getElementById('saveForm').appendChild(newAuthorInput);
         }
 
+        const categorySelect = document.getElementById('categorySelect');
+        const categoryField = document.querySelector('[name=category_id]');
+        if (categorySelect && categoryField) {
+            categoryField.value = categorySelect.value;
+        } else if (categorySelect) {
+            let newCategoryInput = document.createElement('input');
+            newCategoryInput.type = 'hidden';
+            newCategoryInput.name = 'category_id';
+            newCategoryInput.value = categorySelect.value;
+            document.getElementById('saveForm').appendChild(newCategoryInput);
+        }
+
+        const tagsInput = document.getElementById('tagsInput');
+        const tagsField = document.querySelector('[name=tags]');
+        if (tagsInput && tagsField) {
+            tagsField.value = tagsInput.value.trim();
+        } else if (tagsInput) {
+            let newTagsInput = document.createElement('input');
+            newTagsInput.type = 'hidden';
+            newTagsInput.name = 'tags';
+            newTagsInput.value = tagsInput.value.trim();
+            document.getElementById('saveForm').appendChild(newTagsInput);
+        }
+
         /* ===============================
            Debug
         =============================== */
@@ -4825,7 +4987,17 @@ $isEdit = isset($blog) && $blog;
             }
         };
         // Set status (if you use it in backend)
-        document.querySelector('[name=status]') && (document.querySelector('[name=status]').value = publish ? 'published' : 'draft');
+        const statusField = document.querySelector('[name=status]');
+        const checkedStatus = document.querySelector('input[name="status"]:checked');
+        if (statusField) {
+            if (publish) {
+                statusField.value = 'active';
+            } else if (checkedStatus) {
+                statusField.value = checkedStatus.value;
+            } else {
+                statusField.value = 'inactive';
+            }
+        }
         saveForm.submit();
     }
 
@@ -4862,6 +5034,15 @@ $isEdit = isset($blog) && $blog;
             } else if (type === 'image') {
                 const img = b.querySelector('.block-image-inner img');
                 if (img) html += '<div style="margin:20px 0">' + img.outerHTML + '</div>';
+            } else if (type === 'gallery') {
+                const imgs = Array.from(b.querySelectorAll('img'));
+                if (imgs.length) {
+                    html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0;">';
+                    imgs.forEach(img => {
+                        html += '<div>' + img.outerHTML + '</div>';
+                    });
+                    html += '</div>';
+                }
             } else if (type === 'separator') {
                 html += ' <hr style = "margin:20px 0;border:none;border-top:1px solid #dcdcde" > ';
             } else if (type === 'spacer') {
@@ -4911,6 +5092,7 @@ $isEdit = isset($blog) && $blog;
     window.addSeparator = addSeparator;
     window.addSpacer = addSpacer;
     window.addImageBlock = addImageBlock;
+    window.addGalleryBlock = addGalleryBlock;
     window.removeBlock = removeBlock;
 
     // ================= RESTORE EXISTING CONTENT (EDIT MODE) =================
@@ -4948,6 +5130,20 @@ $isEdit = isset($blog) && $blog;
                 if (!url) return;
                 wrap.innerHTML = '<img src="' + url + '" alt="">';
                 wrapBlock(wrap, 'image');
+            } else if (type === 'gallery') {
+                const urls = Array.isArray(b.urls) ? b.urls : [];
+                if (!urls.length) return;
+                const wrap = document.createElement('div');
+                wrap.className = 'block-image-inner has-image';
+                const grid = document.createElement('div');
+                grid.className = 'block-gallery-inner';
+                urls.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    grid.appendChild(img);
+                });
+                wrap.appendChild(grid);
+                wrapBlock(wrap, 'gallery');
             } else if (type === 'separator') {
                 addSeparator();
             } else if (type === 'spacer') {

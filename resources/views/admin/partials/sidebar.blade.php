@@ -31,6 +31,12 @@
                             <span class="d-none d-sm-inline">All Blogs</span>
                         </a>
                     </li>
+                    <li class="w-100">
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-tags me-2"></i>
+                            <span class="d-none d-sm-inline">Categories</span>
+                        </a>
+                    </li>
 
                     @if(session('admin_role') === 'admin' || session('admin_role') === 'editor')
                     <li class="w-100">

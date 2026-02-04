@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 
 /*
@@ -51,6 +52,10 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::post('/blogs/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::delete('/blogs/delete/{id}', [BlogController::class, 'delete'])->name('blogs.delete');
     Route::post('blogs/upload-image', [BlogController::class, 'uploadImage'])->name('blogs.uploadImage');
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
 });
 
 Route::get('/blogs', [BlogController::class, 'publicBlogs'])
