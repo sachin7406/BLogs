@@ -2117,15 +2117,6 @@ $isEdit = isset($blog) && $blog;
                 </select>
             </div>
 
-            <div class="settings-group">
-                <strong>Template</strong>
-                <div class="value">Single Post</div>
-            </div>
-
-            <div class="settings-group">
-                <strong>Discussion</strong>
-                <div class="value">Open</div>
-            </div>
         </div>
 
         <div id="blockSettings" style="display: none;">
