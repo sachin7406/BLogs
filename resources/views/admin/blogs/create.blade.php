@@ -1696,19 +1696,6 @@ $isEdit = isset($blog) && $blog;
         margin-bottom: 12px;
     }
 
-    .block-gallery-inner {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 12px;
-    }
-
-    .block-gallery-inner img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 6px;
-    }
-
     /* Accordion block */
     .block-accordion-item {
         border: 1px solid #dcdcde;
@@ -1935,7 +1922,6 @@ $isEdit = isset($blog) && $blog;
             <div class="block-category">
                 <div class="block-category-title">MEDIA</div>
                 <div class="block-item" data-block="image" draggable="true" title="Image"><span class="block-item-icon">🖼</span><span class="block-item-text">Image</span></div>
-                <div class="block-item" data-block="gallery" draggable="true" title="Gallery"><span class="block-item-icon">🖼</span><span class="block-item-text">Gallery</span></div>
             </div>
         </div>
         <div class="wp-left-tab-content" id="wpLeftTabPatterns" style="display:none;">
@@ -2493,7 +2479,6 @@ $isEdit = isset($blog) && $blog;
             quote: '" Quote',
             code: '<> Code',
             image: '🖼 Image',
-            gallery: '🖼 Gallery',
             columns: '▌ Columns',
             accordion: '≡ Accordion',
             separator: '— Separator',
@@ -2981,52 +2966,6 @@ $isEdit = isset($blog) && $blog;
         };
     }
 
-    function addGalleryBlock() {
-        const wrap = document.createElement('div');
-        wrap.className = 'block-image-inner';
-        wrap.innerHTML = `
-            <div class="block-image-instruction">Upload multiple images to build a gallery.</div>
-            <div class="block-image-actions">
-                <button type="button" class="btn-upload block-gallery-upload">Upload</button>
-                <button type="button" class="btn-secondary block-gallery-url">Insert from URL</button>
-            </div>
-            <input type="file" class="block-gallery-file" accept="image/*" multiple style="display:none">
-        `;
-        wrapBlock(wrap, 'gallery');
-        const fileInput = wrap.querySelector('.block-gallery-file');
-        wrap.querySelector('.block-gallery-upload').onclick = () => fileInput.click();
-        fileInput.onchange = (e) => {
-            const files = Array.from(e.target.files || []);
-            if (!files.length) return;
-            wrap.classList.add('has-image');
-            wrap.innerHTML = '<div class="block-gallery-inner"></div>';
-            const grid = wrap.querySelector('.block-gallery-inner');
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    const img = document.createElement('img');
-                    img.src = ev.target.result;
-                    grid.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        };
-        wrap.querySelector('.block-gallery-url').onclick = () => {
-            const urlInput = prompt('Enter image URLs (comma separated):');
-            if (!urlInput) return;
-            const urls = urlInput.split(',').map(u => u.trim()).filter(Boolean);
-            if (!urls.length) return;
-            wrap.classList.add('has-image');
-            wrap.innerHTML = '<div class="block-gallery-inner"></div>';
-            const grid = wrap.querySelector('.block-gallery-inner');
-            urls.forEach(url => {
-                const img = document.createElement('img');
-                img.src = url;
-                grid.appendChild(img);
-            });
-        };
-    }
-
     function removeBlock(btn) {
         btn.closest('.block').remove();
         saveState();
@@ -3359,9 +3298,6 @@ $isEdit = isset($blog) && $blog;
         if (type === 'image') {
             // Allow alignment & dimension controls on image itself
             return block.querySelector('.block-image-inner img') || block.querySelector('img');
-        }
-        if (type === 'gallery') {
-            return block.querySelector('.block-gallery-inner') || block.querySelector('.block-image-inner');
         }
         if (type === 'columns' || type === 'accordion' || type === 'buttons' || type === 'separator' || type === 'spacer') return null;
         return block.querySelector('[contenteditable="true"]') || block.querySelector('h1, h2, h3, h4, div, blockquote, pre, ul, ol') || block.children[2];
@@ -3731,7 +3667,7 @@ $isEdit = isset($blog) && $blog;
     });
     document.getElementById('blockAlignLeft').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && (selectedBlock.dataset.type === 'image' || selectedBlock.dataset.type === 'gallery')) {
+            if (selectedBlock && selectedBlock.dataset.type === 'image') {
                 selectedBlockContent.style.display = 'block';
                 selectedBlockContent.style.marginLeft = '0';
                 selectedBlockContent.style.marginRight = 'auto';
@@ -3743,7 +3679,7 @@ $isEdit = isset($blog) && $blog;
     };
     document.getElementById('blockAlignCenter').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && (selectedBlock.dataset.type === 'image' || selectedBlock.dataset.type === 'gallery')) {
+            if (selectedBlock && selectedBlock.dataset.type === 'image') {
                 selectedBlockContent.style.display = 'block';
                 selectedBlockContent.style.marginLeft = 'auto';
                 selectedBlockContent.style.marginRight = 'auto';
@@ -3755,7 +3691,7 @@ $isEdit = isset($blog) && $blog;
     };
     document.getElementById('blockAlignRight').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && (selectedBlock.dataset.type === 'image' || selectedBlock.dataset.type === 'gallery')) {
+            if (selectedBlock && selectedBlock.dataset.type === 'image') {
                 selectedBlockContent.style.display = 'block';
                 selectedBlockContent.style.marginLeft = 'auto';
                 selectedBlockContent.style.marginRight = '0';
@@ -4223,11 +4159,6 @@ $isEdit = isset($blog) && $blog;
             name: 'List',
             icon: '≡',
             block: 'list'
-        },
-        {
-            name: 'Gallery',
-            icon: '🖼',
-            block: 'gallery'
         }
     ];
 
@@ -4384,7 +4315,6 @@ $isEdit = isset($blog) && $blog;
         else if (blockType === 'separator') block = addSeparator();
         else if (blockType === 'spacer') block = addSpacer();
         else if (blockType === 'image') block = addImageBlock();
-        else if (blockType === 'gallery') block = addGalleryBlock();
         else if (blockType === 'details') block = addAccordion();
         else if (blockType === 'verse') block = addPreformatted();
         else if (blockType === 'classic') block = addParagraph();
@@ -4761,12 +4691,6 @@ $isEdit = isset($blog) && $blog;
                         errors.push("Image block at position " + (i + 1) + " cannot be blank.");
                     }
                 }
-                if (type === 'gallery') {
-                    const imgs = b.querySelectorAll('img');
-                    if (!imgs.length) {
-                        errors.push("Gallery block at position " + (i + 1) + " cannot be blank.");
-                    }
-                }
                 if (type === 'accordion') {
                     b.querySelectorAll('.block-accordion-item').forEach((item, itemIdx) => {
                         let titleText = (item.querySelector('.block-accordion-title')?.textContent || '').trim();
@@ -4837,27 +4761,6 @@ $isEdit = isset($blog) && $blog;
                 blocks.push({
                     type: 'image',
                     url: src // ✅ ONLY URL (no Base64, no HTML)
-                });
-            }
-            /* ===============================
-               Gallery (Base64 → Upload → URLs)
-            =============================== */
-            else if (type === 'gallery') {
-                const imgs = Array.from(b.querySelectorAll('img'));
-                if (!imgs.length) continue;
-                const urls = [];
-                for (const img of imgs) {
-                    let src = img.getAttribute('src');
-                    if (src && isBase64Image(src)) {
-                        const file = base64ToFile(src);
-                        src = await uploadImage(file, pageTitle);
-                        img.setAttribute('src', src);
-                    }
-                    if (src) urls.push(src);
-                }
-                blocks.push({
-                    type: 'gallery',
-                    urls: urls
                 });
             }
 
@@ -5034,15 +4937,6 @@ $isEdit = isset($blog) && $blog;
             } else if (type === 'image') {
                 const img = b.querySelector('.block-image-inner img');
                 if (img) html += '<div style="margin:20px 0">' + img.outerHTML + '</div>';
-            } else if (type === 'gallery') {
-                const imgs = Array.from(b.querySelectorAll('img'));
-                if (imgs.length) {
-                    html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0;">';
-                    imgs.forEach(img => {
-                        html += '<div>' + img.outerHTML + '</div>';
-                    });
-                    html += '</div>';
-                }
             } else if (type === 'separator') {
                 html += ' <hr style = "margin:20px 0;border:none;border-top:1px solid #dcdcde" > ';
             } else if (type === 'spacer') {
@@ -5092,7 +4986,6 @@ $isEdit = isset($blog) && $blog;
     window.addSeparator = addSeparator;
     window.addSpacer = addSpacer;
     window.addImageBlock = addImageBlock;
-    window.addGalleryBlock = addGalleryBlock;
     window.removeBlock = removeBlock;
 
     // ================= RESTORE EXISTING CONTENT (EDIT MODE) =================
@@ -5130,20 +5023,6 @@ $isEdit = isset($blog) && $blog;
                 if (!url) return;
                 wrap.innerHTML = '<img src="' + url + '" alt="">';
                 wrapBlock(wrap, 'image');
-            } else if (type === 'gallery') {
-                const urls = Array.isArray(b.urls) ? b.urls : [];
-                if (!urls.length) return;
-                const wrap = document.createElement('div');
-                wrap.className = 'block-image-inner has-image';
-                const grid = document.createElement('div');
-                grid.className = 'block-gallery-inner';
-                urls.forEach(url => {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    grid.appendChild(img);
-                });
-                wrap.appendChild(grid);
-                wrapBlock(wrap, 'gallery');
             } else if (type === 'separator') {
                 addSeparator();
             } else if (type === 'spacer') {
