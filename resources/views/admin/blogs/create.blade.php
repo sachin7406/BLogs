@@ -952,16 +952,19 @@ $isEdit = isset($blog) && $blog;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
     }
 
     .collapsible-toggle::after {
-        content: '+';
-        font-size: 18px;
+        content: '▸';
+        font-size: 14px;
         color: #50575e;
+        transition: transform 0.15s ease-in-out;
     }
 
     .collapsible-toggle.expanded::after {
-        content: '−';
+        /* content: '−'; */
+        transform: rotate(90deg);
     }
 
     .collapsible-content {
@@ -2084,7 +2087,7 @@ $isEdit = isset($blog) && $blog;
                 </div>
             </div>
 
-            <div class="settings-group">
+            <div class="settings-group"  style="display: none;">
                 <strong>Publish</strong>
                 <div class="value" id="publishTiming">Immediately</div>
                 <div class="publish-timing" id="publishTimingInput" style="display: none;">
@@ -2092,7 +2095,7 @@ $isEdit = isset($blog) && $blog;
                 </div>
             </div>
 
-            <div class="settings-group">
+            <div class="settings-group" style="display: none;">
                 <strong>Slug</strong>
                 <div class="value" id="slugValue">
                     {{ $isEdit && !empty($blog->slug) ? e($blog->slug) : 'auto-generated' }}
@@ -2237,7 +2240,7 @@ $isEdit = isset($blog) && $blog;
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                             <div>
                                 <label style="font-size:11px;color:#50575e;">Width</label>
-                                <input type="text" id="blockWidth" placeholder="auto" style="width:100%;padding:6px;border:1px solid #dcdcde;border-radius:4px;margin-top:4px;">
+                                <input type="number" id="blockWidth" placeholder="auto" style="width:100%;padding:6px;border:1px solid #dcdcde;border-radius:4px;margin-top:4px;">
                             </div>
                             <div>
                                 <label style="font-size:11px;color:#50575e;">Height</label>
@@ -3460,6 +3463,28 @@ $isEdit = isset($blog) && $blog;
         return '#' + [1, 2, 3].map(i => ('0' + parseInt(m[i], 10).toString(16)).slice(-2)).join('');
     }
 
+    function applyFontSize(value) {
+        if (!selectedBlockContent) return;
+        const selection = window.getSelection ? window.getSelection() : null;
+        if (selection && selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const inBlock = selectedBlockContent.contains(range.commonAncestorContainer);
+            if (inBlock && !selection.isCollapsed && value) {
+                const span = document.createElement('span');
+                span.style.fontSize = value;
+                const contents = range.extractContents();
+                span.appendChild(contents);
+                range.insertNode(span);
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(span);
+                selection.addRange(newRange);
+                return;
+            }
+        }
+        selectedBlockContent.style.fontSize = value || '';
+    }
+
     function applyBlockTransform(val) {
         if (!selectedBlockContent) return;
         if (val === 'details') return; /* structural, skip */
@@ -3527,7 +3552,8 @@ $isEdit = isset($blog) && $blog;
     };
     document.getElementById('tbFontSize').addEventListener('change', (e) => {
         if (selectedBlockContent) {
-            selectedBlockContent.style.fontSize = e.target.value || '';
+            // selectedBlockContent.style.fontSize = e.target.value || '';
+            applyFontSize(e.target.value || '');
             saveState();
             document.getElementById('blockFontSize').value = e.target.value;
 
@@ -3563,7 +3589,8 @@ $isEdit = isset($blog) && $blog;
 
     document.getElementById('blockFontSize').addEventListener('change', (e) => {
         if (selectedBlockContent) {
-            selectedBlockContent.style.fontSize = e.target.value || '';
+            if (e.target.value === 'custom') return;
+            applyFontSize(e.target.value || '');
             saveState();
             document.getElementById('tbFontSize').value = e.target.value;
             // console.log(document.getElementById('tbFontSize').value +"="+ e.target.value)
@@ -3669,7 +3696,8 @@ $isEdit = isset($blog) && $blog;
                 customLabel.textContent = this.value + 'px';
                 // When changing the custom size, override the block font size accordingly
                 if (selectedBlockContent) {
-                    selectedBlockContent.style.fontSize = this.value + 'px';
+                    // selectedBlockContent.style.fontSize = this.value + 'px';
+                    applyFontSize(this.value + 'px');
                     saveState && saveState();
                     // Optionally ensure select's value is custom if not already
                     if (fontSizeSelect.value !== 'custom') {
@@ -3785,13 +3813,22 @@ $isEdit = isset($blog) && $blog;
     // Collapsible sections
     document.querySelectorAll('.collapsible-toggle').forEach(toggle => {
         toggle.onclick = () => {
-            const content = toggle.nextElementSibling;
+            const group = toggle.closest('.settings-group');
+            const content = group ? group.querySelector('.collapsible-content') : null;
             if (content) {
                 const isExpanded = content.style.display !== 'none';
                 content.style.display = isExpanded ? 'none' : 'block';
                 toggle.classList.toggle('expanded', !isExpanded);
             }
         };
+    });
+    document.querySelectorAll('.block-settings-header').forEach(header => {
+        header.addEventListener('click', (e) => {
+            if (e.target.closest('.block-settings-kebab')) return;
+            if (e.target.closest('.collapsible-toggle')) return;
+            const toggle = header.querySelector('.collapsible-toggle');
+            if (toggle) toggle.click();
+        });
     });
 
     // Dimensions and Border controls
