@@ -3460,6 +3460,28 @@ $isEdit = isset($blog) && $blog;
         return '#' + [1, 2, 3].map(i => ('0' + parseInt(m[i], 10).toString(16)).slice(-2)).join('');
     }
 
+    function applyFontSize(value) {
+        if (!selectedBlockContent) return;
+        const selection = window.getSelection ? window.getSelection() : null;
+        if (selection && selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const inBlock = selectedBlockContent.contains(range.commonAncestorContainer);
+            if (inBlock && !selection.isCollapsed && value) {
+                const span = document.createElement('span');
+                span.style.fontSize = value;
+                const contents = range.extractContents();
+                span.appendChild(contents);
+                range.insertNode(span);
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(span);
+                selection.addRange(newRange);
+                return;
+            }
+        }
+        selectedBlockContent.style.fontSize = value || '';
+    }
+
     function applyBlockTransform(val) {
         if (!selectedBlockContent) return;
         if (val === 'details') return; /* structural, skip */
@@ -3527,7 +3549,7 @@ $isEdit = isset($blog) && $blog;
     };
     document.getElementById('tbFontSize').addEventListener('change', (e) => {
         if (selectedBlockContent) {
-            selectedBlockContent.style.fontSize = e.target.value || '';
+            applyFontSize(e.target.value || '');
             saveState();
             document.getElementById('blockFontSize').value = e.target.value;
 
@@ -3563,7 +3585,8 @@ $isEdit = isset($blog) && $blog;
 
     document.getElementById('blockFontSize').addEventListener('change', (e) => {
         if (selectedBlockContent) {
-            selectedBlockContent.style.fontSize = e.target.value || '';
+            if (e.target.value === 'custom') return;
+            applyFontSize(e.target.value || '');
             saveState();
             document.getElementById('tbFontSize').value = e.target.value;
             // console.log(document.getElementById('tbFontSize').value +"="+ e.target.value)
@@ -3669,7 +3692,7 @@ $isEdit = isset($blog) && $blog;
                 customLabel.textContent = this.value + 'px';
                 // When changing the custom size, override the block font size accordingly
                 if (selectedBlockContent) {
-                    selectedBlockContent.style.fontSize = this.value + 'px';
+                    applyFontSize(this.value + 'px');
                     saveState && saveState();
                     // Optionally ensure select's value is custom if not already
                     if (fontSizeSelect.value !== 'custom') {
