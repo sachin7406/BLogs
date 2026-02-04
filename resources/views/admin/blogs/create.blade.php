@@ -1044,6 +1044,30 @@ $isEdit = isset($blog) && $blog;
         color: #50575e;
         font-size: 14px;
         cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background: none;
+    }
+
+    .block-settings-link-icon.is-linked {
+        color: #3858e9;
+        border-color: #dcdcde;
+        background: #f6f7f7;
+    }
+
+    .block-settings-box-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .block-settings-box-grid input {
+        padding: 6px 8px;
+        font-size: 12px;
+        border: 1px solid #dcdcde;
+        border-radius: 4px;
+        text-align: right;
     }
 
     .block-settings-attr-row {
@@ -2265,7 +2289,13 @@ $isEdit = isset($blog) && $blog;
                             <div class="block-settings-slider-row">
                                 <input type="range" id="blockPaddingSlider" min="0" max="80" value="0" title="Padding">
                                 <input type="text" id="blockPadding" class="block-settings-px" placeholder="0" value="0">
-                                <span class="block-settings-link-icon" title="Link">⇔</span>
+                                <button type="button" class="block-settings-link-icon is-linked" id="blockPaddingLink" title="Link padding">⇔</button>
+                            </div>
+                            <div class="block-settings-box-grid">
+                                <input type="text" id="blockPaddingTop" placeholder="Top" value="0">
+                                <input type="text" id="blockPaddingRight" placeholder="Right" value="0">
+                                <input type="text" id="blockPaddingBottom" placeholder="Bottom" value="0">
+                                <input type="text" id="blockPaddingLeft" placeholder="Left" value="0">
                             </div>
                         </div>
                         <div class="settings-sub" style="margin-top:12px;">
@@ -2273,7 +2303,13 @@ $isEdit = isset($blog) && $blog;
                             <div class="block-settings-slider-row">
                                 <input type="range" id="blockMarginSlider" min="0" max="80" value="0" title="Margin">
                                 <input type="text" id="blockMargin" class="block-settings-px" placeholder="0" value="0">
-                                <span class="block-settings-link-icon" title="Link">⇔</span>
+                                <button type="button" class="block-settings-link-icon is-linked" id="blockMarginLink" title="Link margin">⇔</button>
+                            </div>
+                            <div class="block-settings-box-grid">
+                                <input type="text" id="blockMarginTop" placeholder="Top" value="0">
+                                <input type="text" id="blockMarginRight" placeholder="Right" value="0">
+                                <input type="text" id="blockMarginBottom" placeholder="Bottom" value="0">
+                                <input type="text" id="blockMarginLeft" placeholder="Left" value="0">
                             </div>
                         </div>
                     </div>
@@ -3448,12 +3484,43 @@ $isEdit = isset($blog) && $blog;
         if (bb) bb.value = rgbToHex(el.style.backgroundColor) || '#ffffff';
         const padInput = document.getElementById('blockPadding');
         const padSlider = document.getElementById('blockPaddingSlider');
+        const padTop = document.getElementById('blockPaddingTop');
+        const padRight = document.getElementById('blockPaddingRight');
+        const padBottom = document.getElementById('blockPaddingBottom');
+        const padLeft = document.getElementById('blockPaddingLeft');
+        const padLink = document.getElementById('blockPaddingLink');
         const marginInput = document.getElementById('blockMargin');
         const marginSlider = document.getElementById('blockMarginSlider');
-        if (padInput) padInput.value = parsePx(el.style.padding) || 0;
-        if (padSlider) padSlider.value = parsePx(el.style.padding) || 0;
-        if (marginInput) marginInput.value = parsePx(el.style.margin) || 0;
-        if (marginSlider) marginSlider.value = parsePx(el.style.margin) || 0;
+        const marginTop = document.getElementById('blockMarginTop');
+        const marginRight = document.getElementById('blockMarginRight');
+        const marginBottom = document.getElementById('blockMarginBottom');
+        const marginLeft = document.getElementById('blockMarginLeft');
+        const marginLink = document.getElementById('blockMarginLink');
+        const computed = window.getComputedStyle ? window.getComputedStyle(el) : null;
+        const padTopVal = parsePx(computed?.paddingTop || el.style.paddingTop) || 0;
+        const padRightVal = parsePx(computed?.paddingRight || el.style.paddingRight) || 0;
+        const padBottomVal = parsePx(computed?.paddingBottom || el.style.paddingBottom) || 0;
+        const padLeftVal = parsePx(computed?.paddingLeft || el.style.paddingLeft) || 0;
+        const marginTopVal = parsePx(computed?.marginTop || el.style.marginTop) || 0;
+        const marginRightVal = parsePx(computed?.marginRight || el.style.marginRight) || 0;
+        const marginBottomVal = parsePx(computed?.marginBottom || el.style.marginBottom) || 0;
+        const marginLeftVal = parsePx(computed?.marginLeft || el.style.marginLeft) || 0;
+        const paddingLinked = padTopVal === padRightVal && padTopVal === padBottomVal && padTopVal === padLeftVal;
+        const marginLinked = marginTopVal === marginRightVal && marginTopVal === marginBottomVal && marginTopVal === marginLeftVal;
+        if (padInput) padInput.value = paddingLinked ? padTopVal : '';
+        if (padSlider) padSlider.value = paddingLinked ? padTopVal : 0;
+        if (padTop) padTop.value = padTopVal;
+        if (padRight) padRight.value = padRightVal;
+        if (padBottom) padBottom.value = padBottomVal;
+        if (padLeft) padLeft.value = padLeftVal;
+        if (padLink) setLinkState(padLink, paddingLinked);
+        if (marginInput) marginInput.value = marginLinked ? marginTopVal : '';
+        if (marginSlider) marginSlider.value = marginLinked ? marginTopVal : 0;
+        if (marginTop) marginTop.value = marginTopVal;
+        if (marginRight) marginRight.value = marginRightVal;
+        if (marginBottom) marginBottom.value = marginBottomVal;
+        if (marginLeft) marginLeft.value = marginLeftVal;
+        if (marginLink) setLinkState(marginLink, marginLinked);
         const borderWInput = document.getElementById('blockBorderWidth');
         const borderWSlider = document.getElementById('blockBorderWidthSlider');
         if (borderWInput) borderWInput.value = parsePx(el.style.borderWidth) || 0;
@@ -3504,6 +3571,17 @@ $isEdit = isset($blog) && $blog;
         if (!value) return 0;
         const num = parseFloat(value.toString().replace('px', ''));
         return Number.isNaN(num) ? 0 : num;
+    }
+
+    function setLinkState(button, linked) {
+        if (!button) return;
+        button.dataset.linked = linked ? '1' : '0';
+        button.classList.toggle('is-linked', linked);
+    }
+
+    function isLinked(button) {
+        if (!button) return true;
+        return button.dataset.linked !== '0';
     }
 
     function applyFontSize(value) {
@@ -3923,10 +4001,25 @@ $isEdit = isset($blog) && $blog;
     // Slider sync for Dimensions/Border (ref: image 1)
     const padSlider = document.getElementById('blockPaddingSlider');
     const padInput = document.getElementById('blockPadding');
+    const padTop = document.getElementById('blockPaddingTop');
+    const padRight = document.getElementById('blockPaddingRight');
+    const padBottom = document.getElementById('blockPaddingBottom');
+    const padLeft = document.getElementById('blockPaddingLeft');
+    const padLink = document.getElementById('blockPaddingLink');
+    const marginLink = document.getElementById('blockMarginLink');
+    const marginTop = document.getElementById('blockMarginTop');
+    const marginRight = document.getElementById('blockMarginRight');
+    const marginBottom = document.getElementById('blockMarginBottom');
+    const marginLeft = document.getElementById('blockMarginLeft');
     if (padSlider && padInput) {
         padSlider.addEventListener('input', () => {
             padInput.value = padSlider.value;
             if (selectedBlock && selectedBlockContent) {
+                setLinkState(padLink, true);
+                if (padTop) padTop.value = padSlider.value;
+                if (padRight) padRight.value = padSlider.value;
+                if (padBottom) padBottom.value = padSlider.value;
+                if (padLeft) padLeft.value = padSlider.value;
                 selectedBlockContent.style.padding = padSlider.value + 'px';
                 saveState();
             }
@@ -3934,6 +4027,17 @@ $isEdit = isset($blog) && $blog;
         padInput.addEventListener('input', () => {
             const n = parseInt(padInput.value, 10);
             if (!isNaN(n)) padSlider.value = Math.min(80, Math.max(0, n));
+            if (selectedBlock && selectedBlockContent) {
+                setLinkState(padLink, true);
+                if (!isNaN(n)) {
+                    if (padTop) padTop.value = n;
+                    if (padRight) padRight.value = n;
+                    if (padBottom) padBottom.value = n;
+                    if (padLeft) padLeft.value = n;
+                    selectedBlockContent.style.padding = n + 'px';
+                    saveState();
+                }
+            }
         });
     }
     const marginSlider = document.getElementById('blockMarginSlider');
@@ -3942,6 +4046,11 @@ $isEdit = isset($blog) && $blog;
         marginSlider.addEventListener('input', () => {
             marginInput.value = marginSlider.value;
             if (selectedBlock && selectedBlockContent) {
+                setLinkState(marginLink, true);
+                if (marginTop) marginTop.value = marginSlider.value;
+                if (marginRight) marginRight.value = marginSlider.value;
+                if (marginBottom) marginBottom.value = marginSlider.value;
+                if (marginLeft) marginLeft.value = marginSlider.value;
                 selectedBlockContent.style.margin = marginSlider.value + 'px';
                 saveState();
             }
@@ -3949,6 +4058,17 @@ $isEdit = isset($blog) && $blog;
         marginInput.addEventListener('input', () => {
             const n = parseInt(marginInput.value, 10);
             if (!isNaN(n)) marginSlider.value = Math.min(80, Math.max(0, n));
+            if (selectedBlock && selectedBlockContent) {
+                setLinkState(marginLink, true);
+                if (!isNaN(n)) {
+                    if (marginTop) marginTop.value = n;
+                    if (marginRight) marginRight.value = n;
+                    if (marginBottom) marginBottom.value = n;
+                    if (marginLeft) marginLeft.value = n;
+                    selectedBlockContent.style.margin = n + 'px';
+                    saveState();
+                }
+            }
         });
     }
     const borderWSlider = document.getElementById('blockBorderWidthSlider');
@@ -3981,6 +4101,88 @@ $isEdit = isset($blog) && $blog;
             if (!isNaN(n)) radiusSlider.value = Math.min(50, Math.max(0, n));
         });
     }
+
+    function applyBoxValue(type, values, linked) {
+        if (!selectedBlockContent) return;
+        if (linked) {
+            selectedBlockContent.style[type] = values.top + 'px';
+        } else {
+            selectedBlockContent.style[type + 'Top'] = values.top + 'px';
+            selectedBlockContent.style[type + 'Right'] = values.right + 'px';
+            selectedBlockContent.style[type + 'Bottom'] = values.bottom + 'px';
+            selectedBlockContent.style[type + 'Left'] = values.left + 'px';
+        }
+    }
+
+    function bindBoxInputs(type) {
+        const isPadding = type === 'padding';
+        const topInput = document.getElementById(isPadding ? 'blockPaddingTop' : 'blockMarginTop');
+        const rightInput = document.getElementById(isPadding ? 'blockPaddingRight' : 'blockMarginRight');
+        const bottomInput = document.getElementById(isPadding ? 'blockPaddingBottom' : 'blockMarginBottom');
+        const leftInput = document.getElementById(isPadding ? 'blockPaddingLeft' : 'blockMarginLeft');
+        const linkBtn = document.getElementById(isPadding ? 'blockPaddingLink' : 'blockMarginLink');
+        const slider = document.getElementById(isPadding ? 'blockPaddingSlider' : 'blockMarginSlider');
+        const summary = document.getElementById(isPadding ? 'blockPadding' : 'blockMargin');
+
+        const handleInput = () => {
+            if (!selectedBlockContent) return;
+            const linked = isLinked(linkBtn);
+            const values = {
+                top: parsePx(topInput?.value) || 0,
+                right: parsePx(rightInput?.value) || 0,
+                bottom: parsePx(bottomInput?.value) || 0,
+                left: parsePx(leftInput?.value) || 0,
+            };
+            if (linked) {
+                const val = values.top;
+                if (rightInput) rightInput.value = val;
+                if (bottomInput) bottomInput.value = val;
+                if (leftInput) leftInput.value = val;
+                if (slider) slider.value = val;
+                if (summary) summary.value = val;
+                applyBoxValue(type, {
+                    top: val,
+                    right: val,
+                    bottom: val,
+                    left: val,
+                }, true);
+            } else {
+                if (slider) slider.value = 0;
+                if (summary) summary.value = '';
+                applyBoxValue(type, values, false);
+            }
+            saveState();
+        };
+
+        [topInput, rightInput, bottomInput, leftInput].forEach(input => {
+            if (input) input.addEventListener('input', handleInput);
+        });
+
+        if (linkBtn) {
+            linkBtn.addEventListener('click', () => {
+                const next = !isLinked(linkBtn);
+                setLinkState(linkBtn, next);
+                if (next && topInput) {
+                    const val = parsePx(topInput.value) || 0;
+                    if (rightInput) rightInput.value = val;
+                    if (bottomInput) bottomInput.value = val;
+                    if (leftInput) leftInput.value = val;
+                    if (slider) slider.value = val;
+                    if (summary) summary.value = val;
+                    applyBoxValue(type, {
+                        top: val,
+                        right: val,
+                        bottom: val,
+                        left: val,
+                    }, true);
+                    saveState();
+                }
+            });
+        }
+    }
+
+    bindBoxInputs('padding');
+    bindBoxInputs('margin');
 
     editor.addEventListener('click', (e) => {
         const block = e.target.closest('.block');
