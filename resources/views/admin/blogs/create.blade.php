@@ -1490,8 +1490,8 @@ $isEdit = isset($blog) && $blog;
     /* Block toolbar More dropdown (ref: image 5) */
     .block-toolbar-more {
         position: absolute;
-        top: 25%;
-        right: 0;
+        top: 0;
+        left: 0;
         background: #fff;
         border: 1px solid #dcdcde;
         border-radius: 6px;
@@ -1500,12 +1500,16 @@ $isEdit = isset($blog) && $blog;
         padding: 6px 0;
         display: none;
         z-index: 1000;
-        transition: box-shadow 0.15s;
+        transition: box-shadow 0.15s, opacity 0.12s;
         user-select: none;
+        opacity: 0;
+        pointer-events: none;
     }
 
     .block-toolbar-more.show {
         display: block;
+        opacity: 1;
+        pointer-events: auto;
         animation: dropdownIn 0.12s cubic-bezier(0.65, 0, 0.35, 1);
     }
 
@@ -1526,26 +1530,27 @@ $isEdit = isset($blog) && $blog;
         width: 100%;
         padding: 10px 18px;
         border: none;
-        background: none;
+        background: transparent;
         text-align: left;
         font-size: 14px;
         color: #262a2e;
         cursor: pointer;
         border-radius: 0;
-        transition: background 0.13s;
+        transition: background 0.13s, color 0.13s;
     }
 
     .block-toolbar-more button:hover,
     .block-toolbar-more button:focus {
-        background: #f0f4ff;
+        background-color: #f0f4ff;
         color: #354fd7;
         outline: none;
     }
 
     .block-toolbar-more hr {
         margin: 7px 0;
-        border: none;
+        border: 0;
         border-top: 1px solid #eef1f4;
+        height: 0;
     }
 
     .editor-placeholder {
@@ -1960,6 +1965,8 @@ $isEdit = isset($blog) && $blog;
                         <option value="h2">Heading 2</option>
                         <option value="h3">Heading 3</option>
                         <option value="h4">Heading 4</option>
+                        <option value="h5">Heading 5</option>
+                        <option value="h6">Heading 6</option>
                         <option value="quote">Quote</option>
                         <option value="code">Code</option>
                         <option value="list">List</option>
@@ -2597,8 +2604,7 @@ $isEdit = isset($blog) && $blog;
     function attachColumnPlusButtons(root) {
         (root || document).querySelectorAll('.column').forEach(col => {
             // Remove any existing marker to avoid duplicates
-            const existingMarker = col.querySelector('.block-insert-marker');
-            if (existingMarker) existingMarker.remove();
+            col.querySelectorAll('.block-insert-marker').forEach(marker => marker.remove());
 
             // If no blocks in this column, show large initial "+" button UI
             if (!col.querySelector('.block')) {
@@ -2710,7 +2716,7 @@ $isEdit = isset($blog) && $blog;
             // Ensure bottom "+" marker exists after restoring from HTML
             if (!block.querySelector('.block-insert-marker-bottom')) {
                 const bottomMarker = document.createElement('div');
-                bottomMarker.className = 'block-insert-marker 3 block-insert-marker-bottom';
+                bottomMarker.className = 'block-insert-marker block-insert-marker-bottom';
                 bottomMarker.innerHTML = `<div style="flex:1;height:1px;background:#0066ff;"></div>
                 <button type="button" class="block-insert-plus" style="">+</button>
                 <div style="flex:1;height:1px;background:#0066ff;"></div>`;
@@ -2742,7 +2748,7 @@ $isEdit = isset($blog) && $blog;
 
     function addHeading(level) {
         // Only declare function, do not bind to window to avoid recursion stack overflow
-        const tag = ['h1', 'h2', 'h3', 'h4'][level - 1] || 'h2';
+        const tag = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'][level - 1] || 'h2';
         const h = document.createElement(tag);
         h.contentEditable = true;
         h.innerText = 'Heading';
@@ -3296,7 +3302,7 @@ $isEdit = isset($blog) && $blog;
             return block.querySelector('.block-image-inner img') || block.querySelector('img');
         }
         if (type === 'columns' || type === 'accordion' || type === 'buttons' || type === 'separator' || type === 'spacer') return null;
-        return block.querySelector('[contenteditable="true"]') || block.querySelector('h1, h2, h3, h4, div, blockquote, pre, ul, ol') || block.children[2];
+        return block.querySelector('[contenteditable="true"]') || block.querySelector('h1, h2, h3, h4, h5, h6, div, blockquote, pre, ul, ol') || block.children[2];
     }
 
     function showBlockToolbar(block) {
@@ -3339,16 +3345,20 @@ $isEdit = isset($blog) && $blog;
                 document.getElementById('blockInspectorTitle').textContent = 'H' + (content.tagName || '').replace('H', '') + ' Heading ' + (content.tagName || '').replace('H', '');
                 document.getElementById('blockInspectorDesc').textContent = 'Introduce new sections and organize content to help visitors (and search engines) understand the structure of your content.';
                 document.getElementById('blockHeadingLevelGroup').style.display = 'block';
+                document.getElementById('blockButtonSettingsGroup').style.display = 'none';
+                document.getElementById('blockColumnsSettingsGroup').style.display = 'none';
             } else if (type === 'buttons') {
                 document.getElementById('blockInspectorTitle').textContent = 'Button';
                 document.getElementById('blockInspectorDesc').textContent = 'Prompt visitors to take action with a button-style link.';
                 document.getElementById('blockHeadingLevelGroup').style.display = 'none';
                 document.getElementById('blockButtonSettingsGroup').style.display = 'block';
+                document.getElementById('blockColumnsSettingsGroup').style.display = 'none';
             } else if (type === 'columns' || type === 'grid') {
                 document.getElementById('blockInspectorTitle').textContent = 'Columns';
                 document.getElementById('blockInspectorDesc').textContent = 'Create multi-column layouts.';
                 document.getElementById('blockHeadingLevelGroup').style.display = 'none';
                 document.getElementById('blockColumnsSettingsGroup').style.display = 'block';
+                document.getElementById('blockButtonSettingsGroup').style.display = 'none';
             } else {
                 document.getElementById('blockInspectorTitle').textContent = type.charAt(0).toUpperCase() + type.slice(1);
                 document.getElementById('blockInspectorDesc').textContent = 'Block settings.';
@@ -3400,6 +3410,8 @@ $isEdit = isset($blog) && $blog;
             h2: 'H2',
             h3: 'H3',
             h4: 'H4',
+            h5: 'H5',
+            h6: 'H6',
             quote: 'Q',
             code: 'C',
             list: 'Li',
@@ -3410,6 +3422,8 @@ $isEdit = isset($blog) && $blog;
             h2: 'H2',
             h3: 'H3',
             h4: 'H4',
+            h5: 'H5',
+            h6: 'H6',
             quote: '"',
             code: '</>',
             list: '≡',
@@ -3420,6 +3434,8 @@ $isEdit = isset($blog) && $blog;
             else if (tag === 'h2') tb.value = 'h2';
             else if (tag === 'h3') tb.value = 'h3';
             else if (tag === 'h4') tb.value = 'h4';
+            else if (tag === 'h5') tb.value = 'h5';
+            else if (tag === 'h6') tb.value = 'h6';
             else if (tag === 'blockquote') tb.value = 'quote';
             else if (tag === 'pre') tb.value = el.classList.contains('code-block') ? 'code' : 'preformatted';
             else if (tag === 'ul' || tag === 'ol') tb.value = 'list';
@@ -3595,6 +3611,10 @@ $isEdit = isset($blog) && $blog;
         document.getElementById(id).onclick = () => {
             if (!selectedBlockContent) return;
             const align = ['left', 'center', 'right'][i];
+            if (applyImageAlignment(align)) {
+                saveState();
+                return;
+            }
             selectedBlockContent.style.textAlign = align;
             saveState();
         };
@@ -3670,39 +3690,51 @@ $isEdit = isset($blog) && $blog;
             document.getElementById('tbColor').value = e.target.value;
         }
     });
+
+    function applyImageAlignment(align) {
+        if (!selectedBlock || selectedBlock.dataset.type !== 'image') return false;
+        const imageWrap = selectedBlock.querySelector('.block-image-inner');
+        if (!imageWrap) return false;
+        imageWrap.style.display = 'block';
+        if (align === 'left') {
+            imageWrap.style.marginLeft = '0';
+            imageWrap.style.marginRight = 'auto';
+        } else if (align === 'center') {
+            imageWrap.style.marginLeft = 'auto';
+            imageWrap.style.marginRight = 'auto';
+        } else if (align === 'right') {
+            imageWrap.style.marginLeft = 'auto';
+            imageWrap.style.marginRight = '0';
+        }
+        return true;
+    }
     document.getElementById('blockAlignLeft').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
-                selectedBlockContent.style.display = 'block';
-                selectedBlockContent.style.marginLeft = '0';
-                selectedBlockContent.style.marginRight = 'auto';
-            } else {
-                selectedBlockContent.style.textAlign = 'left';
+            if (applyImageAlignment('left')) {
+                saveState();
+                return;
             }
+            selectedBlockContent.style.textAlign = 'left';
             saveState();
         }
     };
     document.getElementById('blockAlignCenter').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
-                selectedBlockContent.style.display = 'block';
-                selectedBlockContent.style.marginLeft = 'auto';
-                selectedBlockContent.style.marginRight = 'auto';
-            } else {
-                selectedBlockContent.style.textAlign = 'center';
+            if (applyImageAlignment('center')) {
+                saveState();
+                return;
             }
+            selectedBlockContent.style.textAlign = 'center';
             saveState();
         }
     };
     document.getElementById('blockAlignRight').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
-                selectedBlockContent.style.display = 'block';
-                selectedBlockContent.style.marginLeft = 'auto';
-                selectedBlockContent.style.marginRight = '0';
-            } else {
-                selectedBlockContent.style.textAlign = 'right';
+            if (applyImageAlignment('right')) {
+                saveState();
+                return;
             }
+            selectedBlockContent.style.textAlign = 'right';
             saveState();
         }
     };
@@ -4008,9 +4040,28 @@ $isEdit = isset($blog) && $blog;
     });
 
     // ================= BLOCK TOOLBAR MORE DROPDOWN (ref: image 5) =================
+    function showToolbarMore(btn) {
+        const moreMenu = document.getElementById('blockToolbarMore');
+        const wrapper = document.getElementById('editorWrapper');
+        const btnRect = btn.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+        // Compute position relative to wrapper, similar to toolbar
+        moreMenu.style.top = (btnRect.top - wrapperRect.top + btnRect.height + 4) + 'px';
+        moreMenu.style.left = (btnRect.left - wrapperRect.left) + 'px';
+        moreMenu.classList.add('show');
+        // Focus first menu item for accessibility
+        const firstBtn = moreMenu.querySelector('button[data-more]');
+        if (firstBtn) firstBtn.focus();
+    }
+
     document.getElementById('tbMore').onclick = (e) => {
         e.stopPropagation();
-        document.getElementById('blockToolbarMore').classList.toggle('show');
+        const moreMenu = document.getElementById('blockToolbarMore');
+        if (moreMenu.classList.contains('show')) {
+            moreMenu.classList.remove('show');
+        } else {
+            showToolbarMore(e.currentTarget);
+        }
     };
     document.addEventListener('click', () => document.getElementById('blockToolbarMore').classList.remove('show'));
     document.getElementById('blockToolbarMore').onclick = (e) => {
@@ -4777,7 +4828,7 @@ $isEdit = isset($blog) && $blog;
 
                 blocks.push({
                     type: 'image',
-                    url: src // ✅ ONLY URL (no Base64, no HTML)
+                    url: src 
                 });
             }
 
@@ -4812,15 +4863,74 @@ $isEdit = isset($blog) && $blog;
                Everything Else (including heading, list, etc)
             =============================== */
             else {
-                // Get the editable or semantic block
-                let el = b.querySelector('[contenteditable]') ||
-                    b.querySelector('h1,h2,h3,h4,h5,h6,ul,ol,li,p,blockquote,pre,div');
-                let content = el ? cleanHTML(el.outerHTML) : '';
+                // Get the editable or semantic block in priority order
+                let el =
+                    b.querySelector('[contenteditable]') ||
+                    b.querySelector('h1, h2, h3, h4, h5, h6') ||
+                    b.querySelector('ul,ol,li,p,blockquote,pre,div');
+
+                let content = '';
+                if (el) {
+                    // Example for handling provided content: Remove span wrappers, inline styles, but preserve semantic structure
+                    let clone = el.cloneNode(true);
+
+                    function cleanElement(element) {
+                        // Remove all style attributes and unwanted classes
+                        if (element.removeAttribute) {
+                            element.removeAttribute('style');
+                            element.removeAttribute('class');
+                        }
+
+                        // Flatten <span> tags but keep their content
+                        if (element.tagName === 'SPAN' && element.childNodes.length > 0) {
+                            // Move children up
+                            let parent = element.parentNode;
+                            while (element.firstChild) {
+                                parent.insertBefore(element.firstChild, element);
+                            }
+                            parent.removeChild(element);
+                            return;
+                        }
+
+                        // Recursively clean children, make a static copy since the tree may mutate
+                        let children = Array.from(element.childNodes);
+                        for (let child of children) {
+                            if (child.nodeType === 1) { // Element node
+                                cleanElement(child);
+                            }
+                        }
+                    }
+
+                    // Remove redundant inline <h4> wrappers matching the broken pattern
+                    if (
+                        clone.tagName &&
+                        /^H[1-6]$/.test(clone.tagName) &&
+                        clone.previousElementSibling &&
+                        clone.previousElementSibling.tagName === 'H4' &&
+                        clone.previousElementSibling.innerHTML.trim() === ''
+                    ) {
+                        clone.previousElementSibling.remove();
+                    }
+
+                    // Normalize broken <h2> structure if possible
+                    if (clone.tagName === 'H2') {
+                        // Remove all internal span wrappers and inline style attributes
+                        // to provide clean H2 with only text content
+                        cleanElement(clone);
+                        clone.innerHTML = clone.innerText;
+                        content = cleanHTML(clone.outerHTML);
+                    } else {
+                        cleanElement(clone);
+                        content = cleanHTML(clone.outerHTML);
+                    }
+                }
+
                 // Remove empty content blocks for types that matter
                 if (
                     ['heading', 'paragraph', 'list', 'blockquote', 'code', 'preformatted'].includes(type) &&
                     (!el || !el.textContent.trim())
                 ) continue;
+
                 blocks.push({
                     type: type,
                     content: content
@@ -4959,7 +5069,6 @@ $isEdit = isset($blog) && $blog;
         showPreview();
     };
 
-
     function showPreview() {
         const previewContent = document.getElementById('previewContent');
         const titleText = title.value || 'No title';
@@ -5034,20 +5143,21 @@ $isEdit = isset($blog) && $blog;
 
     // ================= RESTORE EXISTING CONTENT (EDIT MODE) =================
     function loadInitialBlocks(blocksData) {
-        // console.log("loadInitialBlocks " + blocksData);
+        // Fix: ensure all content including headings aren't missing in edit mode
         if (!Array.isArray(blocksData) || !blocksData.length) return;
         editor.innerHTML = '';
 
         blocksData.forEach(b => {
             const type = b.type || 'paragraph';
+            console.log('Block type:', type, '| Data:', b);
 
             if (type === 'columns' || type === 'grid') {
+                console.log('Processing columns/grid:', b);
                 const colsCount = (b.columns && b.columns.length) ? b.columns.length : parseInt(b.cols || 2, 10) || 2;
                 const wrap = document.createElement('div');
                 wrap.className = 'columns';
                 wrap.dataset.cols = colsCount;
                 if (b.ratio) wrap.dataset.ratio = b.ratio;
-
                 for (let i = 0; i < colsCount; i++) {
                     const col = document.createElement('div');
                     col.className = 'column';
@@ -5057,59 +5167,57 @@ $isEdit = isset($blog) && $blog;
                     }
                     wrap.appendChild(col);
                 }
-
                 const block = wrapBlock(wrap, type);
                 attachColumnPlusButtons(block);
             } else if (type === 'image') {
+                console.log('Processing image:', b);
                 const wrap = document.createElement('div');
                 wrap.className = 'block-image-inner has-image';
                 const url = b.url || '';
-                if (!url) return;
+                if (!url) {
+                    console.log('No image url found for this block:', b);
+                    return;
+                }
                 wrap.innerHTML = '<img src="' + url + '" alt="">';
                 wrapBlock(wrap, 'image');
             } else if (type === 'separator') {
+                console.log('Processing separator:', b);
                 addSeparator();
             } else if (type === 'spacer') {
+                console.log('Processing spacer:', b);
                 addSpacer();
             } else if (type === 'accordion') {
+                console.log('Processing accordion:', b);
                 const wrap = document.createElement('div');
                 wrap.className = 'block-accordion';
                 const items = Array.isArray(b.items) ? b.items : [];
-
                 items.forEach(item => {
+                    console.log('Accordion item:', item);
                     const accItem = document.createElement('div');
                     accItem.className = 'block-accordion-item';
-
                     const title = document.createElement('div');
                     title.className = 'block-accordion-title';
-
                     const titleText = document.createElement('span');
                     titleText.contentEditable = true;
                     titleText.innerText = (item.title || '').trim() || 'Accordion title';
-
                     const toggle = document.createElement('span');
                     toggle.className = 'accordion-toggle';
                     toggle.textContent = '+';
                     toggle.style.cursor = 'pointer';
                     toggle.style.userSelect = 'none';
-
                     title.appendChild(titleText);
                     title.appendChild(toggle);
-
                     const body = document.createElement('div');
                     body.className = 'block-accordion-body';
                     body.style.display = 'none';
-
                     const content = document.createElement('div');
                     content.contentEditable = true;
                     content.setAttribute('data-placeholder', 'Content');
                     content.innerHTML = (item.body || '').trim() || 'Content here';
-
                     body.appendChild(content);
                     accItem.appendChild(title);
                     accItem.appendChild(body);
                     wrap.appendChild(accItem);
-
                     toggle.addEventListener('click', (e) => {
                         e.stopPropagation();
                         const isOpen = body.style.display !== 'none';
@@ -5117,21 +5225,55 @@ $isEdit = isset($blog) && $blog;
                         toggle.textContent = isOpen ? '+' : '−';
                     });
                 });
-
                 wrapBlock(wrap, 'accordion');
             } else {
-                if (!b.content) return;
-                const tmp = document.createElement('div');
-                tmp.innerHTML = b.content;
-                const el = tmp.firstElementChild || tmp;
+                // Enhanced handling for broken heading HTML (e.g., <h4 ...></h4><h2 ...>...</h2>)
+                let el;
+                if (b.content) {
+                    console.log('Processing default/other block:', type, b);
+                    const tmp = document.createElement('div');
+                    tmp.innerHTML = b.content;
 
-                if (['heading', 'paragraph', 'list', 'blockquote', 'code', 'preformatted'].includes(type)) {
-                    el.contentEditable = 'true';
+                    if (type === 'heading') {
+                        // Special: Remove empty <h4> before <h2>, normalize <h2> for text/clean html
+                        // Case: <h4 style="font-size: 12px;"></h4><h2 ...><span>...</span></h2>
+                        let h2 = tmp.querySelector('h2');
+                        // Remove empty preceding <h4> if pattern matches
+                        if (
+                            h2 &&
+                            h2.previousElementSibling &&
+                            h2.previousElementSibling.tagName === 'H4' &&
+                            h2.previousElementSibling.textContent.trim() === ''
+                        ) {
+                            h2.previousElementSibling.remove();
+                        }
+                        // After cleaning, fetch highest-ranking heading (h1 > h2 > ...)
+                        let headingEl = tmp.querySelector('h1, h2, h3, h4, h5, h6');
+                        if (!headingEl) {
+                            headingEl = tmp.firstElementChild;
+                        }
+                        // Normalize innerHTML: remove nested span/style for clean output
+                        if (headingEl) {
+                            // Remove all <span> and inline style from the heading
+                            headingEl.innerHTML = headingEl.innerText;
+                            headingEl.removeAttribute('style');
+                            el = headingEl.cloneNode(true);
+                        } else {
+                            el = document.createElement('h2');
+                        }
+                        el.contentEditable = 'true';
+                    } else {
+                        el = tmp.firstElementChild || tmp;
+                        if (['heading', 'paragraph', 'list', 'blockquote', 'code', 'preformatted'].includes(type)) {
+                            el.contentEditable = 'true';
+                        }
+                        if (type === 'list') el.classList.add('block-list');
+                        if (type === 'code') el.classList.add('code-block');
+                    }
+                    wrapBlock(el, type);
+                } else {
+                    console.log('No content found for', type, b);
                 }
-                if (type === 'list') el.classList.add('block-list');
-                if (type === 'code') el.classList.add('code-block');
-
-                wrapBlock(el, type);
             }
         });
 

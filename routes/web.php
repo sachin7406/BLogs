@@ -14,6 +14,10 @@ use App\Http\Controllers\Admin\CategoryController;
 |--------------------------------------------------------------------------
 */
 
+// Allow /admin (or /admin/) to redirect to login form if user hits just /admin
+Route::redirect('/admin', '/admin/login');
+Route::redirect('/admin/', '/admin/login');
+
 Route::get('/admin/login', [AuthController::class, 'loginForm'])
     ->name('admin.login');
 

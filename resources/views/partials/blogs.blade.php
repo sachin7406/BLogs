@@ -13,76 +13,55 @@
 @section('twitter_description', 'DDSPLM shares the latest blogs on mechanical engineering, CAD, CAE, PLM, and industry innovations. Stay ahead with news, case studies, and insights.')
 @section('twitter_image', asset('images/no-image-available.png'))
 
-<div class="hero-image">
+<div class="hero-image" style="margin-bottom: 0;">
     <div class="hero-text">
-        <h1>Blogs</h1>
-        <ul class="page-list">
-            <li><a href="/" class="spa-link">Home</a></li>
-            <li>Blogs</li>
+        <h1 style="font-size:2.0rem; margin-bottom:0.5rem;">Blogs</h1>
+        <ul class="page-list" style="padding-left: 0; list-style: none; margin-bottom: 0;">
+            <li style="display:inline;"><a href="/" class="spa-link">Home</a></li>
+            <li style="display:inline;"> &nbsp;> Blogs</li>
         </ul>
     </div>
 </div>
-<!---banner- end--->
-<!----blog-----start---->
-<section class="blog_section">
-    <div class="container">
+
+<section class="blog_section py-4">
+    <div class="container" style="max-width:1100px;">
         @if(isset($blogs) && $blogs->count())
-        <div class="row">
-            @foreach($blogs as $index => $blog)
-            <div class="blog-hover mb-3 w-100 d-flex flex-wrap align-items-stretch">
-                @if($index % 2 == 0)
-                {{-- Image on Left --}}
-                <div class="blog-column side" style="flex:1 1 250px; min-width:220px; max-width:400px;">
-                    @if(!empty($blog->reference_image))
-                    <img src="{{ asset(ltrim($blog->reference_image, '/')) }}" class="img-fluid" alt="{{ $blog->title }}">
-                    @else
-                    <img src="{{ asset('images/no-image-available.png') }}" class="img-fluid" alt="No image">
-                    @endif
-                </div>
-                <div class="blog-column middle" style="flex:2 1 0;min-width:260px; padding-left:24px;">
-                    <p>
-                        {{ $blog->created_at ? $blog->created_at->format('d M, Y') : '' }}
-                    </p>
-                    <h2>
-                        <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}" target="_blank" class="text-uppercase">
-                            {{ $blog->title }}
-                        </a>
-                    </h2>
-                    <p>
-                        {{ $blog->description ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 175) }}
-                    </p>
-                    <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}" target="_blank" class="btn btn-primary">read more</a>
-                </div>
-                @else
-                {{-- Image on Right --}}
-                <div class="blog-column middle" style="flex:2 1 0;min-width:260px; padding-right:24px;">
-                    <p>
-                        {{ $blog->created_at ? $blog->created_at->format('d M, Y') : '' }}
-                    </p>
-                    <h2>
-                        <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}" target="_blank" class="text-uppercase">
-                            {{ $blog->title }}
-                        </a>
-                    </h2>
-                    <p>
-                        {{ $blog->description ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 175) }}
-                    </p>
-                    <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}" target="_blank" class="btn btn-primary">read more</a>
-                </div>
-                <div class="blog-column side" style="flex:1 1 250px; min-width:220px; max-width:400px;">
-                    @if(!empty($blog->reference_image))
-                    <img src="{{ asset(ltrim($blog->reference_image, '/')) }}" class="img-fluid" alt="{{ $blog->title }}">
-                    @else
-                    <img src="{{ asset('images/no-image-available.png') }}" class="img-fluid" alt="No image">
-                    @endif
-                </div>
-                @endif
+        @foreach($blogs as $blog)
+        <div class="row align-items-center my-4 px-2" style="background: #fafbfc; border-radius: 10px; box-shadow: 0 1px 8px #e8eaed; padding: 24px 12px;">
+            <div class="col-md-4 col-12 mb-3 mb-md-0 d-flex justify-content-center align-items-center">
+                <img src="{{ !empty($blog->reference_image) ? asset(ltrim($blog->reference_image, '/')) : asset('images/no-image-available.png') }}"
+                    alt="{{ $blog->title }}" class="img-fluid rounded" style="width:100%;max-width:340px;object-fit:cover;box-shadow:0 2px 8px #dbe7fa;">
             </div>
-            @endforeach
+            <div class="col-md-8 col-12" style="padding-top:10px;padding-bottom:10px;">
+                <div style="font-size:0.99em;color:#a9aab0;margin-bottom:4px;">
+                    {{ $blog->created_at ? $blog->created_at->format('d F, Y') : '' }}
+                </div>
+                <div style="margin-bottom:30px;">
+                    <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}"
+                        style="font-size:1.35rem;font-weight:600;color:#253364;text-decoration:none;line-height:1.3;display:inline-block;margin-bottom:0.5em;transition:color 0.2s;"
+                        target="_blank"
+                        onmouseover="this.style.color='#e53935'"
+                        onmouseout="this.style.color='#253364'">
+                        {{ $blog->title }}
+                    </a>
+                </div>
+                <p style="color:#42454b;font-size:1.05em;margin-bottom:20px;">
+                    {{ $blog->description ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 175) }}
+                </p>
+                <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}"
+                    class="btn btn-light border"
+                    style="font-weight:500;letter-spacing: 0.5px;padding:.45em 1.5em;font-size:1em;color:#2164ae !important;border:1.5px solid #e53935 !important;transition:color 0.2s,border-color 0.2s;"
+                    target="_blank"
+                    onmouseover="this.style.color='#e53935'"
+                    onmouseout="this.style.color='#2164ae'">
+                    Read More
+                </a>
+            </div>
         </div>
+        @endforeach
         @else
-        <p>No blog posts available at this time.</p>
+        <p style="text-align:center;">No blog posts available at this time.</p>
         @endif
     </div>
 </section>
-<!----blog-----end------>
+

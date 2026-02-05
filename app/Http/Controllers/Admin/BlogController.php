@@ -269,16 +269,13 @@ class BlogController extends Controller
     }
     public function publicBlogs()
     {
-        $blogs = Blog::where('status', 'active')->get();
+        $blogs = Blog::where('status', 'active')->orderBy('id', 'desc')->get();
         Log::info('Public blogs:', $blogs->toArray());
         return view('pages.blogs', compact('blogs'));
     }
     public function view($id, $title = null)
     {
         $blog = Blog::findOrFail($id);
-
-        // Optionally: check if the $title in the URL matches the blog's slug or title,
-        // and redirect to the canonical URL if not (SEO-friendly). But core logic just fetches by id.
 
         return view('pages.blogs_view', compact('blog'));
     }

@@ -69,15 +69,6 @@
     <div class="row justify-content-center">
         <div class="col-lg-12">
 
-            {{-- FEATURE IMAGE --}}
-            <!-- @if(!empty($blog->reference_image))
-            <div class="text-center mb-4">
-                <img src="{{ asset(ltrim($blog->reference_image,'/')) }}"
-                    class="img-fluid rounded"
-                    style="max-width: 420px; width:100%;">
-            </div>
-            @endif
-             -->
             {{-- BREADCRUMB --}}
             <div class="blog-breadcrumb text-center">
                 <a href="{{ url('/') }}">Home</a>

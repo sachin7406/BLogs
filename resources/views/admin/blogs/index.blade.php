@@ -58,7 +58,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <a class="dropdown-item viewBlog" href="javascript:void(0)" data-id="{{ $blog->id }}">
+                    <a class="dropdown-item" href="{{ route('admin.blogs.view', $blog->id) }} " target="_blank">
                         View
                     </a>
                 </li>
