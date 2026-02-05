@@ -1,3 +1,18 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Altair HyperWorks Platform')
+@section('meta_description', 'Explore Altair HyperWorks: Accelerate design and simulation with innovative CAE tools like HyperMesh and OptiStruct, empowering efficient, multi-physics product development and optimization.')
+@section('meta_keywords', 'Altair HyperWorks, HyperMesh, OptiStruct, CAE, Simulation, Structural Analysis, Engineering, Meshing, Manufacturing, Automotive, Product Development')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Altair HyperWorks | Advanced CAE Platform')
+@section('og_description', 'Altair HyperWorks provides engineers with advanced simulation, meshing, and optimization for high-performance product innovation.')
+@section('og_image', asset('assets/images/imagesimcenter/Altair.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Altair HyperWorks | Advanced CAE Platform')
+@section('twitter_description', 'Redefine simulation and engineering productivity with Altair HyperWorks. Comprehensive tools for advanced product development.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Altair.png'))
+
 <!----------------banner---------------start----------->
 <div class="hero-image">
     <div class="hero-text">

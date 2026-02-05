@@ -1,3 +1,20 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Home')
+@section('meta_description', 'Welcome to DDSPLM: Your partner for digital design, engineering, and manufacturing solutions including Siemens software, PLM, and cloud CAD SaaS.')
+@section('meta_keywords', 'DDSPLM, Siemens, PLM, CAD, CAE, NX CAD X, Cloud CAD, Engineering Solutions, Mechanical Design, Teamcenter, SaaS')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'DDSPLM | Digital Design & Engineering Solutions')
+@section('og_description', 'Discover DDSPLM for Siemens-powered digital design, engineering, and cloud-based SaaS CAD solutions driving innovation and collaboration.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'DDSPLM | Empowering Next-Gen Engineering')
+@section('twitter_description', 'DDSPLM delivers Siemens digital solutions for engineering, PLM, and scalable cloud-based CAD—connect with us to innovate faster!')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+
+
+
 <section class="">
     <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

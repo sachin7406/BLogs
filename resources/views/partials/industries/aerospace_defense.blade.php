@@ -1,7 +1,22 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Aerospace & Defence')
+@section('meta_description', 'Discover leading solutions for the aerospace and defence industry: engineering innovation, digital transformation, and lifecycle management for modern air and defense platforms.')
+@section('meta_keywords', 'Aerospace, Defence, Engineering, Airframes, Avionics, Defense Electronics, Digital Twin, Innovation')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Aerospace & Defence | DDSPLM Industry Solutions')
+@section('og_description', 'Explore how DDSPLM advances Aerospace & Defence through digital engineering, collaborative lifecycle management, and cutting-edge industry workflows.')
+@section('og_image', asset('assets/images/imagesimcenter/A&D.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Aerospace & Defence | DDSPLM')
+@section('twitter_description', 'DDSPLM empowers the Aerospace & Defence sector with advanced engineering, digital transformation, and value chain innovation.')
+@section('twitter_image', asset('assets/images/imagesimcenter/A&D.png'))
+
+<!------------------banner--------start---------------------->
 <div class="hero-image aerospace-defense">
     <div class="hero-text">
         <h1>Aerospace & Defence</h1>
-        <!-- <p>Technology Is Transforming Rapidly.</p> -->
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
             <li>Aerospace & Defence</li>

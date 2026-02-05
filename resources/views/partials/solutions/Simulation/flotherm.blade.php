@@ -1,3 +1,29 @@
+
+@section('title', 'DDSPLM | Simcenter Flotherm')
+
+@section('meta_description', 'Explore Simcenter Flotherm: industry-leading electronics cooling simulation software. Achieve accurate, fast thermal analysis for digital twins, concept exploration, PCB, IC, and system-level thermal solutions.')
+
+@section('meta_keywords', 'Simcenter Flotherm, Electronics Cooling Simulation, Thermal Analysis, Digital Twin, Thermal Design, PCB Simulation, MCAD ECAD, Siemens, Junction Temperature, FlothermXT, Electronics System Design')
+
+@section('meta_robots', 'index, follow')
+
+@section('canonical', url()->current())
+
+@section('og_title', 'Simcenter Flotherm | Electronics Cooling Simulation Software')
+
+@section('og_description', 'Optimize electronics thermal design with Simcenter Flotherm: accurate, fast simulation for PCBs, ICs, enclosures, and systems. Drive reliability and innovation in electronics products.')
+
+@section('og_image', asset('assets/images/imagesimcenter/Flotherm.png'))
+
+@section('og_url', url()->current())
+
+@section('og_type', 'website')
+
+@section('twitter_title', 'Simcenter Flotherm | Electronics Cooling & Thermal Digital Twin')
+
+@section('twitter_description', 'Accelerate electronics cooling design and innovation with Simcenter Flotherm: simulation-driven, user-friendly, and robust thermal analysis software.')
+
+@section('twitter_image', asset('assets/images/imagesimcenter/Flotherm.png'))
 <div class="hero-image flotherm" style="">
     <div class="hero-text">
         <h1>SIMCENTER FLOTHERM</h1>

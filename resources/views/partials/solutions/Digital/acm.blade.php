@@ -1,9 +1,25 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | ACM Suite - Adaptive Control and Monitoring for Machining Optimization')
+@section('meta_description', 'Maximize machining productivity and reduce downtime with ACM Suite. Optimize machining processes, detect tool breakage, and seamlessly enhance production without modifying your NC Program.')
+@section('meta_keywords', 'ACM, Adaptive Control and Monitoring, machining optimization, tool breakage detection, CNC productivity, NC Program, manufacturing software')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'ACM Suite - Adaptive Control and Monitoring for Machining Optimization')
+@section('og_description', 'Maximize machining productivity and reduce downtime with ACM Suite. Detect tool breakage, optimize processes, and boost CNC productivity—all without NC code changes.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'ACM Suite - Adaptive Control and Monitoring')
+@section('twitter_description', 'Maximize machining productivity and reduce downtime with ACM Suite. Detect tool breakage, optimize processes, boost CNC productivity—all without NC code changes.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+
 <div class="hero-image Automotive-EV">
     <div class="hero-text">
-        <h1>ACM </h1>
+        <h1>ACM Suite – Adaptive Control and Monitoring</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
-            <li>ACM Suite for Optimizing the machining process </li>
+            <li>Digital Solutions</li>
+            <li>ACM Suite</li>
         </ul>
     </div>
 </div>

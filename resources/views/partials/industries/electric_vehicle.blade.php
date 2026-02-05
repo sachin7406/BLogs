@@ -1,12 +1,25 @@
-<!----------modal---------end-------------------->
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Electric Vehicle')
+@section('meta_description', 'Discover Siemens and DDSPLM solutions for electric vehicle innovation: accelerate EV design, engineering, manufacturing, and digital transformation.')
+@section('meta_keywords', 'Electric Vehicle, EV, Automotive, Siemens, Digital Twin, Manufacturing, Battery, Engineering, Mobility')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Electric Vehicle | DDSPLM Industry Solutions')
+@section('og_description', 'See how DDSPLM and Siemens drive innovation and efficiency in electric vehicle and automotive manufacturing, leveraging digital twins and next-generation technology.')
+@section('og_image', asset('assets/images/imagesimcenter/Electric-vehicle.jpg'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Electric Vehicle | DDSPLM')
+@section('twitter_description', 'Accelerate electric vehicle design and manufacturing with digital solutions from DDSPLM and Siemens.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Electric-vehicle.jpg'))
+
 <!-------------------banner------------start------>
-<div class="hero-image Electric-vehicle" style="">
+<div class="hero-image Electric-vehicle">
     <div class="hero-text">
-        <h1>Electric Vehicle </h1>
-        <!-- <p>Technology Is Transforming Rapidly.</p> -->
+        <h1>Electric Vehicle</h1>
         <ul class="page-list">
-            <li><a href="../index.html">Home</a></li>
-            <li>Electric Vehicle </li>
+            <li><a class="spa-link" href="/">Home</a></li>
+            <li>Electric Vehicle</li>
         </ul>
     </div>
 </div>

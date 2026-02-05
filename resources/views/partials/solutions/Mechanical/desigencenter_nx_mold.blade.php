@@ -1,12 +1,15 @@
-<div class="hero-image Automotive-EV">
+@section('title', 'DDSPLM | NX Mold Design Center')
+@section('meta_description', 'NX Mold Design Center: Automated and integrated Siemens solutions for state-of-the-art injection mold design, validation, and manufacturing acceleration.')
+@section('meta_keywords', 'NX Mold, mold design, injection mold, Siemens NX, tooling, CAD CAM, mold development, automated mold design, mold wizard')
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
-        <h1>NX Mold Design</h1>
+        <h1>NX Mold Design Center</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
-            <li>Desigen Center X / </li>
-            <li><a href="/solutions/mechanical/desigencenter_nx_cad" class="spa-link">NX Cad /</a></li>
-            <li>NX MOLD</li>
+            <li>Design Center X</li>
+            <li><a href="/solutions/mechanical/desigencenter_nx_cad" class="spa-link">NX CAD</a></li>
+            <li>NX Mold Design</li>
         </ul>
     </div>
 </div>

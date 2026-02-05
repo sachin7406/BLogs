@@ -1,11 +1,26 @@
-<!----------modal---------end-------------------->
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Cortona3D - Technical Authoring Solutions')
+@section('meta_description', 'Cortona3D RapidAuthor: Interactive 3D technical documentation, parts catalogs, training materials, and work instruction authoring from CAD and 3D data for efficient support content creation.')
+@section('meta_keywords', 'Cortona3D, RapidAuthor, technical documentation, 3D parts catalog, interactive manuals, training materials, work instructions, CAD publishing, 3D authoring, technical illustration')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Cortona3D | Technical Authoring Solutions')
+@section('og_description', 'Cortona3D RapidAuthor enables creation of interactive 3D technical documentation, parts catalogs, and training materials directly from CAD data for efficient and accurate support content.')
+@section('og_image', asset('assets/images/imagesimcenter/industrial.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Cortona3D | Technical Authoring Solutions')
+@section('twitter_description', 'Create interactive 3D technical documentation and parts catalogs from CAD and 3D data with Cortona3D RapidAuthor.')
+@section('twitter_image', asset('assets/images/imagesimcenter/industrial.png'))
+
 <!------------------banner--------start---------------------->
-<div class="hero-image ">
+<div class="hero-image">
     <div class="hero-text">
-        <h1>Cortona3D </h1>
+        <h1>Cortona3D – Interactive Technical Documentation</h1>
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
-            <li>Technical - Cortona3D RapidAuthor</li>
+            <li>Technical Solutions</li>
+            <li>Cortona3D RapidAuthor</li>
         </ul>
     </div>
 </div>

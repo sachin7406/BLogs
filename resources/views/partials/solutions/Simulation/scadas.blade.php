@@ -1,8 +1,23 @@
-<div class="hero-image scadas" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | SIMCENTER SCADAS')
+@section('meta_description', 'Discover Simcenter SCADAS: Siemens’ versatile multi-physics data acquisition hardware for acoustic, vibration, and durability testing. Portable, precise, and seamlessly integrated with Simcenter Testlab.')
+@section('meta_keywords', 'Simcenter SCADAS, Data Acquisition, Siemens, Multi-Physics Measurement, Vibration Testing, Acoustic Testing, Durability Engineering, Simcenter Testlab')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter SCADAS | Multi-Physics Data Acquisition by Siemens')
+@section('og_description', 'Explore Simcenter SCADAS: portable, robust and high-precision data acquisition systems for acoustic, vibration and durability engineering; integrated with Simcenter Testlab.')
+@section('og_image', asset('assets/images/imagesimcenter/SCADAS.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter SCADAS | Portable Data Acquisition Systems')
+@section('twitter_description', 'Simcenter SCADAS enables precise, multi-physics measurements for all your acoustic, vibration, and durability testing needs.')
+@section('twitter_image', asset('assets/images/imagesimcenter/SCADAS.png'))
+
+<div class="hero-image scadas">
     <div class="hero-text">
         <h1>SIMCENTER SCADAS</h1>
         <ul class="page-list">
-            <li><a href="/" class="spa-links">Home</a></li>
+            <li><a href="/" class="spa-link">Home</a></li>
             <li>SIMCENTER SCADAS</li>
         </ul>
     </div>

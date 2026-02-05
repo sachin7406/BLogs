@@ -1,12 +1,24 @@
-<div class="hero-image" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter Testlab')
+@section('meta_description', 'Explore Simcenter Testlab: Integrated solution for test-based engineering, enabling high-speed multi-physics data acquisition, advanced analytics, and product innovation for engineering teams.')
+@section('meta_keywords', 'Simcenter Testlab, Test-based Engineering, Multi-physics Testing, Data Acquisition, Engineering Analytics, Siemens Testlab, Product Innovation, R&D Testing')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter Testlab | Advanced Engineering Test Solutions')
+@section('og_description', 'Simcenter Testlab delivers boosted testing efficiency and reliable results for engineering, combining powerful analytics, flexible data acquisition, and seamless simulation integration.')
+@section('og_image', asset('assets/images/imagesimcenter/imsssssss.jpg'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter Testlab | Advanced Engineering Test Solutions')
+@section('twitter_description', 'Simcenter Testlab: Siemens’ all-in-one solution for test-based engineering, providing robust testing, analytics, and modeling tools for next-generation R&D.')
+@section('twitter_image', asset('assets/images/imagesimcenter/imsssssss.jpg'))
+
+<div class="hero-image">
     <div class="hero-text">
-        <h1>Simcenter Testlab
-        </h1>
-        <!-- <p>Technology Is Transforming Rapidly.</p> -->
+        <h1>Simcenter Testlab</h1>
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
-            <li>Simcenter Testlab
-            </li>
+            <li>Simcenter Testlab</li>
         </ul>
     </div>
 </div>

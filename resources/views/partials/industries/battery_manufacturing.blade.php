@@ -1,12 +1,24 @@
-<div class="hero-image" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Battery Manufacturing')
+@section('meta_description', 'Explore Siemens solutions for battery manufacturing: digital engineering, simulation, and lifecycle management for high-performance battery systems.')
+@section('meta_keywords', 'Battery Manufacturing, Simulation, Siemens, Electric Vehicles, Digital Twin, Battery Systems, Engineering')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Battery Manufacturing | DDSPLM Industry Solutions')
+@section('og_description', 'See how DDSPLM enables innovation in battery manufacturing through advanced simulation, digital management, and system engineering solutions.')
+@section('og_image', asset('assets/images/imagesimcenter/Battery-manufactring.jpg'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Battery Manufacturing | Innovation with DDSPLM')
+@section('twitter_description', 'Siemens and DDSPLM accelerate robust battery engineering and simulation for modern electrification challenges.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Battery-manufactring.jpg'))
+
+<div class="hero-image">
     <div class="hero-text">
-        <h1>Battery Manufacturing
-        </h1>
-        <!-- <p>Technology Is Transforming Rapidly.</p> -->
+        <h1>Battery Manufacturing</h1>
         <ul class="page-list">
-            <li><a href="../index.html">Home</a></li>
-            <li>Battery Manufacturing
-            </li>
+            <li><a class="spa-link" href="/">Home</a></li>
+            <li>Battery Manufacturing</li>
         </ul>
     </div>
 </div>

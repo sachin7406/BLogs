@@ -1,11 +1,26 @@
-<!----------modal---------end-------------------->
-<!------------------banner--------start---------------------->
-<div class="hero-image" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Solid Edge X - Cloud SaaS CAD Design Center')
+@section('meta_description', 'Discover Siemens Solid Edge X: secure, cloud-based SaaS 3D CAD for modern design. Collaborate, innovate, and manage product data efficiently—flexible, scalable, with integrated cloud data management powered by Teamcenter X.')
+@section('meta_keywords', 'Solid Edge X, Cloud CAD, SaaS, Siemens, Product Design, Mechanical CAD, Teamcenter X, 3D Design, Collaborative CAD, Cloud PLM')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Solid Edge X | Cloud SaaS CAD by Siemens')
+@section('og_description', 'Cloud SaaS CAD with Siemens Solid Edge X: design flexibly and securely, accelerate innovation, and manage engineering data in the cloud.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Solid Edge X | Cloud SaaS CAD by Siemens')
+@section('twitter_description', 'Empower design teams with Siemens Solid Edge X: secure, scalable, cloud-based SaaS CAD, integrated data management, and modern product development.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
-        <h1>Solid Edge X</h1>
+        <h1>Solid Edge X – Cloud-based CAD by Siemens</h1>
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
-            <li>Design Center & Solid Edge X</li>
+            <li>Design Center X</li>
+            <li><a href="/solutions/mechanical/desigencenter_solid_edge" class="spa-link">Solid Edge</a></li>
+            <li>Solid Edge X (SaaS)</li>
         </ul>
     </div>
 </div>

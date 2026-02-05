@@ -1,8 +1,22 @@
-<!----------modal---------end-------------------->
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Capital - E/E Systems Development')
+@section('meta_description', 'Explore Siemens Capital software for advanced E/E systems development: design, engineer, and validate electrical & electronic systems efficiently in a digital twin environment.')
+@section('meta_keywords', 'Capital, E/E Systems, Electrical Design, Electronics Engineering, Siemens, Digital Twin, Wiring Harness, Embedded Software, Network Communications')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Capital | E/E Systems Development Software')
+@section('og_description', 'Siemens Capital enables efficient development of complex electrical and electronics (E/E) systems. Integrate design, engineering, simulation and validation for smart products.')
+@section('og_image', asset('assets/images/imagesimcenter/industrial.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Capital | E/E Systems Development')
+@section('twitter_description', 'Siemens Capital portfolio accelerates robust E/E system development in context of the digital twin for efficient, compliant, smart product engineering.')
+@section('twitter_image', asset('assets/images/imagesimcenter/industrial.png'))
+
 <!------------------banner--------start---------------------->
 <div class="hero-image ">
     <div class="hero-text">
-        <h1>Capital </h1>
+        <h1>Capital</h1>
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
             <li>Capital software for E/E systems development</li>

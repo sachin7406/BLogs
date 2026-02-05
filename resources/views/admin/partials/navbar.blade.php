@@ -1,12 +1,14 @@
 <div class="topbar d-flex justify-content-between align-items-center px-4">
     <div class="d-flex align-items-center">
         {{-- Back Button --}}
+        @if(session()->has('admin_name') && !empty(session('admin_name')))
         @isset($backUrl)
         <a href="{{ $backUrl }}" class="btn btn-outline-primary me-2 d-flex align-items-center">
             <i class="bi bi-arrow-left"></i>
             <span class="ms-1">{{ $backTitle ?? 'Back' }}</span>
         </a>
         @endisset
+        @endif
         <button class="btn btn-outline-secondary d-md-none me-2" id="menuBtn">
             <i class="bi bi-list"></i>
         </button>

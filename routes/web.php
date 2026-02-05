@@ -59,10 +59,11 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
 });
 
-// Route::get('/blogs', function () {
-//     return view('pages.blogs');
-// })->name('blogs.public');
 
+Route::get('/blogs', [BlogController::class, 'publicBlogs']);
+// Route now uses the blog title as a slug for display, but internally uses the id for lookup
+Route::get('/blogs_view/{id}-{title}', [BlogController::class, 'view'])
+    ->where(['id' => '[0-9]+', 'title' => '[A-Za-z0-9\-]+']);
 /*
 |--------------------------------------------------------------------------
 | PUBLIC PAGES (EXISTING PROJECT)

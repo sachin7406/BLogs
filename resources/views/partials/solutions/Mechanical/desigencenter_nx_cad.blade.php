@@ -1,16 +1,24 @@
-@section('title', 'DDSPLM | NX CAD')
-@section('meta_description', 'Desigen center NX CAD')
-@section('meta_keywords', 'mechanical, engineering, solutions')
-
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | NX CAD - Advanced Mechanical Design Solutions')
+@section('meta_description', 'Discover Siemens NX CAD for efficient mechanical engineering: plan, design, and innovate with advanced 3D CAD tools. Enhance your product development process with NX.')
+@section('meta_keywords', 'NX CAD, Mechanical CAD, Siemens NX, 3D Design, Product Development, Engineering Solutions, CAD Software')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'NX CAD | Advanced Mechanical Design Solutions')
+@section('og_description', 'Streamline mechanical design and engineering innovation with Siemens NX CAD—your trusted advanced 3D CAD platform for product development.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'NX CAD | Advanced Mechanical Design Solutions')
+@section('twitter_description', 'Explore Siemens NX CAD for advanced mechanical engineering: innovate, design, and develop efficiently with a leading 3D CAD tool.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
 
 <div class="hero-image Automotive-EV">
-
     <div class="hero-text">
-        <h1>NX CAD</h1>
+        <h1>NX CAD Design Center</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
-
-            <li>Desigen Center & NX Cad</li>
+            <li>Design Center / NX CAD</li>
         </ul>
     </div>
 </div>

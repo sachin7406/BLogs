@@ -1,9 +1,24 @@
-<div class="hero-image str-ccm" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter STAR-CCM+')
+@section('meta_description', 'Explore Simcenter STAR-CCM+: Industry-leading multiphysics CFD software enabling realistic simulation, automated design exploration, and faster, more innovative designs.')
+@section('meta_keywords', 'Simcenter STAR-CCM+, CFD, Multiphysics Simulation, Siemens, Design Exploration, CAE, Engineering, Simulation Software')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter STAR-CCM+ | Advanced CFD and Multiphysics Simulation')
+@section('og_description', 'Simcenter STAR-CCM+ helps engineers accelerate design decisions with powerful, integrated multiphysics CFD simulation, automated meshing, and advanced postprocessing.')
+@section('og_image', asset('assets/images/imagesimcenter/starccm-.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter STAR-CCM+ | Advanced CFD by Siemens')
+@section('twitter_description', 'Industry-leading multiphysics simulation and design exploration with Simcenter STAR-CCM+ from Siemens.')
+@section('twitter_image', asset('assets/images/imagesimcenter/starccm-.png'))
+
+<div class="hero-image str-ccm">
     <div class="hero-text">
-        <h1>SIMCENTER STARCCM+</h1>
+        <h1>Simcenter STAR-CCM+</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-links">Home</a></li>
-            <li>SIMCENTER STARCCM+</li>
+            <li>Simcenter STAR-CCM+</li>
         </ul>
     </div>
 </div>

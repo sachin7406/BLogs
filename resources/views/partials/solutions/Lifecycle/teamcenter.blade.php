@@ -1,7 +1,21 @@
-<div class="hero-image Automotive-EV">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Teamcenter - Multi-CAD & ECAD Data Management')
+@section('meta_description', 'Teamcenter enables efficient Multi-CAD & ECAD data management, connecting engineering, planning, and manufacturing with a digital thread. Enhance collaboration and innovation with Siemens Teamcenter—accelerate product development, ensure data accuracy, and drive smarter decisions.')
+@section('meta_keywords', 'Teamcenter, Siemens, Multi-CAD Data Management, ECAD Data, Product Lifecycle Management, PLM, Digital Thread, Manufacturing Collaboration, Engineering Collaboration')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Teamcenter - Multi-CAD & ECAD Data Management')
+@section('og_description', 'Integrate engineering, planning, and production with Siemens Teamcenter for secure, scalable product lifecycle management—boost collaboration and streamline your digital enterprise.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Teamcenter | Multi-CAD & ECAD Data Management')
+@section('twitter_description', 'Transform your product lifecycle with Siemens Teamcenter. Manage Multi-CAD & ECAD data, connect teams, and accelerate innovation.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
-        <h1>Teamcenter </h1>
+        <h1>Teamcenter</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
             <li>Teamcenter Multi-CAD & ECAD Data Management</li>

@@ -1,5 +1,19 @@
-<div class="hero-image Automotive-EV">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Teamcenter X - Multi-CAD & ECAD Data Management')
+@section('meta_description', 'Teamcenter X: Secure, scalable SaaS PLM for Multi-CAD & ECAD data & process management. Start fast, grow effortlessly, and collaborate effectively with Siemens Teamcenter X cloud platform.')
+@section('meta_keywords', 'Teamcenter X, SaaS PLM, Siemens Teamcenter, Cloud PLM, Multi-CAD Management, ECAD Data Management, Product Lifecycle Management, Engineering Collaboration')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Teamcenter X - Multi-CAD & ECAD Data Management')
+@section('og_description', 'Start fast with secure, scalable SaaS product lifecycle management using Siemens Teamcenter X—for Multi-CAD & ECAD information, collaboration, and innovation.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Teamcenter X - Multi-CAD & ECAD Data Management')
+@section('twitter_description', 'Start fast, grow, and innovate with Teamcenter X — Secure, scalable SaaS PLM from Siemens for all product data and collaboration.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
         <h1>Teamcenter X</h1>
         <ul class="page-list">

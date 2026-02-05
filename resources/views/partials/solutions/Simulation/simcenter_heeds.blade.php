@@ -1,9 +1,24 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | SIMCENTER HEEDS')
+@section('meta_description', 'Explore Simcenter HEEDS: Siemens’ advanced design space exploration and optimization software—automating simulation workflows, maximizing hardware use, and discovering innovation. Accelerate product development and optimize performance with integrated CAD/CAE support.')
+@section('meta_keywords', 'Simcenter HEEDS, Simulation Optimization, Design Space Exploration, Siemens, CAE, CAD, Product Development, Distributed Execution, Process Automation, Engineering Innovation')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter HEEDS | Design Space Exploration & Simulation by Siemens')
+@section('og_description', 'Simcenter HEEDS accelerates innovation with automated simulation workflows, distributed execution, and efficient search for optimal product performance. Integrates seamlessly with CAD/CAE tools.')
+@section('og_image', asset('assets/images/imagesimcenter/heeds.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter HEEDS | Siemens Design Optimization')
+@section('twitter_description', 'Automate, explore, and ensure product innovation with Simcenter HEEDS. Optimize engineering design and accelerate development across distributed resources.')
+@section('twitter_image', asset('assets/images/imagesimcenter/heeds.png'))
+
 <!----------------banner---------------start----------->
 <div class="hero-image">
     <div class="hero-text">
         <h1>SIMCENTER HEEDS</h1>
         <ul class="page-list">
-            <li><a href="/" class="spa-links">Home</a></li>
+            <li><a href="/" class="spa-link">Home</a></li>
             <li>SIMCENTER HEEDS</li>
         </ul>
     </div>

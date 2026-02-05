@@ -1,4 +1,19 @@
-<div class="hero-image simcenter-tire" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter Tire')
+@section('meta_description', 'Accurately predict vehicle dynamics with Simcenter Tire. Model non-linear tire behavior, improve vehicle analysis, and reduce development time with proven tire simulation solutions.')
+@section('meta_keywords', 'Simcenter Tire, Tire Simulation, Vehicle Dynamics, MF-Tyre, MF-Swift, Siemens, Automotive Simulation, Tire Modeling, Engineering, MF-Tool')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter Tire | Advanced Tire Simulation & Modeling')
+@section('og_description', 'Simcenter Tire delivers precise tire modeling and simulation, supporting improved vehicle simulations and performance predictions for OEMs worldwide.')
+@section('og_image', asset('assets/images/imagesimcenter/tire.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter Tire | Tire Simulation & Vehicle Dynamics')
+@section('twitter_description', 'Simcenter Tire improves accuracy and efficiency in tire simulation and vehicle dynamics modeling for the automotive industry.')
+@section('twitter_image', asset('assets/images/imagesimcenter/tire.png'))
+
+<div class="hero-image simcenter-tire">
     <div class="hero-text">
         <h1>SIMCENTER TIRE</h1>
         <ul class="page-list">

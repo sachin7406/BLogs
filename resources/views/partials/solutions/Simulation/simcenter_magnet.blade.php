@@ -1,3 +1,18 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter MAGNET')
+@section('meta_description', 'Explore Simcenter MAGNET: Advanced electromagnetic field simulation for motors, generators, sensors, and more. Optimize and analyze electromagnetic and electromechanical devices with precision.')
+@section('meta_keywords', 'Simcenter MAGNET, Electromagnetic Simulation, Motor Design, Generator Simulation, Sensor Analysis, Permanent Magnets, Coil Simulation, Siemens, Electromechanical Optimization')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter MAGNET | Electromagnetic Field Simulation by Siemens')
+@section('og_description', 'Simcenter MAGNET provides accurate 2D/3D electromagnetic field simulation for efficient design and innovation in electromechanical systems.')
+@section('og_image', asset('assets/images/imagesimcenter/magnet.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter MAGNET | Electromagnetic Field Simulation')
+@section('twitter_description', 'Simcenter MAGNET empowers engineers with advanced electromagnetic simulation, allowing optimal design and virtual prototyping for motors, generators, and more.')
+@section('twitter_image', asset('assets/images/imagesimcenter/magnet.png'))
+
 <div class="hero-image">
     <div class="hero-text">
         <h1>SIMCENTER MAGNET</h1>

@@ -1,3 +1,18 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter Motorsolve')
+@section('meta_description', 'Discover Simcenter Motorsolve: Advanced electric machine design and analysis. Simulate, analyze, and optimize permanent magnet, induction, synchronous, electronically and brush-commutated motors with intuitive FEA-driven tools.')
+@section('meta_keywords', 'Simcenter Motorsolve, Electric Machine Design, FEA, Motor Simulation, Siemens, EV Motor Design, Electromagnetic Analysis, Permanent Magnet, Motor Topology, Induction Machine, Synchronous Machine')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter Motorsolve | Electric Machine Design & FEA Simulation')
+@section('og_description', 'Simcenter Motorsolve advances the electric machine R&D with rapid, accurate motor simulation and analysis. Boost performance through accurate field plots, intuitive templates, and automated workflows.')
+@section('og_image', asset('assets/images/imagesimcenter/Motorsolve.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter Motorsolve | Electric Machine Design & FEA Simulation')
+@section('twitter_description', 'Simcenter Motorsolve: Comprehensive software for advanced electric machine modeling, simulation, and optimization with robust FEA tools and automated workflows.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Motorsolve.png'))
+
 <div class="hero-image">
     <div class="hero-text">
         <h1>SIMCENTER MOTORSOLVE</h1>

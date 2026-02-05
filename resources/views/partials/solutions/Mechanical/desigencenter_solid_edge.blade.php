@@ -1,11 +1,26 @@
-<!----------modal---------end-------------------->
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Solid Edge Design Center')
+@section('meta_description', 'Discover Siemens Solid Edge for advanced mechanical design: innovate with powerful 3D CAD, generative design, reverse engineering, and additive manufacturing—all in an intuitive environment.')
+@section('meta_keywords', 'Solid Edge, Siemens, mechanical CAD, 3D design, product innovation, generative design, synchronous technology, reverse engineering, additive manufacturing, product development, CAD software')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Solid Edge | Advanced Mechanical Design Solutions')
+@section('og_description', 'Explore Siemens Solid Edge for powerful CAD: innovate, design, and develop products efficiently with intuitive modeling, generative design, reverse engineering, and additive manufacturing.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Solid Edge | Siemens CAD Solutions')
+@section('twitter_description', 'Discover Siemens Solid Edge—advance your product development cycle with leading 3D CAD, generative and additive design, and reverse engineering tools.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+
 <!------------------banner--------start---------------------->
-<div class="hero-image" style="">
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
-        <h1>Solid Edge </h1>
+        <h1>Solid Edge – Powerful CAD by Siemens</h1>
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
-            <li>Design Center & Solid Edge </li>
+            <li>Design Center</li>
+            <li>Solid Edge</li>
         </ul>
     </div>
 </div>

@@ -1,3 +1,18 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Consumer Products & Retail')
+@section('meta_description', 'Explore digital solutions for the consumer products and retail industry: accelerate innovation, manage complexity, and enhance speed-to-market with advanced engineering and lifecycle management.')
+@section('meta_keywords', 'Consumer Products, Retail, Digital Transformation, Innovation, Engineering, Digital Twin, Supply Chain, PLM, Siemens')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Consumer Products & Retail | DDSPLM Industry Solutions')
+@section('og_description', 'Discover how DDSPLM empowers Consumer Products & Retail with digital solutions to manage complexity, drive product innovation, and increase agility across the value chain.')
+@section('og_image', asset('assets/images/imagesimcenter/Consumer.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Consumer Products & Retail | DDSPLM')
+@section('twitter_description', 'Transform consumer products and retail with advanced digital engineering and lifecycle management from DDSPLM.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Consumer.png'))
+
 <div class="hero-image Consumer-Products">
     <div class="hero-text">
         <h1>Consumer Products & Retail</h1>

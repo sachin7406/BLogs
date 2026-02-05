@@ -1,5 +1,20 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Medical Devices')
+@section('meta_description', 'Explore Siemens solutions for the medical device and pharmaceutical industries: accelerate innovation, ensure compliance, reduce costs, and enhance product development with PLM.')
+@section('meta_keywords', 'Medical Devices, Pharmaceuticals, PLM, Siemens, Product Lifecycle Management, FDA Compliance, Innovation, Manufacturing, Engineering')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Medical Devices | DDSPLM Industry Solutions')
+@section('og_description', 'Siemens and DDSPLM empower medical device and pharma companies with digital PLM, streamlined product development, and compliance to regulations like FDA.')
+@section('og_image', asset('assets/images/imagesimcenter/medical.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Medical Devices | DDSPLM')
+@section('twitter_description', 'Advance medical device innovation, quality, and compliance with DDSPLM and Siemens PLM solutions for pharma and life sciences.')
+@section('twitter_image', asset('assets/images/imagesimcenter/medical.png'))
+
 <!----------------------banner-------------start------------------>
-<div class="hero-image medical-devices" style="">
+<div class="hero-image medical-devices">
     <div class="hero-text">
         <h1>Medical Devices</h1>
         <ul class="page-list">

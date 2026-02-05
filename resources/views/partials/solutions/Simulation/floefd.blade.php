@@ -1,3 +1,28 @@
+@section('title', 'SIMCENTER FLOEFD | DDSPLM')
+
+@section('meta_description', 'Explore Simcenter FLOEFD: a frontloading CFD solution embedded in major MCAD systems like Creo, CATIA V5, Siemens NX, Solid Edge, and SolidWorks. Improve engineering productivity and reduce simulation time with advanced automation and parametric capabilities.')
+
+@section('meta_keywords', 'Simcenter FLOEFD, CFD, Frontloading, MCAD, Siemens NX, Creo, CATIA V5, Solid Edge, SolidWorks, Simulation, CAE, PLM, Engineering, Automation')
+
+@section('meta_robots', 'index, follow')
+
+@section('canonical', url()->current())
+
+@section('og_title', 'Simcenter FLOEFD | Frontloading CFD for Engineers')
+
+@section('og_description', 'Discover Simcenter FLOEFD: embedded CFD simulation for leading MCAD platforms, enabling engineers to frontload CFD, optimize product development, and accelerate innovation.')
+
+@section('og_image', asset('assets/images/imagesimcenter/Floefd.png'))
+
+@section('og_url', url()->current())
+
+@section('og_type', 'website')
+
+@section('twitter_title', 'Simcenter FLOEFD | Embedded CFD for MCAD')
+
+@section('twitter_description', 'Simcenter FLOEFD offers powerful frontloading CFD tools for engineers—boosting productivity and reducing simulation time within MCAD systems.')
+
+@section('twitter_image', asset('assets/images/imagesimcenter/Floefd.png'))
 <div class="hero-image floefd" style="">
     <div class="hero-text">
         <h1>SIMCENTER FLOEFD</h1>

@@ -1,10 +1,25 @@
-<div class="hero-image Automotive-EV">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | NX CAM - Integrated CAD/CAM for Manufacturing Excellence')
+@section('meta_description', 'Siemens NX CAM: Seamlessly integrate design, engineering, and production with a single CAD/CAM platform. Accelerate manufacturing, minimize downtime, and maximize productivity with NX for Manufacturing.')
+@section('meta_keywords', 'NX CAM, Siemens NX, CAD/CAM, Digital Manufacturing, Manufacturing Software, CNC Programming, Toolpath, CMM Inspection, Shop Floor, Integrated Production, Automation')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'NX CAM - Integrated CAD/CAM for Manufacturing Excellence')
+@section('og_description', 'Seamlessly integrate design, engineering, and production with Siemens NX CAM. Accelerate manufacturing, minimize downtime, and maximize productivity with NX for Manufacturing.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'NX CAM - Integrated CAD/CAM for Manufacturing Excellence')
+@section('twitter_description', 'Seamlessly integrate design, engineering, and production with Siemens NX CAM. Accelerate manufacturing, minimize downtime, and maximize productivity.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
         <h1>NX CAM</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
-            <li>Digital Manufacturing & NX CAM</li>
+            <li>Digital Solutions</li>
+            <li>NX CAM</li>
         </ul>
     </div>
 </div>

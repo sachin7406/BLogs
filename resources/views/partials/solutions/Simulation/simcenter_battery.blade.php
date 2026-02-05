@@ -1,3 +1,18 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter Battery Design Studio')
+@section('meta_description', 'Simcenter Battery Design Studio (BDS) enables engineers to digitally validate Li-ion cell design with detailed specs and simulation, offering physics-based and circuit models for optimal battery innovation.')
+@section('meta_keywords', 'Simcenter BDS, Battery Design Studio, Li-ion Cell Validation, Battery Simulation, Siemens, Electrochemistry, Battery Modeling, EV Batteries')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter Battery Design Studio | Battery Simulation by Siemens')
+@section('og_description', 'Digitally validate and optimize Li-ion cell design with Simcenter BDS: from detailed cell specs to advanced simulation and performance modeling.')
+@section('og_image', asset('assets/images/imagesimcenter/Battery.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter Battery Design Studio | Battery Innovation & Simulation')
+@section('twitter_description', 'Simcenter BDS supports advanced Li-ion cell modeling with detailed simulation, material database & empirical circuit models—powering battery innovation.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Battery.png'))
+
 <!----------------banner---------------start----------->
 <div class="hero-image">
     <div class="hero-text">

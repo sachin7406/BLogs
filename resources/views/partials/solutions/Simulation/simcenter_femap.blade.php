@@ -1,3 +1,18 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | SIMCENTER FEMAP')
+@section('meta_description', 'Discover Simcenter Femap: Advanced engineering simulation software for finite element modeling, enabling industries to model, analyze, and improve complex products and systems efficiently.')
+@section('meta_keywords', 'Simcenter Femap, FEMAP, Finite Element Analysis, Siemens Simulation, Engineering Analysis, CAE, Mechanical Simulation, Nastran, Advanced Modeling')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'SIMCENTER FEMAP | Advanced Simulation Software by Siemens')
+@section('og_description', 'Simcenter Femap provides advanced FEA, CAD-neutral modeling, and simulation for engineers and consultants in aerospace, automotive, marine, and beyond.')
+@section('og_image', asset('assets/images/imagesimcenter/FEMAP-2020.2-1440x932-1.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'SIMCENTER FEMAP | Advanced Engineering Simulation')
+@section('twitter_description', 'Simcenter Femap: Siemens software for advanced finite element modeling and simulation across industries, optimizing product performance.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FEMAP-2020.2-1440x932-1.png'))
+
 <div class="hero-image">
     <div class="hero-text">
         <h1>SIMCENTER FEMAP</h1>

@@ -1,10 +1,23 @@
-<!--banner-->
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | RAMS')
+@section('meta_description', 'Explore model-based RAMS simulation: ensure Reliability, Availability, Maintainability, and Safety for complex systems. Reduce risk, increase safety, and optimize product lifecycle using digital risk twin methodologies.')
+@section('meta_keywords', 'RAMS, Reliability, Availability, Maintainability, Safety, Simulation, Digital Twin, Model-based Engineering, Risk Analysis, System Engineering, DDSPLM')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'RAMS | Reliability, Availability, Maintainability, Safety')
+@section('og_description', 'Reduce engineering risk and enhance product safety with model-based RAMS simulation and digital risk twin strategies. Enable data-driven design for reliability and maintainability.')
+@section('og_image', asset('assets/images/imagesimcenter/RAMS_IMG.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'RAMS | Model-Based Engineering for Reliability & Safety')
+@section('twitter_description', 'RAMS simulation at DDSPLM: achieve world-class reliability, maintainability, and safety for your products with model-based digital risk twin techniques.')
+@section('twitter_image', asset('assets/images/imagesimcenter/RAMS_IMG.png'))
 <div class="hero-image">
     <div class="hero-text">
         <h1>RAMS</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-links">Home</a></li>
-            <li>ram</li>
+            <li>RAMS</li>
         </ul>
     </div>
 </div>

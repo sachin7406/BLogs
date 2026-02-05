@@ -1,10 +1,26 @@
-<!----------modal---------end-------------------->
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | QForm Forging Software - Advanced Metal Forming Simulation')
+@section('meta_description', 'QForm: Advanced metal forming simulation software for forging, rolling, extrusion, and heat treatment. Achieve exceptional precision, adaptive meshing, and a user-friendly interface designed for manufacturing, research, and education.')
+@section('meta_keywords', 'QForm, forging simulation, metal forming, heat treatment, rolling, extrusion, CAE, adaptive meshing, manufacturing software, process optimization')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'QForm Forging Software - Advanced Metal Forming Simulation')
+@section('og_description', 'QForm delivers precision metal forming simulation including forging, rolling, extrusion, and heat treatment. Experience adaptive meshing and rapid simulation for manufacturing and research.')
+@section('og_image', asset('assets/images/imagesimcenter/industrial.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'QForm Forging Software - Advanced Metal Forming Simulation')
+@section('twitter_description', 'Simulate forging, rolling, extrusion & heat treatment with QForm. Adaptive meshing, precision, usability for manufacturing, education & research.')
+@section('twitter_image', asset('assets/images/imagesimcenter/industrial.png'))
+
 <!------------------banner--------start---------------------->
+
 <div class="hero-image ">
     <div class="hero-text">
-        <h1>QForm</h1>
+        <h1>QForm Forging Software</h1>
         <ul class="page-list">
             <li><a class="spa-link" href="/">Home</a></li>
+            <li>Optimization Solutions</li>
             <li>QForm Forging Software</li>
         </ul>
     </div>

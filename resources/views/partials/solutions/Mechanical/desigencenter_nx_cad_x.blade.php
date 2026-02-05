@@ -1,10 +1,26 @@
-<div class="hero-image Automotive-EV">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | NX CAD X (SaaS) Design Center')
+@section('meta_description', 'Discover Siemens NX CAD X: Cloud-based Mechanical CAD SaaS for advanced 3D design from any device, driving faster innovation and secure PLM integration.')
+@section('meta_keywords', 'NX CAD X, Cloud CAD, SaaS CAD, Siemens Xcelerator, Mechanical Design, PLM, Teamcenter X, 3D CAD SaaS, Engineering Innovation')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'NX CAD X (SaaS) | Cloud-Based Mechanical CAD by Siemens')
+@section('og_description', 'NX CAD X: Accelerate design and innovation with Siemens’ advanced 3D cloud CAD SaaS. Designers can work securely from anywhere and seamlessly integrate with PLM.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'NX CAD X (SaaS) | Cloud-Based Mechanical CAD')
+@section('twitter_description', 'NX CAD X: Siemens 3D CAD SaaS powers efficient and secure design from any device, integrated with PLM and powered by the cloud.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
-        <h1>NX CAD X</h1>
+        <h1>NX CAD X – Cloud-Based Mechanical CAD by Siemens</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
-            <li>Desigen Center X & NX Cad</li>
+            <li>Design Center X</li>
+            <li><a href="/solutions/mechanical/desigencenter_nx_cad" class="spa-link">NX CAD</a></li>
+            <li>NX CAD X (SaaS)</li>
         </ul>
     </div>
 </div>

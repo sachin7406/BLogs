@@ -1,5 +1,20 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Marine')
+@section('meta_description', 'Explore Siemens software solutions for marine and shipbuilding industries: digital transformation, ship design, production, and lifecycle optimization.')
+@section('meta_keywords', 'Marine, Shipbuilding, Digital Twin, Siemens, Ship Design, Lifecycle Management, Naval, DDSPLM, Maritime Industry')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Marine | DDSPLM Industry Solutions')
+@section('og_description', 'Siemens and DDSPLM empower marine and shipbuilding with digitalization, accelerating innovation, lifecycle management, and maritime engineering.')
+@section('og_image', asset('assets/images/imagesimcenter/marine.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Marine | DDSPLM Industry Solutions')
+@section('twitter_description', 'Transform marine and shipbuilding with Siemens and DDSPLM solutions: digital innovation for efficiency, compliance, and ship performance.')
+@section('twitter_image', asset('assets/images/imagesimcenter/marine.png'))
+
 <!-------------banner-------------start------------>
-<div class="hero-image marine" style="">
+<div class="hero-image marine">
     <div class="hero-text">
         <h1>Marine</h1>
         <ul class="page-list">

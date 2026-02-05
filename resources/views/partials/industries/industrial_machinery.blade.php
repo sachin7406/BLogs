@@ -1,5 +1,20 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Industrial Machinery & Heavy Equipment')
+@section('meta_description', 'Explore Siemens solutions for industrial machinery and heavy equipment: enhance innovation, manage complexity, and improve time-to-market with advanced engineering and digitalization.')
+@section('meta_keywords', 'Industrial Machinery, Heavy Equipment, Digital Transformation, Engineering, Manufacturing, Simulation, PLM, Siemens')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Industrial Machinery & Heavy Equipment | DDSPLM')
+@section('og_description', 'Discover how DDSPLM and Siemens advance industrial machinery and heavy equipment with integrated digital solutions, helping manufacturers innovate, stay competitive, and optimize operations.')
+@section('og_image', asset('assets/images/imagesimcenter/industrial.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Industrial Machinery & Heavy Equipment | DDSPLM')
+@section('twitter_description', 'Power industrial machinery and heavy equipment innovation and engineering with Siemens and DDSPLM advanced solutions.')
+@section('twitter_image', asset('assets/images/imagesimcenter/industrial.png'))
+
 <!------------------banner--------start---------------------->
-<div class="hero-image industrial-machinery" style="">
+<div class="hero-image industrial-machinery">
     <div class="hero-text">
         <h1>Industrial Machinery & Heavy Equipment</h1>
         <ul class="page-list">

@@ -236,7 +236,6 @@
                             <div class="overlay-sec">
                                 <div class="text">
                                     <h6>Automotive </h6>
-
                                 </div>
                             </div>
                         </div>

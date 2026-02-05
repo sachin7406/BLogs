@@ -267,15 +267,19 @@ class BlogController extends Controller
         Blog::destroy($id);
         return back()->with('success', 'Blog deleted');
     }
-
     public function publicBlogs()
     {
-        // Only return blogs with active status and order by latest
-        $blogs = Blog::where('status', 'active')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $blogs = Blog::where('status', 'active')->get();
+        Log::info('Public blogs:', $blogs->toArray());
+        return view('pages.blogs', compact('blogs'));
+    }
+    public function view($id, $title = null)
+    {
+        $blog = Blog::findOrFail($id);
 
-        // Pass $blogs explicitly to the view as an array
-        return view('partials.blogs', ['blogs' => $blogs]);
+        // Optionally: check if the $title in the URL matches the blog's slug or title,
+        // and redirect to the canonical URL if not (SEO-friendly). But core logic just fetches by id.
+
+        return view('pages.blogs_view', compact('blog'));
     }
 }

@@ -1,9 +1,23 @@
-<div class="hero-image Automotive-EV">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Automotive & Transportation')
+@section('meta_description', 'Explore Siemens solutions for faster, more efficient automotive and transportation design, engineering, and manufacturing. Improve vehicle performance and meet regulatory pressures with industry best-in-class tools.')
+@section('meta_keywords', 'Automotive, Transportation, EV, Electric Vehicles, Automotive Design, Vehicle Engineering, Siemens, Digital Twin, PLM, Mobility')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Automotive & Transportation | Siemens Solutions')
+@section('og_description', 'Siemens helps automotive and transportation companies innovate with advanced design & engineering tools, enabling an efficient response to modern demands.')
+@section('og_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Automotive & Transportation | Siemens Solutions')
+@section('twitter_description', 'Empower automotive & transportation engineering with digital solutions from Siemens. Accelerate innovation, safety & performance.')
+@section('twitter_image', asset('assets/images/imagesimcenter/FASTER, MORE EFFICIENT AUTOMOTIVE DESIGN.png'))
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
         <h1>Automotive & Transportation</h1>
         <ul class="page-list">
-            <li><a href="/" class="spa-link">Home</a></li>
+            <li><a class="spa-link" href="/">Home</a></li>
             <li>Automotive & Transportation</li>
         </ul>
     </div>

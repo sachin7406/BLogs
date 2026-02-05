@@ -1,9 +1,36 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Capital E/E Systems Development Platform')
+
+@section('meta_description', 'Discover Siemens Capital E/E Systems Development: accelerate modern electrical/electronic systems engineering with integrated architecture, network, and embedded software design for next-generation product innovation and compliance.')
+
+@section('meta_keywords', 'Capital, Siemens, E/E Systems, Electrical Design, Embedded Software, Network Development, Electrical Engineering, Digital Manufacturing, Model Based Systems, Wiring Harness, System Architecture, Automotive, Aerospace, Compliance')
+
+@section('meta_robots', 'index, follow')
+
+@section('canonical', url()->current())
+
+@section('og_title', 'Capital E/E Systems Development | Digital Product Innovation')
+
+@section('og_description', 'Advance E/E system design with Siemens Capital: streamline electrical, electronic, and software development from architecture to manufacturing with automation, traceability, and compliance.')
+
+@section('og_image', asset('assets/images/imagesimcenter/captial.png'))
+
+@section('og_url', url()->current())
+
+@section('og_type', 'website')
+
+@section('twitter_title', 'Capital E/E Systems Development | Siemens Digital Innovation')
+
+@section('twitter_description', 'Drive innovation and accelerate E/E systems engineering with Siemens Capital—integrated tools for electrical, electronic, and software product development.')
+
+@section('twitter_image', asset('assets/images/imagesimcenter/captial.png'))
+
 <div class="hero-image">
     <div class="hero-text">
-        <h1>CAPITAL</h1>
+        <h1>Capital</h1>
         <ul class="page-list">
-            <li><a href="/" class="spa-links">Home</a></li>
-            <li>CAPITAL</li>
+            <li><a href="/" class="spa-link">Home</a></li>
+            <li>Capital</li>
         </ul>
     </div>
 </div>
@@ -14,9 +41,11 @@
         <div class="row">
             <div class="column column_bg">
                 <div class="column_text">
-                    <h3>CAPITAL</h3>
+                    <h3>Capital</h3>
                     <p>
-                        Modern E/E systems are characterized by a huge growth in complexity. One of the biggest challenges is developing these complex, multi-domain systems in a coherent, integrated way, which is driving companies to evolve their E/E system development approaches to meet the market challenges of tomorrow. The next generation of development approaches must blur the boundaries between software, electrical, electronic, and network development to ensure comprehensive traceability and compliance whilst accelerating product development. To help companies thrive in this new world the Capital electrical/electronic (E/E) systems development software portfolio has been strategically expanded to support this. Building upon leading Capital capabilities for the design, manufacture, and service of electrical systems, the portfolio is now expanded to encompass E/E system and software architectures, network communications, and embedded software development.
+                        Siemens Capital is a comprehensive, modern E/E systems development platform engineered to tackle the unprecedented complexity of today’s electrical and electronic products. Evolving far beyond traditional electrical design, Capital unifies the development of software, electrical, electronic, and networked systems within a coherent, traceable flow. This next-generation approach accelerates product delivery, ensures regulatory compliance, and enables end-to-end traceability across domains.
+                        <br><br>
+                        Built on industry-leading Capital tools for electrical system design, manufacturing, and service, the expanded portfolio now empowers engineering teams to collaboratively architect E/E systems, design embedded software, manage networks, and automate manufacturing documentation in a seamlessly integrated environment.
                     </p>
                 </div>
             </div>

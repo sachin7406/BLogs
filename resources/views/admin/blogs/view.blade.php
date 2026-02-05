@@ -20,18 +20,6 @@
             overflow: hidden;
         }
 
-        .creative-post-wrapper:before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: -100px;
-            right: -120px;
-            width: 280px;
-            height: 260px;
-            background: radial-gradient(ellipse at top right, #ecebff 60%, transparent 100%);
-            z-index: 0;
-            pointer-events: none;
-        }
 
         .creative-back-link {
             display: inline-flex;
@@ -223,25 +211,6 @@
             animation: fadeInUp .7s;
         }
 
-        /* Ribbon effect badge */
-        .creative-badge {
-            position: absolute;
-            top: 17px;
-            right: -28px;
-            background: linear-gradient(100deg, #6b80fa 60%, #64ceec 100%);
-            color: #fff;
-            font-weight: 750;
-            font-size: 13.5px;
-            padding: 8px 38px 8px 28px;
-            border-radius: 6px 28px 28px 6px;
-            box-shadow: 0 2px 8px #8fbfff7f;
-            letter-spacing: 1.2px;
-            z-index: 99;
-            transform: rotate(8deg);
-            pointer-events: none;
-            opacity: 0.88;
-        }
-
         @media (max-width: 1020px) {
             .creative-post-wrapper {
                 padding: 30px 6vw 20px 6vw;
@@ -261,16 +230,15 @@
 
     <div class="creative-post-wrapper fadeUp">
 
-        {{-- Ribbon badge for some creative flavor --}}
-        <span class="creative-badge">BLOG PREVIEW</span>
-
         {{-- Dynamic creative back button --}}
+        @if(session()->has('admin_name') && !empty(session('admin_name')))
         <a href="{{ $backUrl }}" class="creative-back-link" title="Go back to Dashboard">
             <svg viewBox="0 0 24 24">
                 <path d="M11.67 3.87L9.9 5.63L15.26 11H4v2h11.25l-5.35 5.36l1.77 1.76L20.36 12z" />
             </svg>
             Back to {{ $backTitle }}
         </a>
+        @endif
 
         {{-- Title --}}
         <h1 class="wp-post-title">{{ $blog->title }}</h1>

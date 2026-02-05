@@ -1,4 +1,19 @@
-<div class="hero-image simcenter-speed" style="">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Simcenter SPEED')
+@section('meta_description', 'Discover Simcenter SPEED: Advanced software for electric machine design and analysis, supporting a range of machine types and offering robust links to simulation tools like Simcenter Amesim.')
+@section('meta_keywords', 'Simcenter SPEED, Electric Machine Design, Simulation, Siemens, Machine Analysis, System-level Simulation, Amesim')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter SPEED | Electric Machine Design & Simulation')
+@section('og_description', 'Simcenter SPEED delivers powerful electric machine design capabilities, supporting theoretical and physical models with system-level simulation and tool interoperability.')
+@section('og_image', asset('assets/images/imagesimcenter/simcenter speed.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter SPEED | Electric Machine Design')
+@section('twitter_description', 'Simcenter SPEED offers a complete platform for electric machine design, analysis, and system-level simulation integration.')
+@section('twitter_image', asset('assets/images/imagesimcenter/simcenter speed.png'))
+
+<div class="hero-image simcenter-speed">
     <div class="hero-text">
         <h1>SIMCENTER SPEED</h1>
         <ul class="page-list">

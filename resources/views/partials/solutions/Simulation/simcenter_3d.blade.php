@@ -1,8 +1,23 @@
-<div class="hero-image">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | SIMCENTER 3D')
+@section('meta_description', 'Explore Simcenter 3D: Siemens’ advanced CAE simulation platform for engineering analysis. Accelerate product performance prediction, reduce prototyping costs, and enable comprehensive multi-physics simulations.')
+@section('meta_keywords', 'Simcenter 3D, Siemens, CAE Simulation, Engineering Analysis, Virtual Testing, Structural Analysis, Thermal Analysis, Flow Simulation, Multiphysics, Product Development')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter 3D | Advanced CAE Simulation by Siemens')
+@section('og_description', 'Discover Simcenter 3D: revolutionary engineering simulation software to accelerate product innovation, improve accuracy and integrate multi-physics analysis.')
+@section('og_image', asset('assets/images/imagesimcenter/3d.jpg'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter 3D | Siemens CAE Simulation')
+@section('twitter_description', 'Simcenter 3D: Power your engineering with next-gen CAE simulation—virtual testing for faster, more innovative product development.')
+@section('twitter_image', asset('assets/images/imagesimcenter/3d.jpg'))
+
+<div class="hero-image simcenter-3d">
     <div class="hero-text">
         <h1>SIMCENTER 3D</h1>
         <ul class="page-list">
-            <li><a href="/" class="spa-links">Home</a></li>
+            <li><a href="/" class="spa-link">Home</a></li>
             <li>SIMCENTER 3D</li>
         </ul>
     </div>

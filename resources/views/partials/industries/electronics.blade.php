@@ -1,5 +1,20 @@
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | Electronics')
+@section('meta_description', 'Explore Siemens Capital software and digital solutions for the electronics industry: streamline E/E systems, electronic product design, and manufacturing with an integrated digital twin.')
+@section('meta_keywords', 'Electronics, Electronic Design, E/E Systems, Capital, Siemens, Digital Twin, Product Innovation, Electronics Manufacturing, Embedded Systems')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Electronics | DDSPLM Industry Solutions')
+@section('og_description', 'DDSPLM empowers electronics companies with advanced E/E systems, design automation, and manufacturing digitalization powered by Siemens Capital and comprehensive digital twin technology.')
+@section('og_image', asset('assets/images/imagesimcenter/industrial.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Electronics | DDSPLM Industry Solutions')
+@section('twitter_description', 'Accelerate innovation and product excellence in electronics with DDSPLM digital solutions and Siemens Capital for E/E systems engineering.')
+@section('twitter_image', asset('assets/images/imagesimcenter/industrial.png'))
+
 <!------------------------banner--------------------------start----------------->
-<div class="hero-image electronic" style="">
+<div class="hero-image electronic">
     <div class="hero-text">
         <h1>Electronics</h1>
         <ul class="page-list">

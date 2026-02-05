@@ -1,11 +1,26 @@
-<div class="hero-image Automotive-EV">
+{{-- SEO & Meta Data --}}
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | NX Progressive Die Design Center')
+@section('meta_description', 'Discover Siemens NX Progressive Die Design Center for digital manufacturing: automate, accelerate, and optimize progressive die engineering with intelligent sheet metal tooling in NX. Boost productivity, quality, and innovation in metal stamping.')
+@section('meta_keywords', 'NX Progressive Die, Siemens NX, Progressive Die Design, Sheet Metal, Tooling Automation, Digital Manufacturing, Metal Stamping, Strip Layout, Punch Design, NX CAD, Die Wizard')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'NX Progressive Die Design Center | Digital Manufacturing')
+@section('og_description', 'Accelerate sheet metal tooling with Siemens NX Progressive Die Design Center: automate die development and optimize stamping performance using intelligent, production-ready progressions.')
+@section('og_image', asset('assets/images/imagesimcenter/industrial.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'NX Progressive Die Design Center | Siemens Digital Manufacturing')
+@section('twitter_description', 'Boost productivity by automating progressive die tooling and metal stamping workflows with Siemens NX Progressive Die Design Center.')
+@section('twitter_image', asset('assets/images/imagesimcenter/industrial.png'))
 
+<div class="hero-image Automotive-EV">
     <div class="hero-text">
         <h1>NX Progressive Die Design</h1>
         <ul class="page-list">
             <li><a href="/" class="spa-link">Home</a></li>
-            <li>Desigen Center X / </li>
-            <li><a href="/solutions/mechanical/desigencenter_nx_cad" class="spa-link">NX Cad /</a></li>
+            <li>Design Center X</li>
+            <li><a href="/solutions/mechanical/desigencenter_nx_cad" class="spa-link">NX CAD</a></li>
             <li>NX Progressive Die Design</li>
         </ul>
     </div>

@@ -1,9 +1,23 @@
-<!----------------banner---------------start----------->
-<div class="hero-image">
+{{-- SEO & Meta Data --}}
+@section('title', 'DDSPLM | SIMCENTER AMESIM')
+@section('meta_description', 'Explore Simcenter Amesim: Siemens’ advanced system simulation platform for mechatronic performance prediction, optimization and virtual validation. Accelerate engineering productivity across development stages.')
+@section('meta_keywords', 'Simcenter Amesim, System Simulation, Mechatronic Systems, Performance Optimization, Virtual Validation, Siemens, Multiphysics, FMI, Modelica')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', 'Simcenter Amesim | System Simulation Platform by Siemens')
+@section('og_description', 'Simcenter Amesim delivers scalable, powerful multi-physics simulation for engineers seeking virtual assessment and optimization of mechatronic systems—integrated with CAE, CAD and controls environments.')
+@section('og_image', asset('assets/images/imagesimcenter/Amesim.png'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'Simcenter Amesim | Siemens System Simulation')
+@section('twitter_description', 'Simcenter Amesim: Model, analyze, and optimize mechatronic systems virtually for smarter engineering and faster product innovation.')
+@section('twitter_image', asset('assets/images/imagesimcenter/Amesim.png'))
+
+<div class="hero-image simcenter-amesim">
     <div class="hero-text">
         <h1>SIMCENTER AMESIM</h1>
         <ul class="page-list">
-            <li><a href="/" class="spa-links">Home</a></li>
+            <li><a href="/" class="spa-link">Home</a></li>
             <li>SIMCENTER AMESIM</li>
         </ul>
     </div>
