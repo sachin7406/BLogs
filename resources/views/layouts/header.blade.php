@@ -8,12 +8,34 @@
                         <i class="bi bi-telephone-fill"></i> +91-9350633147, +91-9319833144
                     </span>
                 </div>
-                <div class="social-icons mx-md-0 mx-auto">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                    <a href="#"><i class="bi bi-youtube"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
+                <div class="header-social-links">
+                    <ul class="list-unstyled d-flex mb-0">
+                        <li>
+                            <a href="https://www.facebook.com/DDSPLM" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/ddsplmindia" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/digital-design-solutions" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/channel/UC_WbD3tWvknbb8FaATXNnoQ" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/DDSPLM" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

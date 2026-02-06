@@ -77,12 +77,32 @@
                     © 2021 | DDSPLM Pvt Ltd | All Rights Reserved
                 </div>
                 <div class="col-md-4 text-center text-md-end">
-                    <div class="footer-social">
-                        <a href="https://www.facebook.com/DDSPLM" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
-                        <a href="https://twitter.com/DDSPLM" target="_blank" rel="noopener"><i class="bi bi-twitter"></i></a>
-                        <a href="https://www.linkedin.com/company/ddsplm" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
-                        <a href="https://www.instagram.com/ddsplm" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
-                        <a href="https://www.youtube.com/@DDSPLM" target="_blank" rel="noopener"><i class="bi bi-youtube"></i></a>
+                    <div class="social-icons mb-0">
+                        <li>
+                            <a href="https://www.facebook.com/DDSPLM" target="_blank">
+                                <i class="fab fa-facebook-f icons" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/DDSPLM" target="_blank">
+                                <i class="fab fa-twitter icons" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/digital-design-solutions" target="_blank">
+                                <i class="fab fa-linkedin-in icons" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/ddsplmindia" target="_blank">
+                                <i class="fab fa-instagram icons" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/channel/UC_WbD3tWvknbb8FaATXNnoQ" target="_blank">
+                                <i class="fab fa-youtube icons" aria-hidden="true"></i>
+                            </a>
+                        </li>
                     </div>
                 </div>
             </div>
