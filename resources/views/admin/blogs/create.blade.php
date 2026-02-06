@@ -1490,7 +1490,7 @@ $isEdit = isset($blog) && $blog;
     /* Block toolbar More dropdown (ref: image 5) */
     .block-toolbar-more {
         position: absolute;
-        top: 25%;
+        top: calc(100% + 8px);
         right: 0;
         background: #fff;
         border: 1px solid #dcdcde;
@@ -1960,6 +1960,8 @@ $isEdit = isset($blog) && $blog;
                         <option value="h2">Heading 2</option>
                         <option value="h3">Heading 3</option>
                         <option value="h4">Heading 4</option>
+                        <option value="h5">Heading 5</option>
+                        <option value="h6">Heading 6</option>
                         <option value="quote">Quote</option>
                         <option value="code">Code</option>
                         <option value="list">List</option>
@@ -2597,8 +2599,7 @@ $isEdit = isset($blog) && $blog;
     function attachColumnPlusButtons(root) {
         (root || document).querySelectorAll('.column').forEach(col => {
             // Remove any existing marker to avoid duplicates
-            const existingMarker = col.querySelector('.block-insert-marker');
-            if (existingMarker) existingMarker.remove();
+            col.querySelectorAll('.block-insert-marker').forEach(marker => marker.remove());
 
             // If no blocks in this column, show large initial "+" button UI
             if (!col.querySelector('.block')) {
@@ -2710,7 +2711,7 @@ $isEdit = isset($blog) && $blog;
             // Ensure bottom "+" marker exists after restoring from HTML
             if (!block.querySelector('.block-insert-marker-bottom')) {
                 const bottomMarker = document.createElement('div');
-                bottomMarker.className = 'block-insert-marker 3 block-insert-marker-bottom';
+                bottomMarker.className = 'block-insert-marker block-insert-marker-bottom';
                 bottomMarker.innerHTML = `<div style="flex:1;height:1px;background:#0066ff;"></div>
                 <button type="button" class="block-insert-plus" style="">+</button>
                 <div style="flex:1;height:1px;background:#0066ff;"></div>`;
@@ -2742,7 +2743,7 @@ $isEdit = isset($blog) && $blog;
 
     function addHeading(level) {
         // Only declare function, do not bind to window to avoid recursion stack overflow
-        const tag = ['h1', 'h2', 'h3', 'h4'][level - 1] || 'h2';
+        const tag = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'][level - 1] || 'h2';
         const h = document.createElement(tag);
         h.contentEditable = true;
         h.innerText = 'Heading';
@@ -3296,7 +3297,7 @@ $isEdit = isset($blog) && $blog;
             return block.querySelector('.block-image-inner img') || block.querySelector('img');
         }
         if (type === 'columns' || type === 'accordion' || type === 'buttons' || type === 'separator' || type === 'spacer') return null;
-        return block.querySelector('[contenteditable="true"]') || block.querySelector('h1, h2, h3, h4, div, blockquote, pre, ul, ol') || block.children[2];
+        return block.querySelector('[contenteditable="true"]') || block.querySelector('h1, h2, h3, h4, h5, h6, div, blockquote, pre, ul, ol') || block.children[2];
     }
 
     function showBlockToolbar(block) {
@@ -3339,16 +3340,20 @@ $isEdit = isset($blog) && $blog;
                 document.getElementById('blockInspectorTitle').textContent = 'H' + (content.tagName || '').replace('H', '') + ' Heading ' + (content.tagName || '').replace('H', '');
                 document.getElementById('blockInspectorDesc').textContent = 'Introduce new sections and organize content to help visitors (and search engines) understand the structure of your content.';
                 document.getElementById('blockHeadingLevelGroup').style.display = 'block';
+                document.getElementById('blockButtonSettingsGroup').style.display = 'none';
+                document.getElementById('blockColumnsSettingsGroup').style.display = 'none';
             } else if (type === 'buttons') {
                 document.getElementById('blockInspectorTitle').textContent = 'Button';
                 document.getElementById('blockInspectorDesc').textContent = 'Prompt visitors to take action with a button-style link.';
                 document.getElementById('blockHeadingLevelGroup').style.display = 'none';
                 document.getElementById('blockButtonSettingsGroup').style.display = 'block';
+                document.getElementById('blockColumnsSettingsGroup').style.display = 'none';
             } else if (type === 'columns' || type === 'grid') {
                 document.getElementById('blockInspectorTitle').textContent = 'Columns';
                 document.getElementById('blockInspectorDesc').textContent = 'Create multi-column layouts.';
                 document.getElementById('blockHeadingLevelGroup').style.display = 'none';
                 document.getElementById('blockColumnsSettingsGroup').style.display = 'block';
+                document.getElementById('blockButtonSettingsGroup').style.display = 'none';
             } else {
                 document.getElementById('blockInspectorTitle').textContent = type.charAt(0).toUpperCase() + type.slice(1);
                 document.getElementById('blockInspectorDesc').textContent = 'Block settings.';
@@ -3400,6 +3405,8 @@ $isEdit = isset($blog) && $blog;
             h2: 'H2',
             h3: 'H3',
             h4: 'H4',
+            h5: 'H5',
+            h6: 'H6',
             quote: 'Q',
             code: 'C',
             list: 'Li',
@@ -3410,6 +3417,8 @@ $isEdit = isset($blog) && $blog;
             h2: 'H2',
             h3: 'H3',
             h4: 'H4',
+            h5: 'H5',
+            h6: 'H6',
             quote: '"',
             code: '</>',
             list: '≡',
@@ -3420,6 +3429,8 @@ $isEdit = isset($blog) && $blog;
             else if (tag === 'h2') tb.value = 'h2';
             else if (tag === 'h3') tb.value = 'h3';
             else if (tag === 'h4') tb.value = 'h4';
+            else if (tag === 'h5') tb.value = 'h5';
+            else if (tag === 'h6') tb.value = 'h6';
             else if (tag === 'blockquote') tb.value = 'quote';
             else if (tag === 'pre') tb.value = el.classList.contains('code-block') ? 'code' : 'preformatted';
             else if (tag === 'ul' || tag === 'ol') tb.value = 'list';
@@ -3595,6 +3606,10 @@ $isEdit = isset($blog) && $blog;
         document.getElementById(id).onclick = () => {
             if (!selectedBlockContent) return;
             const align = ['left', 'center', 'right'][i];
+            if (applyImageAlignment(align)) {
+                saveState();
+                return;
+            }
             selectedBlockContent.style.textAlign = align;
             saveState();
         };
@@ -3670,39 +3685,50 @@ $isEdit = isset($blog) && $blog;
             document.getElementById('tbColor').value = e.target.value;
         }
     });
+    function applyImageAlignment(align) {
+        if (!selectedBlock || selectedBlock.dataset.type !== 'image') return false;
+        const imageWrap = selectedBlock.querySelector('.block-image-inner');
+        if (!imageWrap) return false;
+        imageWrap.style.display = 'block';
+        if (align === 'left') {
+            imageWrap.style.marginLeft = '0';
+            imageWrap.style.marginRight = 'auto';
+        } else if (align === 'center') {
+            imageWrap.style.marginLeft = 'auto';
+            imageWrap.style.marginRight = 'auto';
+        } else if (align === 'right') {
+            imageWrap.style.marginLeft = 'auto';
+            imageWrap.style.marginRight = '0';
+        }
+        return true;
+    }
     document.getElementById('blockAlignLeft').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
-                selectedBlockContent.style.display = 'block';
-                selectedBlockContent.style.marginLeft = '0';
-                selectedBlockContent.style.marginRight = 'auto';
-            } else {
-                selectedBlockContent.style.textAlign = 'left';
+            if (applyImageAlignment('left')) {
+                saveState();
+                return;
             }
+            selectedBlockContent.style.textAlign = 'left';
             saveState();
         }
     };
     document.getElementById('blockAlignCenter').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
-                selectedBlockContent.style.display = 'block';
-                selectedBlockContent.style.marginLeft = 'auto';
-                selectedBlockContent.style.marginRight = 'auto';
-            } else {
-                selectedBlockContent.style.textAlign = 'center';
+            if (applyImageAlignment('center')) {
+                saveState();
+                return;
             }
+            selectedBlockContent.style.textAlign = 'center';
             saveState();
         }
     };
     document.getElementById('blockAlignRight').onclick = () => {
         if (selectedBlockContent) {
-            if (selectedBlock && selectedBlock.dataset.type === 'image') {
-                selectedBlockContent.style.display = 'block';
-                selectedBlockContent.style.marginLeft = 'auto';
-                selectedBlockContent.style.marginRight = '0';
-            } else {
-                selectedBlockContent.style.textAlign = 'right';
+            if (applyImageAlignment('right')) {
+                saveState();
+                return;
             }
+            selectedBlockContent.style.textAlign = 'right';
             saveState();
         }
     };
