@@ -158,7 +158,7 @@ class BlogController extends Controller
             'success' => true,
             'url'     => '/assets/images/blogs/' . $fileName
         ]);
-    }
+    }   
 
     public function create()
     {
@@ -269,8 +269,8 @@ class BlogController extends Controller
     }
     public function publicBlogs()
     {
-        $blogs = Blog::where('status', 'active')->orderBy('id', 'desc')->get();
-        Log::info('Public blogs:', $blogs->toArray());
+        $perPage = 10;
+        $blogs = Blog::where('status', 'active')->orderBy('id', 'desc')->paginate($perPage);
         return view('pages.blogs', compact('blogs'));
     }
     public function view($id, $title = null)

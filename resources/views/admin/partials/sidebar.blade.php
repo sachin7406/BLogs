@@ -64,12 +64,6 @@
                             <span class="d-none d-sm-inline">All Users</span>
                         </a>
                     </li>
-                    <li class="w-100">
-                        <a href="{{ route('admin.users.create') }}" class="nav-link px-0 text-white">
-                            <i class="bi bi-person-plus me-2"></i>
-                            <span class="d-none d-sm-inline">Add User</span>
-                        </a>
-                    </li>
                 </ul>
             </li>
             @endif

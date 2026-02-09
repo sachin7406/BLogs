@@ -13,6 +13,23 @@
         </div>
 
         <div class="card-body">
+
+            {{-- Alert for success message --}}
+            @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
+            {{-- Alert for error message --}}
+            @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $errors->first() }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
             <table class="table table-hover align-middle">
                 <thead class="table-light">
                     <tr>
@@ -85,29 +102,6 @@
         document.getElementById('modalTitle').innerText = 'Edit User';
         modal.show();
     }
-
-    document.getElementById('userForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        let id = document.getElementById('user_id').value;
-        let url = id ? `/admin/users/${id}` : `/admin/users`;
-        let method = id ? 'PUT' : 'POST';
-
-        fetch(url, {
-            method: method,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name.value,
-                email: email.value,
-                password: password.value,
-                role: role.value,
-                status: status.value
-            })
-        }).then(() => location.reload());
-    });
 </script>
 
 @endsection

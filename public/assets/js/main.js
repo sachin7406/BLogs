@@ -74,6 +74,7 @@ function closeAllMegaMenus() {
 ========================= */
 if (window.innerWidth > 920) {
     $('.nav-item.dropdown').on('mouseenter', function () {
+        // console.log("callingss");
         if (openMenu) return;
         const menu = $(this).find('.mega-menu');
         closeAllMegaMenus();

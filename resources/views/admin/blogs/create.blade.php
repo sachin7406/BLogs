@@ -1832,9 +1832,15 @@ $isEdit = isset($blog) && $blog;
         <span class="command-palette" id="commandPaletteBtn">Ctrl+K</span>
     </div>
     <div class="wp-topbar-right">
-        <button class="icon-btn active" id="settingsSidebarBtn" title="Toggle settings sidebar">⚙</button>
-        <button class="icon-btn" id="previewBtn" title="Preview">👁</button>
-        <button class="publish" id="publishBtn">Publish</button>
+        <button class="icon-btn active" id="settingsSidebarBtn" title="Toggle settings sidebar" style="font-size: 18px; background: #f3f5ff; border-radius: 6px; margin-right: 8px; padding: 7px 13px; border: 1px solid #dde3fa; color: #3858e9; box-shadow: 0 1px 3px rgba(56,88,233,0.07); transition: background 0.2s, box-shadow 0.2s;">
+            <span style="font-size: 20px; vertical-align: middle;">⚙</span>
+        </button>
+        <button class="icon-btn" id="previewBtn" title="Preview" style="font-size: 18px; background: #f8f8fa; border-radius: 6px; margin-right: 8px; padding: 7px 13px; border: 1px solid #eee; color: #333; transition: background 0.2s, box-shadow 0.2s;">
+            <span style="font-size: 18px; vertical-align: middle;">👁</span>
+        </button>
+        <button class="publish" id="publishBtn" style="background: linear-gradient(90deg, #3656ec 0%, #3e9aff 100%); border-radius: 6px; color: #fff; border: none; padding: 8px 22px; font-size: 16px; font-weight: 600; letter-spacing: 0.03em; box-shadow: 0 2px 8px rgba(56,88,233,0.10); transition: background 0.2s, box-shadow 0.2s; cursor: pointer;">
+            Publish
+        </button>
     </div>
 </div>
 
@@ -1921,7 +1927,6 @@ $isEdit = isset($blog) && $blog;
                 <div class="block-item" data-block="accordion" draggable="true" title="Accordion"><span class="block-item-icon">≡</span><span class="block-item-text">Accordion</span></div>
                 <div class="block-item" data-block="buttons" draggable="true" title="Buttons"><span class="block-item-icon">▢</span><span class="block-item-text">Buttons</span></div>
                 <div class="block-item" data-block="columns" data-cols="picker" draggable="true" title="Columns"><span class="block-item-icon">|||</span><span class="block-item-text">Columns</span></div>
-                <div class="block-item" data-block="group" draggable="true" title="Group"><span class="block-item-icon">⊞</span><span class="block-item-text">Group</span></div>
                 <div class="block-item" data-block="separator" draggable="true" title="Separator"><span class="block-item-icon">—</span><span class="block-item-text">Separator</span></div>
                 <div class="block-item" data-block="spacer" draggable="true" title="Spacer"><span class="block-item-icon">↗</span><span class="block-item-text">Spacer</span></div>
             </div>
@@ -2040,7 +2045,6 @@ $isEdit = isset($blog) && $blog;
                 <button type="button" data-more="addNote">Add note</button>
                 <button type="button" data-more="copyStyles">Copy styles</button>
                 <button type="button" data-more="pasteStyles">Paste styles</button>
-                <button type="button" data-more="group">Group</button>
                 <button type="button" data-more="lock">Lock</button>
                 <button type="button" data-more="rename">Rename</button>
                 <button type="button" data-more="hide">Hide</button>
@@ -2803,10 +2807,75 @@ $isEdit = isset($blog) && $blog;
     }
 
     function addTable() {
-        const table = document.createElement('table');
-        table.contentEditable = true;
-        table.innerHTML = '<tr><td>Cell 1</td><td>Cell 2</td></tr><tr><td>Cell 3</td><td>Cell 4</td></tr>';
-        wrapBlock(table, 'table');
+
+        // Container
+        const wrapper = document.createElement('div');
+        wrapper.className = 'wp-table-setup';
+
+        wrapper.innerHTML = `
+            <div style="padding:16px;border:1px solid #dcdcde;border-radius:6px;background:#fff;">
+                <strong style="display:block;margin-bottom:10px;">Table</strong>
+                <p style="margin-bottom:12px;color:#555;">Insert a table for sharing data.</p>
+
+                <div style="display:flex;gap:12px;margin-bottom:12px;">
+                    <div>
+                        <label style="font-size:12px;">COLUMN COUNT</label>
+                        <input type="number" min="1" value="2" class="table-cols"
+                            style="width:80px;padding:6px;border:1px solid #ccc;border-radius:4px;">
+                    </div>
+                    <div>
+                        <label style="font-size:12px;">ROW COUNT</label>
+                        <input type="number" min="1" value="2" class="table-rows"
+                            style="width:80px;padding:6px;border:1px solid #ccc;border-radius:4px;">
+                    </div>
+                </div>
+
+                <button type="button" class="create-table-btn"
+                    style="background:#3858e9;color:#fff;border:none;padding:8px 14px;border-radius:4px;cursor:pointer;">
+                    Create Table
+                </button>
+            </div>
+        `;
+
+        const block = wrapBlock(wrapper, 'table');
+
+        const createBtn = wrapper.querySelector('.create-table-btn');
+
+        createBtn.onclick = () => {
+            const cols = parseInt(wrapper.querySelector('.table-cols').value, 10);
+            const rows = parseInt(wrapper.querySelector('.table-rows').value, 10);
+
+            if (!cols || !rows || cols < 1 || rows < 1) {
+                alert('Rows and columns must be greater than 0');
+                return;
+            }
+
+            // Build table
+            const table = document.createElement('table');
+            table.style.width = '100%';
+            table.style.borderCollapse = 'collapse';
+            table.setAttribute('border', '1');
+
+            for (let r = 0; r < rows; r++) {
+                const tr = document.createElement('tr');
+                for (let c = 0; c < cols; c++) {
+                    const td = document.createElement('td');
+                    td.contentEditable = true;
+                    td.innerText = 'Cell';
+                    td.style.padding = '8px';
+                    td.style.border = '1px solid #ccc';
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+
+            // Replace setup UI with actual table
+            wrapper.innerHTML = '';
+            wrapper.appendChild(table);
+
+            saveState();
+            refreshAllListViews();
+        };
     }
 
     function addAccordion() {
@@ -2937,35 +3006,70 @@ $isEdit = isset($blog) && $blog;
     function addImageBlock() {
         const wrap = document.createElement('div');
         wrap.className = 'block-image-inner';
-        wrap.innerHTML = `
-            <div class="block-image-instruction">Drag and drop an image, upload, or choose from your library.</div>
-            <div class="block-image-actions">
-                <button type="button" class="btn-upload block-img-upload">Upload</button>
-                <button type="button" class="btn-secondary block-img-select">Select Image</button>
-                <button type="button" class="btn-secondary block-img-url">Insert from URL</button>
-            </div>
-            <input type="file" class="block-img-file" accept="image/*" style="display:none">
-        `;
-        const block = wrapBlock(wrap, 'image');
-        wrap.querySelector('.block-img-upload').onclick = () => wrap.querySelector('.block-img-file').click();
-        wrap.querySelector('.block-img-file').onchange = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    wrap.classList.add('has-image');
-                    wrap.innerHTML = '<img src="' + ev.target.result + '" alt="">';
+
+        function renderImageActions() {
+            // Remounts the UI for upload/select/url buttons
+            wrap.innerHTML = `
+                <div class="block-image-instruction">Drag and drop an image, upload, or choose from your library.</div>
+                <div class="block-image-actions">
+                    <button type="button" class="btn-upload block-img-upload">Upload</button>
+                    <button type="button" class="btn-secondary block-img-select">Select Image</button>
+                    <button type="button" class="btn-secondary block-img-url">Insert from URL</button>
+                </div>
+                <input type="file" class="block-img-file" accept="image/*" style="display:none">
+            `;
+            bindActions();
+        }
+
+        function renderWithImage(imageSrc) {
+            wrap.classList.add('has-image');
+            wrap.innerHTML = `
+                <div style="position:relative; text-align:center;">
+                    <img src="${imageSrc}" alt="" style="max-width:100%;margin:auto;display:block;">
+                    <button type="button" class="btn-secondary block-img-replace" style="position:absolute;top:8px;right:8px;z-index:2;" title="Replace">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M20 17.17V13a1 1 0 1 1 2 0v7a1 1 0 0 1-1 1h-7a1 1 0 1 1 0-2h4.17L4.93 4.93a1 1 0 0 1 1.41-1.41l15.13 15.13a1 1 0 0 1-1.41 1.41L20 17.17z" fill="#555"/><path d="M2 6.83V11a1 1 0 1 0 2 0V6.83L19.07 19.07a1 1 0 0 0 1.41-1.41L4.93 4.93A1 1 0 1 0 3.51 6.34L2 6.83z" fill="#555"/></svg>
+                    </button>
+                </div>
+            `;
+            const replaceBtn = wrap.querySelector('.block-img-replace');
+            if (replaceBtn) {
+                replaceBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    renderImageActions();
                 };
-                reader.readAsDataURL(file);
             }
-        };
-        wrap.querySelector('.block-img-url').onclick = () => {
-            const url = prompt('Enter image URL:');
-            if (url) {
-                wrap.classList.add('has-image');
-                wrap.innerHTML = '<img src="' + url + '" alt="">';
-            }
-        };
+        }
+
+        function bindActions() {
+            wrap.querySelector('.block-img-upload').onclick = () => wrap.querySelector('.block-img-file').click();
+            wrap.querySelector('.block-img-file').onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        renderWithImage(ev.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            // If you have a file manager/modal for Select Image, hook it here
+            // For now, we'll just prompt as a stub like Insert from URL
+            wrap.querySelector('.block-img-select').onclick = () => {
+                const url = prompt('Enter image URL (from "Select Image"):');
+                if (url) {
+                    renderWithImage(url);
+                }
+            };
+            wrap.querySelector('.block-img-url').onclick = () => {
+                const url = prompt('Enter image URL:');
+                if (url) {
+                    renderWithImage(url);
+                }
+            };
+        }
+
+        renderImageActions();
+        const block = wrapBlock(wrap, 'image');
     }
 
     function removeBlock(btn) {
@@ -3516,28 +3620,6 @@ $isEdit = isset($blog) && $blog;
         if (!value) return 0;
         const num = parseFloat(value.toString().replace('px', ''));
         return Number.isNaN(num) ? 0 : num;
-    }
-
-    function applyFontSize(value) {
-        if (!selectedBlockContent) return;
-        const selection = window.getSelection ? window.getSelection() : null;
-        if (selection && selection.rangeCount > 0) {
-            const range = selection.getRangeAt(0);
-            const inBlock = selectedBlockContent.contains(range.commonAncestorContainer);
-            if (inBlock && !selection.isCollapsed && value) {
-                const span = document.createElement('span');
-                span.style.fontSize = value;
-                const contents = range.extractContents();
-                span.appendChild(contents);
-                range.insertNode(span);
-                selection.removeAllRanges();
-                const newRange = document.createRange();
-                newRange.selectNodeContents(span);
-                selection.addRange(newRange);
-                return;
-            }
-        }
-        selectedBlockContent.style.fontSize = value || '';
     }
 
     function applyFontSize(value) {
@@ -4828,7 +4910,7 @@ $isEdit = isset($blog) && $blog;
 
                 blocks.push({
                     type: 'image',
-                    url: src 
+                    url: src
                 });
             }
 
