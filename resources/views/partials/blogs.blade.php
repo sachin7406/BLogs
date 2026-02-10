@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<section class="blog_section py-4">
+<section class="blog_section ">
     <div class="container" style="max-width:1100px;">
         @if(isset($blogs) && $blogs->count())
         @foreach($blogs as $blog)

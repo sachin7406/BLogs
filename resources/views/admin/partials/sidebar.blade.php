@@ -85,7 +85,8 @@
                 <img src="https://i.pravatar.cc/30" alt="user" width="30" height="30" class="rounded-circle">
                 <span class="d-none d-sm-inline mx-1">{{ session('admin_name') }}</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <!-- Add "show" class to force the dropdown to display -->
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow show" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li>

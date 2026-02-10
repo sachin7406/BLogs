@@ -31,23 +31,49 @@ class UserController extends Controller
     ======================= */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'     => 'required',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'role'     => 'required',
-            'status'   => 'required',
-        ]);
+        try {
+            // Validate input
+            // Validate input, only allow gmail.com or ddsplm.com emails
+            $validated = $request->validate([
+                'name'     => 'required|string|max:255',
+                'email'    => [
+                    'required',
+                    'email',
+                    'unique:users,email',
+                    'max:255',
+                    function ($attribute, $value, $fail) {
+                        $allowedDomains = ['gmail.com', 'ddsplm.com'];
+                        $emailDomain = substr(strrchr($value, "@"), 1);
+                        if (!in_array(strtolower($emailDomain), $allowedDomains)) {
+                            $fail('Only gmail.com or ddsplm.com email addresses are allowed.');
+                        }
+                    },
+                ],
+                'password' => 'required|string|min:6',
+                'role'     => 'required|string',
+                'status'   => 'required|string',
+            ]);
 
-        User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'role'     => $request->role,
-            'status'   => $request->status,
-        ]);
+            // Hash the password
+            $validated['password'] = Hash::make($validated['password']);
 
-        return response()->json(['message' => 'User created']);
+            // Create the user
+            $user = User::create($validated);
+
+            // If you want to redirect after creation (to work in browser and for Ajax):
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['message' => 'User created', 'user' => $user]);
+            } else {
+                return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+            }
+        } catch (\Exception $e) {
+            // Return a proper error
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['message' => 'Error creating user', 'error' => $e->getMessage()], 500);
+            } else {
+                return redirect()->back()->withInput()->withErrors(['error' => $e->getMessage()]);
+            }
+        }
     }
 
     /* ======================
