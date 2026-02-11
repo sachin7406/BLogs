@@ -29,7 +29,8 @@ class BlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::with('category')->latest()->get();
+        $perPage = 12; // You can adjust this as needed
+        $blogs = Blog::with('category')->latest()->paginate($perPage);
         return view('admin.blogs.index', compact('blogs'));
     }
 
@@ -375,9 +376,7 @@ class BlogController extends Controller
     }
     public function view($id, $title = null)
     {
-        $decryptedId = Crypt::decrypt($id);
-
-        $blog = Blog::findOrFail($decryptedId);
+        $blog = Blog::findOrFail($id);
 
         return view('pages.blogs_view', compact('blog'));
     }

@@ -97,6 +97,12 @@
     </div>
     @endforelse
 
+    <!-- PAGINATION -->
+    @if($blogs->hasPages())
+    <div class="d-flex justify-content-center mt-4">
+        {{ $blogs->links() }}
+    </div>
+    @endif
 </div>
 
 @endsection
