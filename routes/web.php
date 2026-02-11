@@ -49,14 +49,59 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::get('/dashboard', [BlogController::class, 'dashboard'])->name('dashboard');
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
     Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
-    Route::get('/blogs/view/{id}', [BlogController::class, 'show'])->name('blogs.view');
-    // Route::get('/blogs/edit/{id}', [BlogController::class, 'edit'])->name('blogs.edit');
-    // Edit (same blade as create)
-    Route::get('/blogs/edit/{id}', [BlogController::class, 'edit'])->name('blogs.edit');
+
+    // Use encrypted ID for viewing blog, handled by BlogController@show which will decrypt internally
+    Route::get('/blogs/view/{id}', function ($id) {
+        $encryptedId = $id;
+        try {
+            $decryptedId = \Illuminate\Support\Facades\Crypt::decrypt($encryptedId);
+        } catch (\Exception $e) {
+            abort(404, 'Invalid blog id');
+        }
+        $blog = \App\Models\Blog::findOrFail($decryptedId);
+        return app(\App\Http\Controllers\Admin\BlogController::class)->show($encryptedId);
+    })->name('blogs.view');
+
+    // Edit (same blade as create), with encrypted id handling for consistency
+    Route::get('/blogs/edit/{id}', function ($id) {
+        $encryptedId = $id;
+        try {
+            $decryptedId = \Illuminate\Support\Facades\Crypt::decrypt($encryptedId);
+        } catch (\Exception $e) {
+            abort(404, 'Invalid blog id');
+        }
+        $blog = \App\Models\Blog::findOrFail($decryptedId);
+        return app(\App\Http\Controllers\Admin\BlogController::class)->edit($encryptedId);
+    })->name('blogs.edit');
+
     Route::post('/blogs/store', [BlogController::class, 'store'])->name('blogs.store');
-    Route::post('/blogs/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
-    Route::delete('/blogs/delete/{id}', [BlogController::class, 'delete'])->name('blogs.delete');
+
+    Route::post('/blogs/update/{id}', function ($id, \Illuminate\Http\Request $request) {
+        $encryptedId = $id;
+        try {
+            $decryptedId = \Illuminate\Support\Facades\Crypt::decrypt($encryptedId);
+        } catch (\Exception $e) {
+            abort(404, 'Invalid blog id');
+        }
+        $blog = \App\Models\Blog::findOrFail($decryptedId);
+        return app(\App\Http\Controllers\Admin\BlogController::class)->update($request, $encryptedId);
+    })->name('blogs.update');
+
+    Route::delete('/blogs/delete/{id}', function ($id) {
+        $encryptedId = $id;
+        try {
+            $decryptedId = \Illuminate\Support\Facades\Crypt::decrypt($encryptedId);
+        } catch (\Exception $e) {
+            abort(404, 'Invalid blog id');
+        }
+        $blog = \App\Models\Blog::findOrFail($decryptedId);
+        return app(\App\Http\Controllers\Admin\BlogController::class)->delete($encryptedId);
+    })->name('blogs.delete');
+
+
     Route::post('blogs/upload-image', [BlogController::class, 'uploadImage'])->name('blogs.uploadImage');
+    // Handle image download from URL for blog image upload (AJAX from admin blog create page)
+    Route::post('blogs/image-from-url', [BlogController::class, 'imageFromUrl'])->name('blogs.imageFromUrl');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');

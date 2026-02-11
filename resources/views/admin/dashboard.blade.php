@@ -37,7 +37,10 @@
 <div class="blog-grid mt-4">
 
     @foreach($blogs as $blog)
-    <a href="{{ route('admin.blogs.view', $blog->id) }}" class="text-decoration-none">
+    @php
+    $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($blog->id);
+    @endphp
+    <a href="{{ route('admin.blogs.view', $encryptedId) }}" class="text-decoration-none">
         <div class="blog-card">
 
             <img
@@ -49,15 +52,15 @@
                 <h6 class="blog-title">{{ $blog->title }}</h6>
 
                 <p class="blog-desc">
-                    {{ Str::limit($blog->description, 70) }}
+                    {{ \Illuminate\Support\Str::limit(strip_tags($blog->description), 70) }}
                 </p>
 
                 <div class="blog-meta">
                     <span class="badge bg-{{ $blog->status === 'active' ? 'success' : 'secondary' }}">{{ ucfirst($blog->status) }}</span>
                     @if($blog->category)
-                        <span class="badge bg-info ms-1">{{ $blog->category->name }}</span>
+                    <span class="badge bg-info ms-1">{{ $blog->category->name }}</span>
                     @else
-                        <span class="badge bg-light text-dark ms-1">Uncategorized</span>
+                    <span class="badge bg-light text-dark ms-1">Uncategorized</span>
                     @endif
                     <small>{{ $blog->created_at->diffForHumans() }}</small>
                 </div>
@@ -71,6 +74,7 @@
         </div>
     </a>
     @endforeach
+
 
 </div>
 
