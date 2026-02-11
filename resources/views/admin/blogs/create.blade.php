@@ -2075,7 +2075,7 @@ $isEdit = isset($blog) && $blog;
                     </div>
                 </div>
                 <input type="file" id="featuredImageInput" accept="image/*" style="display: none;">
-            </div>  
+            </div>
 
             <div class="settings-group">
                 <strong>Last edited</strong>
@@ -3351,17 +3351,7 @@ $isEdit = isset($blog) && $blog;
     document.addEventListener('keydown', (e) => {
         if (selectedBlock) {
             const ctrl = e.ctrlKey || e.metaKey;
-            if (ctrl && e.key.toLowerCase() === 'c') { // Copy
-                e.preventDefault();
-                clipboardBlockJson = blockToJson(selectedBlock);
-            } else if (ctrl && e.key.toLowerCase() === 'x') { // Cut
-                e.preventDefault();
-                clipboardBlockJson = blockToJson(selectedBlock);
-                selectedBlock.remove();
-                hideBlockToolbar();
-                saveState();
-                refreshAllListViews();
-            } else if (ctrl && e.shiftKey && e.key.toLowerCase() === 'd') { // Duplicate
+            if (ctrl && e.shiftKey && e.key.toLowerCase() === 'd') { // Duplicate
                 e.preventDefault();
                 const clone = selectedBlock.cloneNode(true);
                 selectedBlock.parentNode.insertBefore(clone, selectedBlock.nextSibling);

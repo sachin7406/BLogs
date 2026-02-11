@@ -82,13 +82,7 @@
             </a>
             <!-- Add "show" class to force the dropdown to display -->
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow show" aria-labelledby="dropdownUser1">
-                <li>
-                    <a class="dropdown-item" href="{{ route('admin.users.profile', ['id' => session('admin_id')]) }}">Profile</a>
-                </li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
+                <li><a class="dropdown-item" href="{{ route('admin.profile') }}">Profile</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.logout') }}">Sign out</a></li>
             </ul>
         </div>

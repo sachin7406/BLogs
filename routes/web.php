@@ -39,8 +39,6 @@ Route::prefix('admin')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
 
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
-    // Profile view route
-    Route::get('/users/profile/{id}', [UserController::class, 'profile'])->name('admin.users.profile');
 });
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +49,8 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::get('/dashboard', [BlogController::class, 'dashboard'])->name('dashboard');
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
     Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
-
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
     // Use encrypted ID for viewing blog, handled by BlogController@show which will decrypt internally
     Route::get('/blogs/view/{id}', function ($id) {
         $encryptedId = $id;

@@ -20,7 +20,7 @@
 
         <div class="d-flex align-items-center gap-2">
             <img src="https://i.pravatar.cc/32" class="rounded-circle">
-            <span>{{ session('admin_name') }}</span>
+            <a href="{{ route('admin.profile') }}" class="text-decoration-none text-dark fw-semibold">{{ session('admin_name') }}</a>
         </div>
     </div>
 </div>

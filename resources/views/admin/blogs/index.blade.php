@@ -3,6 +3,13 @@
 
 @section('content')
 
+@section('content')
+@php
+// Dynamic back link to dashboard
+$backUrl = route('admin.dashboard');
+$backTitle = 'Dashboard';
+@endphp
+
 <!-- HEADER -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-semibold mb-0">Blogs</h4>
