@@ -39,6 +39,8 @@ Route::prefix('admin')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
 
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+    // Profile view route
+    Route::get('/users/profile/{id}', [UserController::class, 'profile'])->name('admin.users.profile');
 });
 /*
 |--------------------------------------------------------------------------

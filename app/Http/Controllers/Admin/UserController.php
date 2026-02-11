@@ -121,4 +121,23 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')
             ->with('success', 'User deleted successfully');
     }
+    /* ======================
+        PROFILE VIEW
+    ======================= */
+    public function profile($id)
+    {
+        // Safely avoid withCount if 'blogs' relation does not exist
+        $user = \App\Models\User::findOrFail($id);
+
+        // Count blogs if the relation exists, otherwise set to 0
+        $blogsCount = 0;
+        if (method_exists($user, 'blogs')) {
+            $blogsCount = $user->blogs()->count();
+        }
+
+        // Attach blogs_count attribute for view compatibility
+        $user->blogs_count = $blogsCount;
+
+        return view('admin.users.profile', compact('user'));
+    }
 }
