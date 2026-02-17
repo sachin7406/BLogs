@@ -48,7 +48,39 @@
                     @endif
                 </ul>
             </li>
-
+            <!-- Config (ADMIN ONLY) -->
+            @if(session('admin_role') === 'admin')
+            <li class="nav-item w-100">
+                <a href="#configSubmenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white">
+                    <i class="fs-4 bi-gear"></i>
+                    <span class="ms-1 d-none d-sm-inline">Config</span>
+                </a>
+                <ul class="collapse nav flex-column ms-4" id="configSubmenu" data-bs-parent="#menu">
+                    {{--
+                        The routes below were originally using route('menus.index') and route('menu-items.index'),
+                        but those routes are not defined. Update with the correct admin routes or temporary # links.
+                    --}}
+                    <li class="w-100">
+                        <a href="{{ route('admin.menus.index') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-menu-button-wide me-2"></i>
+                            <span class="d-none d-sm-inline">Menu Config Master</span>
+                        </a>
+                    </li>
+                    <li class="w-100">
+                        <a href="{{ route('admin.menu-items.index') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-card-list me-2"></i>
+                            <span class="d-none d-sm-inline">Items Config Master</span>
+                        </a>
+                    </li>
+                    <li class="w-100">
+                        <a href="{{ route('admin.preview.navbar') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-sliders2-vertical me-2"></i>
+                            <span class="d-none d-sm-inline">Config Master</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
 
             <!-- USERS (ADMIN ONLY) -->
             @if(session('admin_role') === 'admin')
@@ -67,6 +99,8 @@
                 </ul>
             </li>
             @endif
+
+
 
         </ul>
 

@@ -48,7 +48,17 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/loader.css') }}">
+    <style>
+        .dropdown-submenu {
+            position: relative;
+        }
 
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-left: .1rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -59,6 +69,8 @@
     {{-- HEADER --}}
     @include('layouts.header')
 
+
+    @include('components.header-menu')
     {{-- SPA ROOT --}}
     <div id="spa-content">
         @yield('content')
@@ -79,6 +91,17 @@
     <script src="{{ asset('assets/js/spa.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/loader.js') }}"></script>
+
+    <script>
+        document.querySelectorAll('.dropdown-submenu .dropdown-toggle')
+            .forEach(el => {
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.nextElementSibling.classList.toggle('show');
+                });
+            });
+    </script>
 
 </body>
 

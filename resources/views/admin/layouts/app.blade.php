@@ -37,11 +37,11 @@
 </head>
 
 <body>
+
     @include('admin.partials.sidebar')
     <div class="d-flex">
         @include('admin.partials.navbar')
         <div class="content main">
-
             <div class="container-fluid px-4 mt-4">
 
                 @yield('content')
@@ -89,6 +89,8 @@
             });
         });
     </script>
+
+    
 </body>
 
 </html>

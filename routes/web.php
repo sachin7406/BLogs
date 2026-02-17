@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\MenuItemController;
 
 
 /*
@@ -40,6 +42,7 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });
+
 /*
 |--------------------------------------------------------------------------
 | ADMIN BLOG (PROTECTED)
@@ -107,6 +110,11 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
+
+    Route::resource('menus', MenuController::class)->names('menus');
+    Route::resource('menu-items', MenuItemController::class)->names('menu-items');
+    Route::get('preview/navbar-tree', [MenuController::class, 'treePreview'])->name('preview.navbar');
+    Route::get('menu-items/form', [MenuItemController::class, 'form'])->name('menu-items.form');
 });
 
 

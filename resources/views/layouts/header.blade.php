@@ -100,12 +100,12 @@
                                                             engineering suite</span>
                                                     </div>
                                                 </a>
-                                                <a href="/solutions/Mechanical/desigencenter_nx_cad" class="spa-link nav-link p-0">
+                                               <a href="/solutions/Mechanical/desigencenter_nx_cad" class="spa-link nav-link p-0">
                                                     <div style="margin-bottom: 10px;">
                                                         <span class="sub-title">NX</span><br>
                                                         <span class="sub-caption">NX CAD</span>
                                                     </div>
-                                                </a>
+                                                </a> 
                                                 <a href="/solutions/Mechanical/desigencenter_solid_edge" class="spa-link nav-link p-0">
                                                     <div style="margin-bottom: 10px;">
                                                         <span class="sub-title">Solid Edge <span style="font-size: 15px; font-weight:400; vertical-align: super; margin-left: 2px;">&#8599;</span>

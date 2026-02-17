@@ -40,6 +40,7 @@
     {{-- HEADER --}}
     @include('layouts.header')
 
+    @include('components.header-menu')
     {{-- SPA ROOT --}}
     <div id="spa-content">
         @yield('content')

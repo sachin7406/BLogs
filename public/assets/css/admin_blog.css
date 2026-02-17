@@ -9,7 +9,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 65px;
+    width: 80px;
     /* 👈 collapsed by default */
     height: 100vh;
     background: #0f172a;
@@ -21,7 +21,7 @@ body {
 
 /* Expand on hover */
 .sidebar:hover {
-    width: 180px;
+    width: 220px;
 }
 
 /* Sidebar links */
@@ -89,6 +89,7 @@ body {
     padding-top: 80px;
     transition: margin-left 0.3s ease;
     width: 100%;
+    /* z-index: -1 !important; */
 }
 
 /* Move content when sidebar expands */
