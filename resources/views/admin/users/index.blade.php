@@ -1,6 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@section('content')
+@php
+// Dynamic back link to dashboard
+$backUrl = route('admin.dashboard');
+$backTitle = 'Dashboard';
+@endphp
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -16,18 +23,32 @@
 
             {{-- Alert for success message --}}
             @if (session('success'))
+<<<<<<< HEAD
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+=======
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+>>>>>>> main
             @endif
 
             {{-- Alert for error message --}}
             @if ($errors->any())
+<<<<<<< HEAD
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ $errors->first() }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+=======
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $errors->first() }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+>>>>>>> main
             @endif
 
             <table class="table table-hover align-middle">

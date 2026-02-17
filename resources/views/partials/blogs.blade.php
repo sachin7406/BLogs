@@ -13,9 +13,66 @@
 @section('twitter_description', 'DDSPLM shares the latest blogs on mechanical engineering, CAD, CAE, PLM, and industry innovations. Stay ahead with news, case studies, and insights.')
 @section('twitter_image', asset('images/no-image-available.png'))
 
-<div class="hero-image" style="margin-bottom: 0;">
-    <div class="hero-text">
-        <h1 style="font-size:2.0rem; margin-bottom:0.5rem;">Blogs</h1>
+<style>
+    /* Responsive adjustments for the blog cards and hero section */
+    .blog-hero-responsive {
+        margin-bottom: 0;
+    }
+
+    .blog-hero-text-responsive h1 {
+        font-size: 2.0rem;
+        margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 576px) {
+        .blog-hero-text-responsive h1 {
+            font-size: 1.4rem;
+        }
+
+        .blog-card-responsive {
+            padding: 14px 3px !important;
+        }
+    }
+
+    @media (max-width:768px) {
+        .blog-card-img-responsive {
+            max-width: 90vw !important;
+            width: 100%;
+            min-width: 220px;
+        }
+
+        .blog-card-body-responsive {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .blog-card-img-responsive {
+            max-width: 98vw !important;
+            min-width: 150px;
+            margin-bottom: 8px;
+        }
+
+        .blog-card-body-responsive a,
+        .blog-card-body-responsive p {
+            font-size: 1em !important;
+        }
+
+        .blog-card-date-responsive {
+            font-size: 0.92em !important;
+        }
+
+        .blog-card-readmore-responsive {
+            font-size: 0.93em !important;
+            padding: .38em 1.2em !important;
+        }
+    }
+</style>
+
+<div class="hero-image blog-hero-responsive">
+    <div class="hero-text blog-hero-text-responsive">
+        <h1>Blogs</h1>
         <ul class="page-list" style="padding-left: 0; list-style: none; margin-bottom: 0;">
             <li style="display:inline;"><a href="/" class="spa-link">Home</a></li>
             <li style="display:inline;"> &nbsp;> Blogs</li>
@@ -27,13 +84,15 @@
     <div class="container" style="max-width:1100px;">
         @if(isset($blogs) && $blogs->count())
         @foreach($blogs as $blog)
-        <div class="row align-items-center my-4 px-2" style="background: #fafbfc; border-radius: 10px; box-shadow: 0 1px 8px #e8eaed; padding: 24px 12px;">
+        <div class="row align-items-center my-4 px-2 blog-card-responsive" style="background: #fafbfc; border-radius: 10px; box-shadow: 0 1px 8px #e8eaed; padding: 24px 12px;">
             <div class="col-md-4 col-12 mb-3 mb-md-0 d-flex justify-content-center align-items-center">
                 <img src="{{ !empty($blog->reference_image) ? asset(ltrim($blog->reference_image, '/')) : asset('images/no-image-available.png') }}"
-                    alt="{{ $blog->title }}" class="img-fluid rounded" style="width:100%;max-width:340px;object-fit:cover;box-shadow:0 2px 8px #dbe7fa;">
+                    alt="{{ $blog->title }}"
+                    class="img-fluid rounded blog-card-img-responsive"
+                    style="width:100%;max-width:340px;object-fit:cover;box-shadow:0 2px 8px #dbe7fa;">
             </div>
-            <div class="col-md-8 col-12" style="padding-top:10px;padding-bottom:10px;">
-                <div style="font-size:0.99em;color:#a9aab0;margin-bottom:4px;">
+            <div class="col-md-8 col-12 blog-card-body-responsive" style="padding-top:10px;padding-bottom:10px;">
+                <div class="blog-card-date-responsive" style="font-size:0.99em;color:#a9aab0;margin-bottom:4px;">
                     {{ $blog->created_at ? $blog->created_at->format('d F, Y') : '' }}
                 </div>
                 <div style="margin-bottom:30px;">
@@ -42,14 +101,14 @@
                         target="_blank"
                         onmouseover="this.style.color='#e53935'"
                         onmouseout="this.style.color='#253364'">
-                        {{ $blog->title }}
+                        {!! $blog->title !!}
                     </a>
                 </div>
                 <p style="color:#42454b;font-size:1.05em;margin-bottom:20px;">
-                    {{ $blog->description ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 175) }}
+                    {!! $blog->description ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 175) !!}
                 </p>
                 <a href="{{ url('/blogs_view/' . $blog->id . '-' . \Illuminate\Support\Str::slug($blog->title)) }}"
-                    class="btn btn-light border"
+                    class="btn btn-light border blog-card-readmore-responsive"
                     style="font-weight:500;letter-spacing: 0.5px;padding:.45em 1.5em;font-size:1em;color:#2164ae !important;border:1.5px solid #e53935 !important;transition:color 0.2s,border-color 0.2s;"
                     target="_blank"
                     onmouseover="this.style.color='#e53935'"
@@ -59,9 +118,14 @@
             </div>
         </div>
         @endforeach
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {!! $blogs->links() !!}
+        </div>
+
         @else
         <p style="text-align:center;">No blog posts available at this time.</p>
         @endif
     </div>
 </section>
-

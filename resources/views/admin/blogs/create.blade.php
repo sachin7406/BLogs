@@ -1921,6 +1921,10 @@ $isEdit = isset($blog) && $blog;
                 <div class="block-item" data-block="table" draggable="true" title="Table" style="background:#f6f8fe;"><span class="block-item-icon" style="color:#4066d7;">🗉</span><span class="block-item-text" style="color:#4066d7;">Table</span></div>
                 <div class="block-item" data-block="classic" draggable="true" title="Classic"><span class="block-item-icon">☐</span><span class="block-item-text">Classic</span></div>
             </div>
+            <div class="block-category">
+                <div class="block-category-title">MEDIA</div>
+                <div class="block-item" data-block="image" draggable="true" title="Image"><span class="block-item-icon">🖼</span><span class="block-item-text">Image</span></div>
+            </div>
 
             <div class="block-category">
                 <div class="block-category-title">DESIGN</div>
@@ -1930,10 +1934,7 @@ $isEdit = isset($blog) && $blog;
                 <div class="block-item" data-block="separator" draggable="true" title="Separator"><span class="block-item-icon">—</span><span class="block-item-text">Separator</span></div>
                 <div class="block-item" data-block="spacer" draggable="true" title="Spacer"><span class="block-item-icon">↗</span><span class="block-item-text">Spacer</span></div>
             </div>
-            <div class="block-category">
-                <div class="block-category-title">MEDIA</div>
-                <div class="block-item" data-block="image" draggable="true" title="Image"><span class="block-item-icon">🖼</span><span class="block-item-text">Image</span></div>
-            </div>
+
         </div>
         <div class="wp-left-tab-content" id="wpLeftTabPatterns" style="display:none;">
             <p class="wp-left-placeholder">Patterns coming soon.</p>
@@ -2819,7 +2820,11 @@ $isEdit = isset($blog) && $blog;
 
                 <div style="display:flex;gap:12px;margin-bottom:12px;">
                     <div>
+<<<<<<< HEAD
                         <label style="font-size:12px;">COLUMN COUNT</label> 
+=======
+                        <label style="font-size:12px;">COLUMN COUNT</label>
+>>>>>>> main
                         <input type="number" min="1" value="2" class="table-cols"
                             style="width:80px;padding:6px;border:1px solid #ccc;border-radius:4px;">
                     </div>
@@ -3060,12 +3065,50 @@ $isEdit = isset($blog) && $blog;
                     renderWithImage(url);
                 }
             };
+<<<<<<< HEAD
             wrap.querySelector('.block-img-url').onclick = () => {
                 const url = prompt('Enter image URL:');
                 if (url) {
                     renderWithImage(url);
                 }
             };
+=======
+            wrap.querySelector('.block-img-url').onclick = async () => {
+                const url = prompt('Enter image URL:');
+                if (url) {
+                    try {
+                        // Send URL to Laravel backend to download and store the image
+                        const response = await fetch('/admin/blogs/image-from-url', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                image_url: url
+                            })
+                        });
+                        const data = await response.json();
+                        if (data.success && data.image_url) {
+                            renderWithImage(data.image_url);
+                        } else {
+                            // If the backend could not fetch the image, fallback to using the raw URL anyway
+                            renderWithImage(url);
+                            if (data.error) {
+                                alert(data.error + '\nUsing the image URL directly as fallback.');
+                            } else {
+                                alert('Failed to download image from server. Using the URL directly as fallback.');
+                            }
+                        }
+                    } catch (err) {
+                        // On network or other errors, fallback to using the raw URL anyway
+                        renderWithImage(url);
+                        alert('Could not connect to image processor. Using the URL directly as fallback.');
+                    }
+                }
+            };
+
+>>>>>>> main
         }
 
         renderImageActions();
@@ -3321,17 +3364,7 @@ $isEdit = isset($blog) && $blog;
     document.addEventListener('keydown', (e) => {
         if (selectedBlock) {
             const ctrl = e.ctrlKey || e.metaKey;
-            if (ctrl && e.key.toLowerCase() === 'c') { // Copy
-                e.preventDefault();
-                clipboardBlockJson = blockToJson(selectedBlock);
-            } else if (ctrl && e.key.toLowerCase() === 'x') { // Cut
-                e.preventDefault();
-                clipboardBlockJson = blockToJson(selectedBlock);
-                selectedBlock.remove();
-                hideBlockToolbar();
-                saveState();
-                refreshAllListViews();
-            } else if (ctrl && e.shiftKey && e.key.toLowerCase() === 'd') { // Duplicate
+            if (ctrl && e.shiftKey && e.key.toLowerCase() === 'd') { // Duplicate
                 e.preventDefault();
                 const clone = selectedBlock.cloneNode(true);
                 selectedBlock.parentNode.insertBefore(clone, selectedBlock.nextSibling);

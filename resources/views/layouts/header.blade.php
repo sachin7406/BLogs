@@ -100,12 +100,12 @@
                                                             engineering suite</span>
                                                     </div>
                                                 </a>
-                                                <a href="/solutions/Mechanical/desigencenter_nx_cad" class="spa-link nav-link p-0">
+                                               <a href="/solutions/Mechanical/desigencenter_nx_cad" class="spa-link nav-link p-0">
                                                     <div style="margin-bottom: 10px;">
                                                         <span class="sub-title">NX</span><br>
                                                         <span class="sub-caption">NX CAD</span>
                                                     </div>
-                                                </a>
+                                                </a> 
                                                 <a href="/solutions/Mechanical/desigencenter_solid_edge" class="spa-link nav-link p-0">
                                                     <div style="margin-bottom: 10px;">
                                                         <span class="sub-title">Solid Edge <span style="font-size: 15px; font-weight:400; vertical-align: super; margin-left: 2px;">&#8599;</span>
@@ -306,8 +306,8 @@
                                     <a href="#">Academics</a>
                                     <a href="#">Renewals</a>
                                     <div class="right-title mt-4">QUICK LINKS</div>
-                                    <a href="#">Blogs</a>
-                                    <a href="#">Case studies</a>
+                                    <a href="{{ url('/blogs') }}">Blogs</a>
+                                    <a href="{{ url('/casestudy') }}">Case studies</a>
                                 </div>
                             </div>
                         </div>
@@ -410,9 +410,9 @@
 
                                 <div class="col-md-2 mega-right">
                                     <div class="right-title">QUICK LINKS</div>
-                                    <a href="#">Case studies</a>
+                                    <a href="{{ url('/casestudy') }}">Case studies</a>
                                     <a href="#">Industry reports</a>
-                                    <a href="#">Blogs</a>
+                                    <a href="{{ url('/blogs') }}">Blogs</a>
                                 </div>
                             </div>
                         </div>
@@ -564,7 +564,7 @@
                                     <div class="right-title">QUICK LINKS</div>
                                     <a href="#">Service Catalog</a>
                                     <a href="#">Request Quote</a>
-                                    <a href="#">Case Studies</a>
+                                    <a href="{{ url('/casestudy') }}">Case Studies</a>
                                 </div>
 
                             </div>

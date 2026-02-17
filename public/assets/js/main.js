@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 ========================= */
 
 let openMenu = null;
+let lockedMenu = null;
 let activeItem = null;
 
 /* =========================
@@ -74,16 +75,25 @@ function closeAllMegaMenus() {
 ========================= */
 if (window.innerWidth > 920) {
     $('.nav-item.dropdown').on('mouseenter', function () {
-        if (openMenu) return;
+        // console.log("callingss");
+        // if (openMenu) return;
         const menu = $(this).find('.mega-menu');
+        if (lockedMenu && lockedMenu.is(menu)) return;
+        if (lockedMenu && !lockedMenu.is(menu)) {
+            lockedMenu.slideUp(150);
+            lockedMenu = null;
+        }
         closeAllMegaMenus();
         menu.slideDown(200);
+        openMenu = menu;
         resetMenu(menu);
     });
 
     $('.mega-menu').on('mouseleave', function () {
-        if (openMenu) return;
+        // if (openMenu) return;
+        if (lockedMenu && lockedMenu.is($(this))) return;
         $(this).slideUp(150);
+        openMenu = null;
     });
 }
 
@@ -95,16 +105,36 @@ $('.dropdown-toggles').on('click', function (e) {
 
     const menu = $(this).closest('.nav-item').find('.mega-menu');
 
-    if (openMenu && openMenu.is(menu)) {
+    // if (openMenu && openMenu.is(menu)) {
+    if (lockedMenu && lockedMenu.is(menu)) {
         menu.slideUp(150);
+        lockedMenu = null;
         openMenu = null;
         return;
+    }
+
+    if (lockedMenu) {
+        lockedMenu.slideUp(150);
+        lockedMenu = null;
     }
 
     closeAllMegaMenus();
     menu.slideDown(200);
     openMenu = menu;
+    lockedMenu = menu;
     resetMenu(menu);
+});
+$(document).on('click', '.close-x', function () {
+    const menu = $(this).closest('.mega-menu');
+    menu.slideUp(150);
+
+    if (lockedMenu && lockedMenu.is(menu)) {
+        lockedMenu = null;
+    }
+
+    if (openMenu && openMenu.is(menu)) {
+        openMenu = null;
+    }
 });
 
 /* =========================
@@ -168,26 +198,66 @@ $(document).on('click', '.mobile-back', function () {
 
 function activateTopNavByURL(path) {
     $('.nav-link').removeClass('active');
+    $('.sol-left').removeClass('active'); // Reset submenu active states
+    $('.sol-box').addClass('d-none');     // Hide all subpanels
 
-    if (path.startsWith('/solutions')) {
-        $('#solutionsDropdown').addClass('active');
+    // Normalize path: lowercase and ensure leading slash
+    let normalPath = (path || '').toLowerCase();
+
+    if (!normalPath.startsWith('/')) {
+        normalPath = '/' + normalPath;
     }
-    else if (path.startsWith('/industries')) {
-        $('#industriesDropdown').addClass('active');
+
+    // Track top and sub menu IDs to enable submenu activation
+    let topMenuId = null;
+    let subPanelId = null;
+
+    if (normalPath.startsWith('/solutions')) {
+        topMenuId = '#solutionsDropdown';
+        // Extract subpath for submenu (e.g., /solutions/simulation)
+        const subMatch = normalPath.match(/^\/solutions\/([^\/]+)/);
+        if (subMatch && subMatch[1]) subPanelId = 'sol-' + subMatch[1].replace(/-/g, '').toLowerCase();
     }
-    else if (path.startsWith('/licensing')) {
-        $('#licensingDropdown').addClass('active');
+    else if (normalPath.startsWith('/industries')) {
+        topMenuId = '#industriesDropdown';
+        const subMatch = normalPath.match(/^\/industries\/([^\/]+)/);
+        if (subMatch && subMatch[1]) subPanelId = 'ind-' + subMatch[1].replace(/-/g, '').toLowerCase();
     }
-    else if (path.startsWith('/service')) {
-        $('#servicesDropdown').addClass('active');
+    else if (normalPath.startsWith('/licensing')) {
+        topMenuId = '#licensingDropdown';
+        const subMatch = normalPath.match(/^\/licensing\/([^\/]+)/);
+        if (subMatch && subMatch[1]) subPanelId = 'lic-' + subMatch[1].replace(/-/g, '').toLowerCase();
     }
-    else if (path === '/' || path === '/home') {
+    else if (normalPath.startsWith('/service')) {
+        topMenuId = '#servicesDropdown';
+        const subMatch = normalPath.match(/^\/service\/([^\/]+)/);
+        if (subMatch && subMatch[1]) subPanelId = 'srv-' + subMatch[1].replace(/-/g, '').toLowerCase();
+    }
+    else if (normalPath === '/' || normalPath === '/home') {
         $('.nav-link[href="/"]').addClass('active');
     }
-    else if (path.startsWith('/contact')) {
+    else if (normalPath.startsWith('/contact')) {
         $('.nav-link[href="/contact"]').addClass('active');
     }
+
+    // Activate top nav
+    if (topMenuId) {
+        $(topMenuId).addClass('active');
+    }
+
+    // If subPanelId found, activate panel and highlight sub menu as active
+    if (subPanelId) {
+        // Show sol-box/submenu panel
+        const $panel = $('#' + subPanelId);
+        if ($panel.length) {
+            $panel.removeClass('d-none');
+        }
+
+        // Activate matching sol-left
+        $('.sol-left[data-target="' + subPanelId + '"]').addClass('active');
+    }
 }
+
 
 function syncMegaMenuWithURL() {
     const path = window.location.pathname;

@@ -290,7 +290,7 @@
                 </div>
                 <section class="py-5 bg-light">
                     <div class="container">
-                        <h2 class="fw-bold mb-4 text-center">Key Features</h2>
+                        <h2 class="text-center mb-5">Key Features</h2>
                         <!-- 5-column layout, matching 'Why Attend?' structure -->
                         <div class="row row-cols-1 row-cols-md-5 g-3">
 
@@ -489,9 +489,9 @@
                 <div class="simcenter-features py-5 bg-light">
                     <div class="container">
                         <h3 class="text-center mb-5">Key Features</h3>
+                        <div class="row row-cols-1 row-cols-md-3 g-3">
 
-                        <div class="row row-cols-1 row-cols-md-5 g-3">
-
+                            <!-- Parametric Layout Design -->
                             <!-- Parametric Layout Design -->
                             <div class="col">
                                 <div class="feature-card h-100">
@@ -569,102 +569,89 @@
                                     </p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
-                <div class="simcenter-features py-5 bg-light">
+                <section class="py-5 bg-light">
                     <div class="container">
+                        <h2 class="text-center mb-5">Key Benefits</h2>
 
-                        <h3 class="text-center mb-5">Key Features</h3>
+                        <!-- 5-column layout -->
+                        <div class="row row-cols-1 row-cols-md-5 g-3">
 
-                        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
-
-                            <!-- Parametric Layout Design -->
+                            <!-- Rapid Line Creation -->
                             <div class="col">
-                                <div class="feature-tile h-100">
-                                    <div class="tile-icon">
-                                        <i class="bi bi-sliders"></i>
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="fas fa-industry"></i>
                                     </div>
-                                    <h6>Parametric Layout Design</h6>
-                                    <p>
-                                        Parametric features for developing and modifying manufacturing layouts.
+                                    <h6 class="fw-bold">Rapid Line Creation</h6>
+                                    <p class="mb-0">
+                                        Rapidly create and visualize production lines using NX.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Flexible Equipment Models -->
+                            <!-- Impact Assessment -->
                             <div class="col">
-                                <div class="feature-tile h-100">
-                                    <div class="tile-icon">
-                                        <i class="bi bi-boxes"></i>
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="fas fa-search"></i>
                                     </div>
-                                    <h6>Flexible Equipment Models</h6>
-                                    <p>
-                                        Digital equipment models supporting smooth transitions between 2D and 3D.
+                                    <h6 class="fw-bold">Impact Assessment</h6>
+                                    <p class="mb-0">
+                                        Conduct precise impact assessments and support effective change management.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Advanced Visualization -->
+                            <!-- Unified Design System -->
                             <div class="col">
-                                <div class="feature-tile h-100">
-                                    <div class="tile-icon">
-                                        <i class="bi bi-eye"></i>
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="fas fa-layer-group"></i>
                                     </div>
-                                    <h6>Advanced Visualization</h6>
-                                    <p>
-                                        JT-based visualization for handling large and complex data sets.
+                                    <h6 class="fw-bold">Unified Design System</h6>
+                                    <p class="mb-0">
+                                        Use a unified system for designing products, tools, and production systems.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Visual Reporting -->
+                            <!-- Equipment Library -->
                             <div class="col">
-                                <div class="feature-tile h-100">
-                                    <div class="tile-icon">
-                                        <i class="bi bi-info-circle"></i>
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="fas fa-database"></i>
                                     </div>
-                                    <h6>Visual Reporting</h6>
-                                    <p>
-                                        Instant access to component attributes through NX Visual Reporting.
+                                    <h6 class="fw-bold">Equipment Library</h6>
+                                    <p class="mb-0">
+                                        Access a comprehensive equipment library managed through Teamcenter.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Layout Verification -->
+                            <!-- PLM Platform -->
                             <div class="col">
-                                <div class="feature-tile h-100">
-                                    <div class="tile-icon">
-                                        <i class="bi bi-patch-check"></i>
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="fas fa-rocket"></i>
                                     </div>
-                                    <h6>Layout Verification</h6>
-                                    <p>
-                                        Validate layouts using Tecnomatix Process Simulate and Plant Simulation.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Multi-CAD Support -->
-                            <div class="col">
-                                <div class="feature-tile h-100">
-                                    <div class="tile-icon">
-                                        <i class="bi bi-compass"></i>
-                                    </div>
-                                    <h6>Multi-CAD Support</h6>
-                                    <p>
-                                        Support for multiple CAD systems across manufacturing workflows.
+                                    <h6 class="fw-bold">Single PLM Platform</h6>
+                                    <p class="mb-0">
+                                        Design, validate, and launch manufacturing lines within a single PLM platform.
                                     </p>
                                 </div>
                             </div>
 
                         </div>
-
                     </div>
-                </div>
+                </section>
+
             </div>
         </div>
+    </div>
     </div>
 </section>
 

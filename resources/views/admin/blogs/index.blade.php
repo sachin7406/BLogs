@@ -3,6 +3,13 @@
 
 @section('content')
 
+@section('content')
+@php
+// Dynamic back link to dashboard
+$backUrl = route('admin.dashboard');
+$backTitle = 'Dashboard';
+@endphp
+
 <!-- HEADER -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-semibold mb-0">Blogs</h4>
@@ -56,30 +63,31 @@
             <button class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Blog Actions">
                 <span style="font-size: 1.3rem; line-height: 1;">&#8942;</span>
             </button>
+            @php
+            $encryptedId = \Illuminate\Support\Facades\Crypt::encrypt($blog->id);
+            @endphp
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <a class="dropdown-item" href="{{ route('admin.blogs.view', $blog->id) }} " target="_blank">
+                    <a class="dropdown-item" href="{{ route('admin.blogs.view', $encryptedId) }}" target="_blank">
                         View
                     </a>
                 </li>
-
                 @if(session('admin_role') === 'admin' || session('admin_role') === 'editor')
                 <li>
-                    <a class="dropdown-item" href="{{ route('admin.blogs.edit', $blog->id) }}">
+                    <a class="dropdown-item" href="{{ route('admin.blogs.edit', $encryptedId) }}">
                         Edit
                     </a>
                 </li>
                 @endif
-
                 @if(session('admin_role') === 'admin')
                 <li>
                     <hr class="dropdown-divider">
                 </li>
                 <li>
-                    <form method="POST" action="{{ route('admin.blogs.delete', $blog->id) }}">
+                    <form method="POST" action="{{ route('admin.blogs.delete', $encryptedId) }}" onsubmit="return confirm('Are you sure you want to delete this blog?')">
                         @csrf
                         @method('DELETE')
-                        <button class="dropdown-item text-danger" onclick="return confirm('Are you sure you want to delete this blog?')">
+                        <button class="dropdown-item text-danger" type="submit">
                             Delete
                         </button>
                     </form>
@@ -96,6 +104,12 @@
     </div>
     @endforelse
 
+    <!-- PAGINATION -->
+    @if($blogs->hasPages())
+    <div class="d-flex justify-content-center mt-4">
+        {{ $blogs->links() }}
+    </div>
+    @endif
 </div>
 
 @endsection

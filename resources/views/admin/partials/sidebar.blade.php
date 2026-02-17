@@ -48,7 +48,39 @@
                     @endif
                 </ul>
             </li>
-
+            <!-- Config (ADMIN ONLY) -->
+            @if(session('admin_role') === 'admin')
+            <li class="nav-item w-100">
+                <a href="#configSubmenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white">
+                    <i class="fs-4 bi-gear"></i>
+                    <span class="ms-1 d-none d-sm-inline">Config</span>
+                </a>
+                <ul class="collapse nav flex-column ms-4" id="configSubmenu" data-bs-parent="#menu">
+                    {{--
+                        The routes below were originally using route('menus.index') and route('menu-items.index'),
+                        but those routes are not defined. Update with the correct admin routes or temporary # links.
+                    --}}
+                    <li class="w-100">
+                        <a href="{{ route('admin.menus.index') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-menu-button-wide me-2"></i>
+                            <span class="d-none d-sm-inline">Menu Config Master</span>
+                        </a>
+                    </li>
+                    <li class="w-100">
+                        <a href="{{ route('admin.menu-items.index') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-card-list me-2"></i>
+                            <span class="d-none d-sm-inline">Items Config Master</span>
+                        </a>
+                    </li>
+                    <li class="w-100">
+                        <a href="{{ route('admin.preview.navbar') }}" class="nav-link px-0 text-white">
+                            <i class="bi bi-sliders2-vertical me-2"></i>
+                            <span class="d-none d-sm-inline">Config Master</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
 
             <!-- USERS (ADMIN ONLY) -->
             @if(session('admin_role') === 'admin')
@@ -64,20 +96,17 @@
                             <span class="d-none d-sm-inline">All Users</span>
                         </a>
                     </li>
-                    <li class="w-100">
-                        <a href="{{ route('admin.users.create') }}" class="nav-link px-0 text-white">
-                            <i class="bi bi-person-plus me-2"></i>
-                            <span class="d-none d-sm-inline">Add User</span>
-                        </a>
-                    </li>
                 </ul>
             </li>
             @endif
+
+
 
         </ul>
 
         <hr class="w-100">
 
+        <!-- USER DROPDOWN -->
         <!-- USER DROPDOWN -->
         <div class="dropdown pb-4">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -87,11 +116,15 @@
             </a>
             <!-- Add "show" class to force the dropdown to display -->
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow show" aria-labelledby="dropdownUser1">
+<<<<<<< HEAD
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
+=======
+                <li><a class="dropdown-item" href="{{ route('admin.profile') }}">Profile</a></li>
+>>>>>>> main
                 <li><a class="dropdown-item" href="{{ route('admin.logout') }}">Sign out</a></li>
             </ul>
         </div>

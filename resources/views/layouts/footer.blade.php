@@ -44,7 +44,7 @@
                 </ul>
                 <h5 class="footer-title mt-4">USER LINK</h5>
                 <ul class="footer-list">
-                    <li><a href="{{ url('/case-studies') }}">Case Studies</a></li>
+                    <li><a href="{{ url('/casestudy') }}">Case Studies</a></li>
                     <li><a href="{{ url('/blogs') }}">Blogs</a></li>
                 </ul>
             </div>

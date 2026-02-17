@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Category;
+use Illuminate\Support\Facades\Crypt;
 
 
 class BlogController extends Controller
@@ -21,14 +22,15 @@ class BlogController extends Controller
             'activeBlogs'    => Blog::where('status', 'active')->count(),
             'inactiveBlogs'  => Blog::where('status', 'inactive')->count(),
             'newBlogs'       => Blog::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
-            'latestBlogs'    => Blog::with('category')->latest()->limit(5)->get(),
-            'blogs'          => Blog::with('category')->latest()->paginate(8)
+            'latestBlogs'    => Blog::with('category')->latest()->limit(12)->get(),
+            'blogs'          => Blog::with('category')->latest()->paginate(12)
         ]);
     }
 
     public function index()
     {
-        $blogs = Blog::with('category')->latest()->get();
+        $perPage = 12; // You can adjust this as needed
+        $blogs = Blog::with('category')->latest()->paginate($perPage);
         return view('admin.blogs.index', compact('blogs'));
     }
 
@@ -160,6 +162,86 @@ class BlogController extends Controller
         ]);
     }
 
+    /**
+     * Handle AJAX request to download image from provided URL,
+     * save it to public/assets/images/blogs, and return the accessible URL.
+     */
+    public function imageFromUrl(Request $request)
+    {
+        $request->validate([
+            'image_url' => 'required|url'
+        ]);
+
+        $imageUrl = $request->input('image_url');
+
+        try {
+            // Try to fetch image contents
+            $imageContents = @file_get_contents($imageUrl);
+
+            if ($imageContents === false) {
+                // Could not fetch image data, but per prompt,
+                // if NOT imagenot (image can't be gotten), then still show the URL as fallback
+                return response()->json([
+                    'success' => true,
+                    'image_url' => $imageUrl,
+                    'fallback' => true,
+                    'message' => 'Could not fetch the image from the provided URL. Using the original URL directly.'
+                ]);
+            }
+
+            // Get filename/extension
+            $parsedUrl = parse_url($imageUrl);
+            $basename = isset($parsedUrl['path']) ? basename($parsedUrl['path']) : null;
+            $ext = strtolower(pathinfo($basename, PATHINFO_EXTENSION));
+
+            // Allowed extensions for safety
+            $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+            if (!in_array($ext, $allowedExts)) {
+                // Try to detect extension from response headers/Finfo
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime  = finfo_buffer($finfo, $imageContents);
+                $map = [
+                    'image/jpeg' => 'jpg',
+                    'image/png'  => 'png',
+                    'image/gif'  => 'gif',
+                    'image/webp' => 'webp',
+                    'image/bmp'  => 'bmp',
+                ];
+                $ext = $map[$mime] ?? 'jpg';
+                finfo_close($finfo);
+            }
+
+            // Create folder for blogs if not exists
+            $folder = public_path('assets/images/blogs');
+            if (!file_exists($folder)) {
+                mkdir($folder, 0777, true);
+            }
+
+            // Generate unique filename
+            $fileName = 'extimg_' . time() . '_' . \Illuminate\Support\Str::random(6) . '.' . $ext;
+            $filePath = $folder . '/' . $fileName;
+
+            // Save file to public path
+            file_put_contents($filePath, $imageContents);
+
+            // Return the URL for browser access
+            $publicUrl = '/assets/images/blogs/' . $fileName;
+
+            return response()->json([
+                'success' => true,
+                'image_url' => $publicUrl
+            ]);
+        } catch (\Exception $e) {
+            // On any exception, fall back to showing the original URL (just like above)
+            return response()->json([
+                'success' => true,
+                'image_url' => $imageUrl,
+                'fallback' => true,
+                'message' => 'Could not fetch the image from the provided URL. Using the original URL directly.'
+            ]);
+        }
+    }
+
     public function create()
     {
         // Re‑use the same advanced editor view for create & edit
@@ -171,7 +253,9 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        $blog = Blog::findOrFail($id);
+        $decryptedId = Crypt::decrypt($id);
+
+        $blog = Blog::findOrFail($decryptedId);
         return view('admin.blogs.view', compact('blog'));
     }
 
@@ -180,7 +264,9 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::findOrFail($id);
+        $decryptedId = Crypt::decrypt($id);
+
+        $blog = Blog::findOrFail($decryptedId);
 
         return view('admin.blogs.create', [
             'blog' => $blog,
@@ -194,7 +280,9 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $blog = Blog::findOrFail($id);
+        $decryptedId = Crypt::decrypt($id);
+
+        $blog = Blog::findOrFail($decryptedId);
 
         $request->validate([
             'title'   => 'required|string|max:255',
@@ -264,13 +352,26 @@ class BlogController extends Controller
 
     public function delete($id)
     {
-        Blog::destroy($id);
+        try {
+            $decryptedId = \Illuminate\Support\Facades\Crypt::decrypt($id);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Invalid blog id');
+        }
+
+        $blog = \App\Models\Blog::find($decryptedId);
+
+        if (!$blog) {
+            return back()->with('error', 'Blog not found');
+        }
+
+        $blog->delete();
+
         return back()->with('success', 'Blog deleted');
     }
     public function publicBlogs()
     {
-        $blogs = Blog::where('status', 'active')->orderBy('id', 'desc')->get();
-        Log::info('Public blogs:', $blogs->toArray());
+        $perPage = 10;
+        $blogs = Blog::where('status', 'active')->orderBy('id', 'desc')->paginate($perPage);
         return view('pages.blogs', compact('blogs'));
     }
     public function view($id, $title = null)
