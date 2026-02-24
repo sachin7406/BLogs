@@ -2371,7 +2371,7 @@ $isEdit = isset($blog) && $blog;
 <form
     id="saveForm"
     method="POST"
-    action="{{ $isEdit ? route('admin.blogs.update', $blog->id) : route('admin.blogs.store') }}">
+    action="{{ $isEdit ? route('admin.blogs.update', \Illuminate\Support\Facades\Crypt::encrypt($blog->id)) : route('admin.blogs.store') }}">
     @csrf
     <input type="hidden" name="title">
     <input type="hidden" name="content">

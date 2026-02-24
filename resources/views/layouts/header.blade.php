@@ -100,12 +100,12 @@
                                                             engineering suite</span>
                                                     </div>
                                                 </a>
-                                               <a href="/solutions/Mechanical/desigencenter_nx_cad" class="spa-link nav-link p-0">
+                                                <a href="/solutions/Mechanical/desigencenter_nx_cad" class="spa-link nav-link p-0">
                                                     <div style="margin-bottom: 10px;">
                                                         <span class="sub-title">NX</span><br>
                                                         <span class="sub-caption">NX CAD</span>
                                                     </div>
-                                                </a> 
+                                                </a>
                                                 <a href="/solutions/Mechanical/desigencenter_solid_edge" class="spa-link nav-link p-0">
                                                     <div style="margin-bottom: 10px;">
                                                         <span class="sub-title">Solid Edge <span style="font-size: 15px; font-weight:400; vertical-align: super; margin-left: 2px;">&#8599;</span>
@@ -304,7 +304,7 @@
                                     <div class="right-title">HOW TO BUY</div>
                                     <a href="#">Buy online</a>
                                     <a href="#">Academics</a>
-                                    <a href="#">Renewals</a>
+                                    <a href="{{ url('/Renewal') }}">Renewals</a>
                                     <div class="right-title mt-4">QUICK LINKS</div>
                                     <a href="{{ url('/blogs') }}">Blogs</a>
                                     <a href="{{ url('/casestudy') }}">Case studies</a>
@@ -427,9 +427,6 @@
                             aria-labelledby="licensingDropdown">
 
                             <div class="close-x">&times;</div>
-
-
-
                             <div class="row">
 
                                 <div class="col-lg-3 menu-left">

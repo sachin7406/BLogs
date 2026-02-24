@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', config('app.name'))</title>
 
+    <!-- 🔹 FAVICON -->
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+
     <!-- 🔹 BASIC SEO -->
     <meta name="description" content="@yield('meta_description', 'Default description')">
     <meta name="keywords" content="@yield('meta_keywords', '')">
@@ -41,13 +45,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     {{-- Animation Libraries --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
+    <link rel="stylesheet" href="/assets/css/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    {{-- Custom CSS --}}
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style2.css">
+    <link rel="stylesheet" href="/assets/css/loader.css">
+
+    {{-- Animation Libraries --}}
+    <!-- <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
 
     {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/loader.css') }}">
+     -->
     <style>
         .dropdown-submenu {
             position: relative;
@@ -69,8 +83,8 @@
     {{-- HEADER --}}
     @include('layouts.header')
 
-
     @include('components.header-menu')
+
     {{-- SPA ROOT --}}
     <div id="spa-content">
         @yield('content')
@@ -81,17 +95,25 @@
 
     {{-- ================= CORE JS ================= --}}
 
-    {{-- jQuery (required for your SPA & old scripts) --}}
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 
     {{-- Bootstrap JS (v5 – ONLY ONCE) --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- jQuery (required for your SPA & old scripts) -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <!-- SPA + Custom -->
+    <script src="/assets/js/spa.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/loader.js"></script>
+
+
+    {{-- jQuery (required for your SPA & old scripts) --}}
+    <!-- <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     {{-- SPA + Custom --}}
     <script src="{{ asset('assets/js/spa.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/loader.js') }}"></script>
-
+     -->
     <script>
         document.querySelectorAll('.dropdown-submenu .dropdown-toggle')
             .forEach(el => {

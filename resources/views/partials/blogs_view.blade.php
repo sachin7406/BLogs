@@ -1,3 +1,19 @@
+{{-- SEO & Meta Data --}}
+@section('title', $blog->title ?? 'DDSPLM | Blog Details')
+@section('meta_description', $blog->meta_description ?? Str::limit(strip_tags($blog->description ?? ''), 150))
+@section('meta_keywords', $blog->meta_keywords ?? 'engineering blogs, mechanical design, DDSPLM blog, product innovation, CAD, CAE, PLM, industry news, Siemens, Altair')
+@section('meta_robots', 'index, follow')
+@section('canonical', url()->current())
+@section('og_title', $blog->title ?? 'DDSPLM | Blog')
+@section('og_description', $blog->meta_description ?? Str::limit(strip_tags($blog->description ?? ''), 150))
+@section('og_image', $blog->image_url ?? asset('images/no-image-available.png'))
+@section('og_url', url()->current())
+@section('og_type', 'article')
+@section('twitter_title', $blog->title ?? 'DDSPLM | Blog')
+@section('twitter_description', $blog->meta_description ?? Str::limit(strip_tags($blog->description ?? ''), 150))
+@section('twitter_image', $blog->image_url ?? asset('images/no-image-available.png'))
+
+
 {{-- ================= BLOG ARTICLE CONTENT ================= --}}
 <style>
     .blog-breadcrumb {

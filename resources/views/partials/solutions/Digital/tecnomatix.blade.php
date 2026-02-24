@@ -77,136 +77,141 @@
                     <div class="container">
                         <h3 class="text-center mb-5">Key Benefits</h3>
                         <div class="row row-cols-1 row-cols-md-5 g-3">
-
-                            <!-- Expert-Led Sessions -->
+                            <!-- Cloud-Driven Enhancement -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-person-workspace"></i>
+                                        <i class="bi bi-cloud-arrow-up"></i>
                                     </div>
-                                    <h6 class="fw-bold">Expert-Led Sessions</h6>
+                                    <h6 class="fw-bold">Cloud Collaboration</h6>
                                     <p class="mb-0">
-                                        from practitioners with strong domain depth and hands-on project experience
+                                        Utilize cloud-driven Process Simulate Collaborate to enhance robotic automation design results.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Practical Insights -->
+                            <!-- Accelerated Implementation -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-lightning-charge-fill"></i>
+                                        <i class="bi bi-lightning"></i>
                                     </div>
-                                    <h6 class="fw-bold">Practical Insights</h6>
+                                    <h6 class="fw-bold">Faster Time-to-Value</h6>
                                     <p class="mb-0">
-                                        focused on real use cases and proven implementation approaches
+                                        Boost your time-to-value without the need for software installation.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Technology Updates -->
-                            <div class="col">
-                                <div class="feature-card h-100">
-                                    <div class="icon-badge">
-                                        <i class="bi bi-cpu"></i>
-                                    </div>
-                                    <h6 class="fw-bold">Technology Updates</h6>
-                                    <p class="mb-0">
-                                        across Designcenter, PLM, Digital Manufacturing, and Digital Validation.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Live Q&A -->
+                            <!-- Rapid Communication -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
                                         <i class="bi bi-chat-dots"></i>
                                     </div>
-                                    <h6 class="fw-bold">Live Q&amp;A</h6>
+                                    <h6 class="fw-bold">Fast Communication</h6>
                                     <p class="mb-0">
-                                        Live Q&amp;A with Specialists so you can get clear answers to your specific questions
+                                        Speed up simulation projects with collaborative tools that enable quick and efficient communication.
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Free to Attend -->
+                            <!-- Stakeholder Distribution -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-gift"></i>
+                                        <i class="bi bi-people"></i>
                                     </div>
-                                    <h6 class="fw-bold">Free to Attend</h6>
+                                    <h6 class="fw-bold">Wider Distribution</h6>
                                     <p class="mb-0">
-                                        Join live sessions at no cost, from anywhere.
+                                        Distribute studies among various stakeholders and your robotic automation project network with ease.
                                     </p>
                                 </div>
                             </div>
 
+                            <!-- Efficiency in Documentation -->
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="bi bi-graph-down-arrow"></i>
+                                    </div>
+                                    <h6 class="fw-bold">Reduced Documentation Time</h6>
+                                    <p class="mb-0">
+                                        Cut documentation time for simulation tasks by up to 20%.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <section class="py-5 bg-light">
+
+                <section class="py-5">
                     <div class="container">
-                        <h3 class="text-center mb-4 fw-bold">Key Features</h3>
-                        <div class="row row-cols-1 row-cols-md-5 g-3">
-                            <!-- 1 -->
+                        <h2 class="text-center mb-5">Key Features</h2>
+                        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-cube"></i>
+                                        <i class="fas fa-cube"></i>
                                     </div>
-                                    <h6 class="fw-bold">3D Visualization</h6>
+                                    <h6 class="fw-bold">Advanced 3D Visualization</h6>
                                     <p class="mb-0">
                                         Utilize advanced, interactive 3D visualization features.
                                     </p>
                                 </div>
                             </div>
-                            <!-- 2 -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-eye"></i>
+                                        <i class="fas fa-eye-slash"></i>
                                     </div>
-                                    <h6 class="fw-bold">Visibility Control</h6>
+                                    <h6 class="fw-bold">Dynamic Equipment Display</h6>
                                     <p class="mb-0">
-                                        Conceal and reveal equipment, products, and robot trajectories.
+                                        Conceal and reveal equipment, product, and robot trajectories.
                                     </p>
                                 </div>
                             </div>
-                            <!-- 3 -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-stickies"></i>
+                                        <i class="fas fa-sticky-note"></i>
                                     </div>
-                                    <h6 class="fw-bold">Collaborative Notes</h6>
+                                    <h6 class="fw-bold">Collaborative Notes &amp; Feedback</h6>
                                     <p class="mb-0">
                                         Generate and share collaborative notes and feedback.
                                     </p>
                                 </div>
                             </div>
-                            <!-- 4 -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-play-circle"></i>
+                                        <i class="fas fa-play-circle"></i>
                                     </div>
-                                    <h6 class="fw-bold">Simulation Playback</h6>
+                                    <h6 class="fw-bold">Flexible Simulation Execution</h6>
                                     <p class="mb-0">
                                         Execute standard or pre-recorded simulations.
                                     </p>
                                 </div>
                             </div>
-                            <!-- 5 -->
                             <div class="col">
                                 <div class="feature-card h-100">
                                     <div class="icon-badge">
-                                        <i class="bi bi-tablet"></i>
+                                        <i class="fas fa-exclamation-triangle"></i>
                                     </div>
-                                    <h6 class="fw-bold">Web-Based Access</h6>
+                                    <h6 class="fw-bold">Collision Management</h6>
                                     <p class="mb-0">
-                                        Access simulations on desktop or tablet via web browser.
+                                        Show collision lists and confirm collision statuses.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <div class="icon-badge">
+                                        <i class="fas fa-tablet-alt"></i>
+                                    </div>
+                                    <h6 class="fw-bold">Multi-Device Access</h6>
+                                    <p class="mb-0">
+                                        Access on a desktop or tablet through a web browser.
                                     </p>
                                 </div>
                             </div>

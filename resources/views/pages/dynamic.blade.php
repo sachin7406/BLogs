@@ -3,3 +3,8 @@
 @section('content')
     @include($partial)
 @endsection
+
+
+
+
+

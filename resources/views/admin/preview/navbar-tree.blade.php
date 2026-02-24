@@ -47,9 +47,11 @@ $backTitle = "Menus";
                                 data-menu="{{ $menu->id }}"
                                 title="Add Menu Item"
                                 style="background:#f1f5fa;border:none;color:#387fe7;"
-                                onclick="event.stopPropagation(); handleAddMenuItemWithParams({{ $menu->id }})">
+                                onclick="event.stopPropagation(); handleAddMenuItemForMenu({{ $menu->id }})">
                                 <i class="bi bi-plus"></i>
                             </button>
+
+
                             <button
                                 class="btn btn-warning round-btn shadow-sm ms-2 edit-menu-btn"
                                 data-menu="{{ $menu->id }}"
@@ -256,7 +258,22 @@ $backTitle = "Menus";
                 showModalWithForm(formHtml);
             });
     }
-
+  // This function adds menu items under the root menu (not a submenu).
+    function handleAddMenuItemForMenu(menuId) {
+        // Open the modal form for adding a child menu item directly under the given menu
+        // Pass parent_type=menu and parent_id=menuId as query params to pre-fill the form
+        fetch(`{{ route('admin.menu-items.create') }}?parent_type=menu&parent_id=${menuId}`)
+            .then(res => res.text())
+            .then(formHtml => {
+                if (typeof showModalWithForm === 'function') {
+                    showModalWithForm(formHtml);
+                } else {
+                    // Fallback: open in new window or alert
+                    const newWin = window.open('', '_blank');
+                    newWin.document.write(formHtml);
+                }
+            });
+    }
     function handleAddMenuItemWithParams(parentMenuItemId) {
         // Open the modal form for adding a child menu item under the given menu item
         // Pass parent_type=menu_item and parent_id=parentMenuItemId as query params to pre-fill the form
@@ -272,7 +289,7 @@ $backTitle = "Menus";
                 }
             });
     }
-
+    
     function handleEditMenuClick(menuId) {
         fetch(`{{ url('admin/menus/${menuId}/edit') }}`.replace('${menuId}', menuId))
             .then(res => res.text())

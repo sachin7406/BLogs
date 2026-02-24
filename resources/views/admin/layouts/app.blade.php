@@ -33,7 +33,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/admin_blog.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('assets/css/admin_blog.css') }}"> -->
+
+    <link rel="stylesheet" href="/assets/css/admin_blog.css">
 </head>
 
 <body>
@@ -90,7 +92,7 @@
         });
     </script>
 
-    
+
 </body>
 
 </html>

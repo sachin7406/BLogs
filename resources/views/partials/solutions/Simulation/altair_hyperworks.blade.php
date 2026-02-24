@@ -380,6 +380,27 @@
                     </ul>
                 </div>
 
+                <button class="accordion">Energy</button>
+                <div class="panel">
+                    <p>
+                        Whether in oil and gas, coal, renewable energy, nuclear power, or distribution, our customers use Altair to simulate everything from geomechanics to composite wind turbine blades and analyze structural safety to network loads.
+                    </p>
+                    <ul>
+                        <li>
+                            Optimize energy production and distribution
+                        </li>
+                        <li>
+                            Increase network efficiency and optimize energy efficiency of power generation and energy storage systems
+                        </li>
+                        <li>
+                            Ensure Multiphysics reliability and robustness with our structural simulation software portfolio
+                        </li>
+                        <li>
+                            Streamline aerodynamics and thermal with CFD solvers
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
