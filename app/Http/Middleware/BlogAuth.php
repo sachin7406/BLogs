@@ -19,7 +19,9 @@ class BlogAuth
         if (!session()->has('admin_id')) {
             return redirect('/admin/login');
         }
-
+        if (!auth()->check()) {
+            return redirect('/admin/login');
+        }
         return $next($request);
     }
 }

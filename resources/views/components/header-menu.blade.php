@@ -252,7 +252,9 @@ $menus = \App\Models\Menu::with([
                     @endforeach
 
                 </ul>
-
+                <button class="btn-buy-now ms-lg-3 mt-3 mt-lg-0" data-bs-toggle="modal" data-bs-target="#form">
+                    BUY NOW
+                </button>
             </div>
         </div>
     </nav>

@@ -45,14 +45,14 @@
 
             <img
                 src="{{ $blog->reference_image ?: 'https://via.placeholder.com/400x220?text=Blog+Image' }}"
-                alt="{{ $blog->title }}"
+                alt="{!! $blog->title !!}"
                 class="blog-img">
 
             <div class="blog-body">
                 <h6 class="blog-title">{{ $blog->title }}</h6>
 
                 <p class="blog-desc">
-                    {{ \Illuminate\Support\Str::limit(strip_tags($blog->description), 70) }}
+                    {!! \Illuminate\Support\Str::limit(strip_tags($blog->description), 70) !!}
                 </p>
 
                 <div class="blog-meta">

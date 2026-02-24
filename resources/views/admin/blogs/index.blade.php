@@ -36,10 +36,10 @@ $backTitle = 'Dashboard';
             </div>
             <div class="blog-text">
                 <div class="blog-title fw-semibold mb-1 text-clamp-2">
-                    {{ $blog->title ?: '-' }}
+                    {!! $blog->title ?: '-' !!}
                 </div>
                 <div class="blog-desc mb-1 small text-muted">
-                    {{ $blog->description ? Str::limit(strip_tags($blog->description), 60) : '-' }}
+                    {!! $blog->description ? Str::limit(strip_tags($blog->description), 60) : '-' !!}
                 </div>
                 <div class="blog-meta d-flex flex-wrap gap-2 align-items-center">
                     <span class="badge bg-{{ $blog->status === 'active' ? 'success' : 'secondary' }}">

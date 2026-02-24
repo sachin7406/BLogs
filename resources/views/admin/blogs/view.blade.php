@@ -297,7 +297,7 @@
             <div class="wp-accordion">
                 @foreach($block['items'] as $item)
                 <details>
-                    <summary>{{ $item['title'] }}</summary>
+                    <summary>{!! $item['title'] !!}</summary>
                     <div>{!! $item['body'] !!}</div>
                 </details>
                 @endforeach

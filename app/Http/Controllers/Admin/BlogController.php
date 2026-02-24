@@ -22,16 +22,22 @@ class BlogController extends Controller
             'activeBlogs'    => Blog::where('status', 'active')->count(),
             'inactiveBlogs'  => Blog::where('status', 'inactive')->count(),
             'newBlogs'       => Blog::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
-            'latestBlogs'    => Blog::with('category')->latest()->limit(12)->get(),
-            'blogs'          => Blog::with('category')->latest()->paginate(12)
+            'latestBlogs'    => Blog::with('category')->orderBy('updated_at', 'desc')->limit(12)->get(),
+            'blogs'          => Blog::with('category')->orderBy('updated_at', 'desc')->paginate(12)
         ]);
     }
 
     public function index()
     {
-        $perPage = 12; // You can adjust this as needed
-        $blogs = Blog::with('category')->latest()->paginate($perPage);
-        return view('admin.blogs.index', compact('blogs'));
+        $perPage = 12; // Adjust as needed
+
+        // Retrieve blogs with their category, paginated, ordered by updated_at descending.
+        $blogs = Blog::with('category')
+            ->orderBy('updated_at', 'desc')
+            ->paginate($perPage);
+
+        // Pass the paginated blogs collection to the view.
+        return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
     /* =========================================
@@ -335,6 +341,7 @@ class BlogController extends Controller
         // Reference link – keep existing unless user sends a new one
         $referenceLink = $request->reference_link ?: $blog->reference_link;
 
+        // Manually set the updated_at column to current time
         $blog->update([
             'title'           => $request->title,
             // We intentionally keep the original slug so URLs don't break.
@@ -345,6 +352,7 @@ class BlogController extends Controller
             'status'          => $request->status ?? $blog->status,
             'category_id'     => $request->category_id,
             'tags'            => $request->tags,
+            'updated_at'      => now(), // Add updated time
         ]);
 
         return back()->with('success', 'Blog updated successfully');
@@ -371,7 +379,7 @@ class BlogController extends Controller
     public function publicBlogs()
     {
         $perPage = 10;
-        $blogs = Blog::where('status', 'active')->orderBy('id', 'desc')->paginate($perPage);
+        $blogs = Blog::where('status', 'active')->orderBy('updated_at', 'desc')->paginate($perPage);
         return view('pages.blogs', compact('blogs'));
     }
     public function view($id, $title = null)
