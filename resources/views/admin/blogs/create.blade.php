@@ -1,3 +1,19 @@
+
+@section('title', 'DDSPLM | Admin - Create Blog')
+@section('meta_description', 'Create a new blog post in the DDSPLM admin dashboard. Add title, content, category, images, SEO metadata, and set status for publishing.')
+@section('meta_keywords', 'DDSPLM admin, create blog, new blog post, blog editor, admin dashboard')
+@section('meta_robots', 'noindex, nofollow')
+@section('canonical', url()->current())
+@section('og_title', 'DDSPLM | Admin – Create Blog')
+@section('og_description', 'Write and publish blogs from the DDSPLM admin panel. Add rich content, choose category, and manage publication status.')
+@section('og_image', asset('assets/images/imagesimcenter/DDS HD Logo.jpg'))
+@section('og_url', url()->current())
+@section('og_type', 'website')
+@section('twitter_title', 'DDSPLM | Admin Create Blog')
+@section('twitter_description', 'Easily create new blogs for DDSPLM in the admin dashboard and enrich your company’s content.')
+@section('twitter_image', asset('assets/images/imagesimcenter/DDS HD Logo.jpg'))
+
+
 @extends('admin.layouts.app')
 
 @section('content')
@@ -1844,7 +1860,7 @@ $isEdit = isset($blog) && $blog;
     </div>
 </div>
 
-<!-- Command Palette Modal -->
+<!-- Command Palette Modal for search -->
 <div class="command-palette-modal" id="commandPaletteModal">
     <div class="command-palette-content" onclick="event.stopPropagation()">
         <input type="text" class="command-palette-input" id="commandPaletteInput" placeholder="Search or type a command...">
@@ -2821,6 +2837,7 @@ $isEdit = isset($blog) && $blog;
                 <div style="display:flex;gap:12px;margin-bottom:12px;">
                     <div>
                         <label style="font-size:12px;">COLUMN COUNT</label>
+
                         <input type="number" min="1" value="2" class="table-cols"
                             style="width:80px;padding:6px;border:1px solid #ccc;border-radius:4px;">
                     </div>
@@ -3644,23 +3661,25 @@ $isEdit = isset($blog) && $blog;
 
     function applyFontSize(value) {
         if (!selectedBlockContent) return;
-        const selection = window.getSelection ? window.getSelection() : null;
-        if (selection && selection.rangeCount > 0) {
-            const range = selection.getRangeAt(0);
-            const inBlock = selectedBlockContent.contains(range.commonAncestorContainer);
-            if (inBlock && !selection.isCollapsed && value) {
-                const span = document.createElement('span');
-                span.style.fontSize = value;
-                const contents = range.extractContents();
-                span.appendChild(contents);
-                range.insertNode(span);
-                selection.removeAllRanges();
-                const newRange = document.createRange();
-                newRange.selectNodeContents(span);
-                selection.addRange(newRange);
-                return;
-            }
-        }
+
+        // Fix: prevent repeated nested <span style="font-size:..."> wrappers.
+        // Applying font-size by extracting the selection and wrapping it in a span
+        // causes the same "row" to appear to get font-size applied multiple times.
+        // Instead, apply font-size at the block/content element level.
+        const unwrapFontSizeSpans = (root) => {
+            if (!root || !root.querySelectorAll) return;
+            root.querySelectorAll('span[style]').forEach(span => {
+                // Only unwrap spans that actually carry font-size.
+                if (span && span.style && span.style.fontSize) {
+                    while (span.firstChild) {
+                        span.parentNode.insertBefore(span.firstChild, span);
+                    }
+                    span.remove();
+                }
+            });
+        };
+
+        unwrapFontSizeSpans(selectedBlockContent);
         selectedBlockContent.style.fontSize = value || '';
     }
 
