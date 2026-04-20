@@ -23,18 +23,32 @@ $backTitle = 'Dashboard';
 
             {{-- Alert for success message --}}
             @if (session('success'))
+<<<<<<< HEAD
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+=======
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+>>>>>>> main
             @endif
 
             {{-- Alert for error message --}}
             @if ($errors->any())
+<<<<<<< HEAD
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $errors->first() }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+=======
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ $errors->first() }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+>>>>>>> main
             @endif
 
             <table class="table table-hover align-middle">

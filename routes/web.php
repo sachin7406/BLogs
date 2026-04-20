@@ -106,6 +106,22 @@ Route::middleware('blog.auth')->prefix('admin')->name('admin.')->group(function 
     Route::get('menu-items/form', [MenuItemController::class, 'form'])->name('menu-items.form');
 });
 
+use Illuminate\Http\Request;
+
+Route::post('/admin/import/fetch-html', function (Request $request) {
+    $url = $request->input('url');
+    if (!$url || !filter_var($url, FILTER_VALIDATE_URL)) {
+        return response()->json(['html' => null, 'error' => 'Invalid or missing URL.'], 400);
+    }
+    try {
+        $html = file_get_contents($url);
+        return response()->json(['html' => $html]);
+    } catch (\Exception $e) {
+        return response()->json(['html' => null, 'error' => 'Unable to fetch content.'], 500);
+    }
+});
+
+
 // PUBLIC BLOG LIST AND BLOG VIEW
 Route::get('/blogs', [BlogController::class, 'publicBlogs']);
 // Route now uses the blog title as a slug for display, but internally uses the id for lookup

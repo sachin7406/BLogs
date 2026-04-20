@@ -20,13 +20,20 @@
                     <div class="mb-3">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" class="form-control" required>
+<<<<<<< HEAD
+=======
                         <small class="text-muted" id="emailHelp">
                             Only <strong>@gmail.com and @ddsplm.com</strong> email addresses are accepted.
                         </small>
+>>>>>>> main
                     </div>
 
                     <div class="mb-3">
                         <label for="password">Password</label>
+<<<<<<< HEAD
+                        <input type="password" name="password" id="password" class="form-control" required>
+                        <small class="text-muted" id="passwordHelp">Required for new user</small>
+=======
                         <input type="password" name="password" id="password" class="form-control" required minlength="6">
                         <small class="text-muted" id="passwordHelp">
                             Required for new user
@@ -35,6 +42,7 @@
                                 <li>Choose a secure password.</li>
                             </ul>
                         </small>
+>>>>>>> main
                     </div>
 
                     <div class="row">
@@ -66,6 +74,48 @@
     </div>
 </div>
 <script>
+<<<<<<< HEAD
+    document.getElementById('userForm').addEventListener('submit', function(e) {
+        // Allow normal form submission for now, since prior JavaScript AJAX submission isn't working
+        // If you want AJAX, use the below, but include error/success handling:
+        // 
+        // e.preventDefault();
+        // const formData = new FormData(this);
+        // let id = formData.get('user_id');
+        // let url = id ? `/admin/users/${id}` : `/admin/users`;
+        // let method = id ? 'PUT' : 'POST';
+        // fetch(url, {
+        //     method: method,
+        //     headers: {
+        //         'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
+        //         'Accept': 'application/json',
+        //     },
+        //     body: formData
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //     if (data.message) {
+        //         location.reload();
+        //     } else {
+        //         alert('Error');
+        //     }
+        // })
+        // .catch(err => alert('Error: ' + err));
+        // 
+        // For fallback, remove e.preventDefault() (as above) for classic POST request
+
+        // For edit: Remove password requirement and password help if editing (better UX)
+        let id = document.getElementById('user_id').value;
+        let passwordInput = document.getElementById('password');
+        let helpText = document.getElementById('passwordHelp');
+        if (id) {
+            passwordInput.removeAttribute('required');
+            helpText.innerText = 'Leave blank to keep existing password';
+        } else {
+            passwordInput.setAttribute('required', 'required');
+            helpText.innerText = 'Required for new user';
+        }
+=======
     // Validation functions for email and password
     function validateEmailField(emailInput, emailHelp) {
         const emailValue = emailInput.value.trim().toLowerCase();
@@ -164,5 +214,6 @@
                 return false;
             }
         });
+>>>>>>> main
     });
 </script>
